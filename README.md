@@ -25,7 +25,6 @@
 ![Hugging Face](https://img.shields.io/badge/HuggingFace-FFD21E?logo=huggingface&logoColor=000)  
 
 **Tools & Platforms:**  
-![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=fff)  
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=fff)  
 ![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=fff)  
 
