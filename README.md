@@ -50,7 +50,6 @@
 ---
 
 📫 **Connect with me:**  
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=fff)](https://www.linkedin.com/in/YOUR_LINKEDIN)  
-[![Gmail](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=fff)](mailto:YOUR_EMAIL)  
+[![Gmail](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=fff)](mailto:23520261@gm.uit.edu.vn)  
 
 ---
