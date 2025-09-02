@@ -32,7 +32,7 @@
 
 ## 📌 Current Projects  
 - 🔹 **VisualBERT Implementation** — Vision & Language model for multi-modal tasks on UIT-ViIC dataset
-- 🔹 **Stock Exchange Management System** — Database design & deployment on Oracle  
+- 🔹 **Stock Exchange Management System** — Database design & deployment on PostgreSQL
 ---
 
 ## 📈 GitHub Stats  
