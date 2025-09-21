@@ -36,10 +36,12 @@
 ---
 
 ## 📈 GitHub Stats  
-![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=YOUR_USERNAME&theme=radical)  
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=thanhdatnguyentk&layout=compact&theme=radical)  
+<div align="center">
 
----
+![GitHub Streak](https://v0-git-hub-streak-score-card-phi.vercel.app/api/card-with-avatar?username=thanhdatnguyentk&theme=%7B%22backgroundColor%22%3A%22%230f172a%22%2C%22textColor%22%3A%22%23e2e8f0%22%2C%22accentColor%22%3A%22%230ea5e9%22%2C%22borderColor%22%3A%22%231e293b%22%2C%22waterColor%22%3A%22%230ea5e9%22%2C%22streakColor%22%3A%22%2306b6d4%22%7D)
+
+</div>
+
 
 ## 🌱 Learning Journey  
 > "AI is not magic — it's just a lot of math, code, and coffee." ☕  
