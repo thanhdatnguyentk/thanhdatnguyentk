@@ -28,12 +28,6 @@
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=fff)  
 ![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=fff)  
 
----
-
-## 📌 Current Projects  
-- 🔹 **VisualBERT Implementation** — Vision & Language model for multi-modal tasks on UIT-ViIC dataset
-- 🔹 **Stock Exchange Management System** — Database design & deployment on PostgreSQL
----
 
 ## 📈 GitHub Stats  
 <div align="center">
