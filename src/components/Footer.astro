@@ -1,0 +1,119 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <span class="footer__brand-mark" aria-hidden="true">td</span>
+      <div>
+        <p class="footer__name">Nguyễn Thành Đạt</p>
+        <p class="footer__tagline">AI Engineer in training — UIT - VNU-HCM</p>
+      </div>
+    </div>
+
+    <nav class="footer__links" aria-label="Footer">
+      <a href="https://github.com/thanhdatnguyentk" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:23520261@gm.uit.edu.vn">Email</a>
+      <a href="#top">Back to top ↑</a>
+    </nav>
+
+    <p class="footer__copy">
+      © {year} Nguyễn Thành Đạt. Built with
+      <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>
+      &
+      <a href="https://material-web.dev" target="_blank" rel="noopener noreferrer">Material Web</a>.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--space-7);
+    background: var(--md-sys-color-surface-container);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    align-items: flex-start;
+  }
+
+  .footer__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .footer__brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+    color: var(--md-sys-color-on-primary);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .footer__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .footer__tagline {
+    font-size: 13px;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+  }
+
+  .footer__links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer__links a:hover {
+    color: var(--md-sys-color-primary);
+  }
+
+  .footer__copy {
+    font-size: 13px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 1.6;
+  }
+
+  .footer__copy a {
+    color: var(--md-sys-color-primary);
+    font-weight: 500;
+  }
+
+  .footer__copy a:hover {
+    text-decoration: underline;
+  }
+
+  @media (min-width: 768px) {
+    .footer__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer__copy {
+      margin-left: auto;
+    }
+  }
+</style>

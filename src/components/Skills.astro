@@ -1,0 +1,102 @@
+---
+import { skillGroups } from '../data/projects';
+---
+
+<section class="section skills" id="skills">
+  <div class="container">
+    <h2 class="section-title">Tech stack & tools</h2>
+    <p class="section-subtitle">
+      Languages, frameworks, and tools I reach for when building AI systems
+      and shipping them to the world.
+    </p>
+
+    <div class="skills__grid">
+      {skillGroups.map((group, idx) => (
+        <md-elevated-card class="skills__card" data-index={idx}>
+          <div class="skills__card-inner">
+            <div class="skills__card-header">
+              <span class="skills__card-num" aria-hidden="true">
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+              <h3 class="skills__card-title">{group.label}</h3>
+            </div>
+            <ul class="skills__chip-list">
+              {group.items.map((skill) => (
+                <li>
+                  <md-assist-chip label={skill}>{skill}</md-assist-chip>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </md-elevated-card>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills {
+    background: var(--md-sys-color-surface-container-low);
+  }
+
+  .skills__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+
+  .skills__card {
+    display: block;
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out);
+  }
+
+  .skills__card:hover {
+    transform: translateY(-4px);
+  }
+
+  .skills__card-inner {
+    padding: var(--space-6);
+  }
+
+  .skills__card-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px dashed var(--md-sys-color-outline-variant);
+  }
+
+  .skills__card-num {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .skills__card-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .skills__chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  @media (min-width: 768px) {
+    .skills__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+  }
+</style>

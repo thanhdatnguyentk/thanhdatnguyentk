@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thanhdatnguyentk.github.io/thanhdatnguyentk/sitemap-index.xml

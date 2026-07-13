@@ -1,0 +1,256 @@
+---
+import { stats } from '../data/projects';
+
+const codeSnippet = `<span class="code-key">class</span> <span class="code-cls">AIEngineer</span> {
+  <span class="code-key">constructor</span>() {
+    <span class="code-var">this</span>.name = <span class="code-str">'Nguyễn Thành Đạt'</span>;
+    <span class="code-var">this</span>.focus = [<span class="code-str">'ML'</span>, <span class="code-str">'NLP'</span>, <span class="code-str">'CV'</span>, <span class="code-str">'LLMs'</span>];
+    <span class="code-var">this</span>.school = <span class="code-str">'UIT - VNU-HCM'</span>;
+    <span class="code-var">this</span>.coffee = <span class="code-num">Infinity</span>;
+  }
+
+  <span class="code-fn">build</span>(idea) {
+    <span class="code-key">return</span> <span class="code-fn">train</span>(<span class="code-fn">deploy</span>(idea));
+  }
+}`;
+---
+
+<section class="hero" id="top">
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-blob ambient-blob--1"></div>
+    <div class="ambient-blob ambient-blob--2"></div>
+    <div class="ambient-blob ambient-blob--3"></div>
+  </div>
+
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <md-assist-chip class="hero__chip" label="Available for internships & collabs">
+        <span slot="icon" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="4" fill="currentColor"/>
+          </svg>
+        </span>
+        Available for internships & collabs
+      </md-assist-chip>
+
+      <h1 class="hero__title">
+        Hi, I'm <span class="hero__name">Nguyễn Thành Đạt</span>.<br />
+        An <span class="hero__accent">AI Engineer</span> in the making.
+      </h1>
+
+      <p class="hero__tagline">
+        Turning data into AI solutions. I build end-to-end ML pipelines — from
+        data preprocessing to scalable deployment — and I'm exploring BERT,
+        Transformers, T5, and RAG.
+      </p>
+
+      <div class="hero__actions">
+        <md-filled-button href="#projects" class="hero__btn-primary">
+          <span slot="icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 17l6-6-4-4"/>
+              <path d="M12 19h8"/>
+            </svg>
+          </span>
+          View Projects
+        </md-filled-button>
+        <md-outlined-button href="#contact">
+          <span slot="icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </span>
+          Contact
+        </md-outlined-button>
+      </div>
+
+      <ul class="hero__stats" aria-label="Quick stats">
+        {stats.map((s) => (
+          <li class="hero__stat">
+            <span class="hero__stat-value">{s.value}</span>
+            <span class="hero__stat-label">{s.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="hero__visual" aria-hidden="true">
+      <div class="hero__visual-card">
+        <div class="hero__visual-code">
+          <pre><code set:html={codeSnippet} /></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-top: var(--space-7);
+    padding-bottom: var(--space-9);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .hero__chip {
+    align-self: flex-start;
+    --md-assist-chip-container-shape: 9999px;
+    --md-assist-chip-label-text-color: var(--md-sys-color-on-primary-container);
+    --md-assist-chip-container-color: var(--md-sys-color-primary-container);
+  }
+
+  .hero__title {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .hero__name {
+    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero__accent {
+    color: var(--md-sys-color-tertiary);
+  }
+
+  .hero__tagline {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--md-sys-color-on-surface-variant);
+    max-width: 56ch;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .hero__btn-primary {
+    --md-filled-button-container-shape: 9999px;
+  }
+
+  .hero__btn-primary::part(button) {
+    padding-inline: var(--space-5);
+  }
+
+  md-outlined-button {
+    --md-outlined-button-container-shape: 9999px;
+  }
+
+  .hero__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .hero__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hero__stat-value {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero__stat-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .hero__visual {
+    display: none;
+  }
+
+  .hero__visual-card {
+    position: relative;
+    padding: var(--space-5);
+    background: var(--md-sys-color-surface-container-low);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--elevation-3);
+    overflow: hidden;
+  }
+
+  .hero__visual-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at top right,
+      color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent),
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  .hero__visual-code {
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--md-sys-color-on-surface);
+    overflow-x: auto;
+  }
+
+  .hero__visual-code pre {
+    margin: 0;
+  }
+
+  .code-key { color: var(--md-sys-color-tertiary); font-weight: 600; }
+  .code-cls { color: var(--md-sys-color-primary); }
+  .code-var { color: var(--md-sys-color-secondary); }
+  .code-str { color: #059669; }
+  .code-num { color: #d97706; }
+  .code-fn { color: var(--md-sys-color-primary); }
+
+  @media (min-width: 960px) {
+    .hero__inner {
+      grid-template-columns: 1.3fr 1fr;
+      gap: var(--space-8);
+    }
+
+    .hero__visual {
+      display: block;
+    }
+
+    .hero__stats {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

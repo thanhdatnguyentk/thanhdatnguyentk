@@ -1,0 +1,220 @@
+---
+const focusAreas = ['Machine Learning', 'NLP', 'Computer Vision', 'Large Language Models'];
+---
+
+<section class="section about" id="about">
+  <div class="container">
+    <h2 class="section-title">About me</h2>
+    <p class="section-subtitle">
+      A quick snapshot of who I am and what I'm focused on right now.
+    </p>
+
+    <div class="about__grid">
+      <md-elevated-card class="about__card about__bio">
+        <div class="about__bio-inner">
+          <p class="about__intro">
+            I'm a <strong>3rd-year IT student</strong> at the
+            <strong>University of Information Technology (UIT) — VNU-HCM</strong>,
+            deeply interested in Machine Learning, NLP, and AI System Deployment.
+          </p>
+
+          <p class="about__intro">
+            Currently exploring <strong>BERT, Transformers, T5, RAG</strong>, and
+            optimising model inference. I love building end-to-end AI pipelines —
+            from data preprocessing to scalable deployment — and I'm experimenting
+            with MLTK, BlazeFace, UltraFace, and custom AI model deployment.
+          </p>
+
+          <blockquote class="about__quote">
+            <span aria-hidden="true" class="about__quote-mark">“</span>
+            AI is not magic — it's just a lot of math, code, and coffee.
+          </blockquote>
+
+          <div class="about__goals">
+            <div class="about__goal">
+              <h3 class="about__goal-title">
+                <span class="about__goal-icon" aria-hidden="true">→</span>
+                Short-term
+              </h3>
+              <p>Build high-performance AI systems for production.</p>
+            </div>
+            <div class="about__goal">
+              <h3 class="about__goal-title">
+                <span class="about__goal-icon" aria-hidden="true">★</span>
+                Long-term
+              </h3>
+              <p>Lead AI-powered product development in real-world applications.</p>
+            </div>
+          </div>
+        </div>
+      </md-elevated-card>
+
+      <md-outlined-card class="about__card about__focus">
+        <div class="about__focus-inner">
+          <h3 class="about__focus-title">Currently focusing on</h3>
+          <ul class="about__focus-list">
+            {focusAreas.map((area) => (
+              <li class="about__focus-item">
+                <span class="about__focus-dot" aria-hidden="true"></span>
+                {area}
+              </li>
+            ))}
+          </ul>
+
+          <div class="about__learning">
+            <h3 class="about__focus-title">Currently learning</h3>
+            <div class="about__learning-chips">
+              <md-assist-chip label="BERT">BERT</md-assist-chip>
+              <md-assist-chip label="Transformers">Transformers</md-assist-chip>
+              <md-assist-chip label="T5">T5</md-assist-chip>
+              <md-assist-chip label="RAG">RAG</md-assist-chip>
+              <md-assist-chip label="BlazeFace">BlazeFace</md-assist-chip>
+              <md-assist-chip label="UltraFace">UltraFace</md-assist-chip>
+            </div>
+          </div>
+        </div>
+      </md-outlined-card>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+
+  .about__card {
+    display: block;
+  }
+
+  .about__bio-inner,
+  .about__focus-inner {
+    padding: var(--space-6);
+  }
+
+  .about__intro {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: var(--space-4);
+  }
+
+  .about__intro:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .about__intro strong {
+    color: var(--md-sys-color-primary);
+    font-weight: 600;
+  }
+
+  .about__quote {
+    position: relative;
+    margin: var(--space-6) 0;
+    padding: var(--space-5) var(--space-5) var(--space-5) var(--space-7);
+    background: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    border-radius: var(--radius-md);
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .about__quote-mark {
+    position: absolute;
+    left: var(--space-4);
+    top: var(--space-3);
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--md-sys-color-primary);
+  }
+
+  .about__goals {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+    padding-top: var(--space-5);
+    border-top: 1px dashed var(--md-sys-color-outline-variant);
+  }
+
+  .about__goal-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--md-sys-color-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .about__goal p {
+    font-size: 15px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 1.6;
+  }
+
+  .about__goal-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .about__focus-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: var(--space-4);
+  }
+
+  .about__focus-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .about__focus-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .about__focus-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+    flex-shrink: 0;
+  }
+
+  .about__learning-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  @media (min-width: 768px) {
+    .about__grid {
+      grid-template-columns: 1.4fr 1fr;
+      gap: var(--space-6);
+    }
+
+    .about__goals {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

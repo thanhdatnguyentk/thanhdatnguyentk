@@ -1,0 +1,111 @@
+---
+const links = [
+  { href: '#about', label: 'About' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<header class="nav">
+  <div class="nav__inner container">
+    <a href="#top" class="nav__brand" aria-label="Home">
+      <span class="nav__brand-mark" aria-hidden="true">td</span>
+      <span class="nav__brand-name">Nguyễn Thành Đạt</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      {links.map((link) => (
+        <a href={link.href} class="nav__link">{link.label}</a>
+      ))}
+    </nav>
+
+    <md-filled-tonal-button class="nav__cta" href="#contact">
+      <span slot="icon" aria-hidden="true">✉</span>
+      Hire me
+    </md-filled-tonal-button>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: var(--nav-height);
+    background: color-mix(in srgb, var(--md-sys-color-background) 80%, transparent);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .nav__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .nav__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--md-sys-color-on-background);
+  }
+
+  .nav__brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+    color: var(--md-sys-color-on-primary);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+  }
+
+  .nav__brand-name {
+    display: none;
+  }
+
+  .nav__links {
+    display: none;
+    gap: var(--space-2);
+  }
+
+  .nav__link {
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
+    transition: background var(--duration-fast) var(--ease-out),
+                color var(--duration-fast) var(--ease-out);
+  }
+
+  .nav__link:hover,
+  .nav__link:focus-visible {
+    background: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+  }
+
+  .nav__cta {
+    --md-filled-tonal-button-container-shape: 9999px;
+  }
+
+  @media (min-width: 768px) {
+    .nav__brand-name {
+      display: inline;
+    }
+    .nav__links {
+      display: flex;
+    }
+  }
+</style>

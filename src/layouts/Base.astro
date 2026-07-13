@@ -1,0 +1,107 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Nguyễn Thành Đạt — AI Engineer in training. Portfolio showcasing ML, NLP, and computer vision projects.',
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString() ?? 'https://thanhdatnguyentk.github.io/thanhdatnguyentk/';
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? siteUrl).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#7c3aed" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts: Space Grotesk (display) + DM Sans (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Nguyễn Thành Đạt',
+      jobTitle: 'AI Engineer in Training',
+      url: canonicalURL,
+      sameAs: [
+        'https://github.com/thanhdatnguyentk',
+      ],
+      knowsAbout: [
+        'Machine Learning',
+        'Natural Language Processing',
+        'Computer Vision',
+        'Large Language Models',
+      ],
+      alumniOf: {
+        '@type': 'CollegeOrUniversity',
+        name: 'University of Information Technology - VNU-HCM',
+      },
+    })} />
+  </head>
+
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <slot />
+
+    <!-- Material Web Components — individual imports for tree-shaking -->
+    <script>
+      import '@material/web/button/filled-button.js';
+      import '@material/web/button/filled-tonal-button.js';
+      import '@material/web/button/outlined-button.js';
+      import '@material/web/button/text-button.js';
+      import '@material/web/iconbutton/icon-button.js';
+      import '@material/web/chips/assist-chip.js';
+      import '@material/web/labs/card/elevated-card.js';
+      import '@material/web/labs/card/outlined-card.js';
+
+      // Smooth-scroll for in-page anchors (Material Web Buttons use href for navigation)
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const anchor = target.closest('a[href^="#"]') as HTMLAnchorElement | null;
+        if (!anchor) return;
+        const href = anchor.getAttribute('href');
+        if (!href || href === '#') return;
+        const el = document.querySelector(href);
+        if (!el) return;
+        e.preventDefault();
+        const offset = 80;
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    </script>
+  </body>
+</html>
