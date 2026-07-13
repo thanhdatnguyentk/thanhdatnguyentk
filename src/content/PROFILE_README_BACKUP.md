@@ -1,26 +1,3 @@
-<!--
-  BACKUP OF OLD GITHUB PROFILE README
-  ──────────────────────────────────────────────────────────────────
-  Captured: 2026-07-13 from github.com/thanhdatnguyentk/thanhdatnguyentk
-  via: git fetch origin main && git show origin/main:README.md
-
-  Purpose: preserves the original profile-card content (typing SVG,
-  badge stack, stats images) so it can be restored verbatim if you ever
-  want to revert the repo from "Astro portfolio" back to "GitHub
-  profile README".
-
-  Restoring:
-    cd /home/huy/portfolio
-    cp src/content/PROFILE_README_BACKUP.md README.md
-    git add README.md
-    git commit -m "Restore old profile README"
-    git push -u origin main --force
-
-  Note: this repo is now an Astro site. If you restore this README at
-  the repo root, the GitHub Pages site (built from src/pages/index.astro)
-  will stop working — the two cannot coexist. To keep both, see
-  README.md in this folder's parent for the dual-config pattern.
--->
 
 <div align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&pause=1000&color=0EA5E9&center=true&vCenter=true&width=600&lines=Hi,+I'm+Nguy%E1%BB%85n+Th%C3%A0nh+%C4%90%E1%BA%A1t+!+%F0%9F%91%8B;AI+Engineer+in+the+making+%F0%9F%9A%80;Turning+data+into+AI+solutions+%E2%9A%99%EF%B8%8F" alt="Typing SVG" />

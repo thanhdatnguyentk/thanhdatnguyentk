@@ -1,0 +1,112 @@
+---
+// Portfolio site link card — surfaced at top of page so visitors can
+// jump directly to the deployed portfolio, and to remind them which
+// URL they're currently browsing.
+
+const portfolioUrl = 'https://thanhdatnguyentk.github.io/thanhdatnguyentk/';
+---
+
+<aside class="plink" aria-label="Live portfolio link">
+  <div class="container plink__inner">
+    <div class="plink__icon" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+    </div>
+
+    <div class="plink__body">
+      <p class="plink__label">Live portfolio</p>
+      <a
+        href={portfolioUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="plink__url"
+      >
+        thanhdatnguyentk.github.io/thanhdatnguyentk
+      </a>
+    </div>
+
+    <md-filled-tonal-button href={portfolioUrl} target="_blank" rel="noopener noreferrer" class="plink__btn">
+      <span slot="icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </span>
+      Open site
+    </md-filled-tonal-button>
+  </div>
+</aside>
+
+<style>
+  .plink {
+    background: linear-gradient(
+      135deg,
+      var(--md-sys-color-primary-container) 0%,
+      var(--md-sys-color-tertiary-container) 100%
+    );
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .plink__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+  }
+
+  .plink__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    flex-shrink: 0;
+  }
+
+  .plink__body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .plink__label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--md-sys-color-on-primary-container);
+    opacity: 0.75;
+    margin: 0;
+  }
+
+  .plink__url {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-primary-container);
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .plink__url:hover {
+    text-decoration: underline;
+  }
+
+  .plink__btn {
+    --md-filled-tonal-button-container-shape: 9999px;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    .plink__inner {
+      gap: var(--space-4);
+    }
+  }
+</style>
