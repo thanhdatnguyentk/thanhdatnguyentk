@@ -1,95 +1,78 @@
-# Nguyễn Thành Đạt — Portfolio
+<div align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&pause=1000&color=0EA5E9&center=true&vCenter=true&width=600&lines=Hi,+I'm+Nguy%E1%BB%85n+Th%C3%A0nh+%C4%90%E1%BA%A1t+!+%F0%9F%91%8B;AI+Engineer+in+the+making+%F0%9F%9A%80;Turning+data+into+AI+solutions+%E2%9A%99%EF%B8%8F" alt="Typing SVG" />
+  
+  <p>
+    <em>🎯 <b>Focus:</b> Machine Learning | NLP | Computer Vision | Large Language Models</em>
+  </p>
+  
+  <p>
+    <a href="mailto:23520261@gm.uit.edu.vn">
+      <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail" />
+    </a>
+    <a href="https://github.com/thanhdatnguyentk">
+      <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+    </a>
+    </p>
+</div>
 
-Personal portfolio website. Built with [Astro](https://astro.build/) +
-[Material Web Components](https://material-web.dev/), themed using the
-[ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
-design system.
+---
 
-**Live:** https://thanhdatnguyentk.github.io/thanhdatnguyentk/
+## 🧠 About Me  
+- 🎓 3rd-year IT student at **[University of Information Technology (UIT) - VNU-HCM](https://www.uit.edu.vn/)**.
+- 🤖 Deeply interested in **Machine Learning**, **Natural Language Processing**, and **AI System Deployment**.
+- 🔍 Exploring **BERT, Transformers, T5, RAG**, and optimizing model inference.
+- ⚡ Love building **end-to-end AI pipelines** — from data preprocessing to scalable deployment.
+- 🏗 Currently experimenting with **MLTK, BlazeFace, UltraFace**, and **custom AI model deployment**.
 
-## Stack
+---
 
-- **Astro 4** — Static site generator
-- **@material/web 2.x** — Material Design 3 web components (no JS framework)
-- **ui-ux-pro-max** — Design system (color, typography, spacing tokens)
-- **No build-time JS framework** — content-first, ship only what interacts
+## 💻 Featured Projects
+*Here are some of the cool things I've been working on:*
+- 💬 **[RAG_film_chatbot](https://github.com/thanhdatnguyentk/RAG_film_chatbot)**: My journey to learn NLP, an AI chatbot for films using Retrieval-Augmented Generation (RAG).
+- ☕ **[JavaTorch](https://github.com/thanhdatnguyentk/JavaTorch)**: Implementing PyTorch deep learning concepts natively in Java.
+- 🌌 **[Milky-Way-Simulation](https://github.com/thanhdatnguyentk/Milky-Way-Simulation-C-CUDA-)**: High-performance physical simulation of the Milky Way using C and CUDA.
+- 🚦 **[Traffic-Monitoring](https://github.com/thanhdatnguyentk/Traffic-Monitoring-Realtime-System)**: Real-time traffic analysis and tracking system using Computer Vision.
 
-## Project structure
+---
 
-```
-portfolio/
-├── astro.config.mjs          # site + base path
-├── design-system/            # Persisted design tokens (MASTER + pages/)
-├── public/                   # static assets (favicon, robots)
-├── src/
-│   ├── components/           # Nav, Hero, About, Skills, Projects, Contact, Footer
-│   ├── data/projects.ts      # typed project data
-│   ├── layouts/Base.astro    # global head, fonts, MD component imports
-│   ├── pages/index.astro     # composes all sections
-│   └── styles/global.css     # design tokens, reset, utilities
-└── .github/workflows/deploy.yml
-```
+## 🛠 Tech Stack  
 
-## Local development
+<div align="center">
 
-```bash
-npm install
-npm run dev      # http://localhost:4321/thanhdatnguyentk
-npm run build    # → dist/
-npm run preview  # serve dist/
-```
+**Languages** <br>
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
-## Deploy to GitHub Pages
+**AI / ML Frameworks** <br>
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)  
+![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)  
+![Hugging Face](https://img.shields.io/badge/HuggingFace-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)
+![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white)
 
-This repo is intended to live at `github.com/thanhdatnguyentk/thanhdatnguyentk`
-(the user's profile README repo). Workflow `.github/workflows/deploy.yml` runs
-on every push to `main`.
+**Tools & Platforms** <br>
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)  
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![CUDA](https://img.shields.io/badge/CUDA-76B900?style=for-the-badge&logo=nvidia&logoColor=white)
 
-### One-time setup
+</div>
 
-1. Push to a fresh/clean repo (or back up the existing profile README first):
-   ```bash
-   git init
-   git remote add origin git@github.com:thanhdatnguyentk/thanhdatnguyentk.git
-   ```
+---
 
-2. In GitHub repo settings → **Pages** → Source = **GitHub Actions**.
+## 📈 GitHub Stats  
 
-3. Push to `main`:
-   ```bash
-   git add -A
-   git commit -m "Initial portfolio site"
-   git push -u origin main
-   ```
+<div align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=thanhdatnguyentk&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0f172a" height="165" alt="GitHub Stats" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=thanhdatnguyentk&layout=compact&theme=tokyonight&hide_border=true&bg_color=0f172a" height="165" alt="Top Languages" />
+  <br/><br/>
+  <img src="https://v0-git-hub-streak-score-card-phi.vercel.app/api/card-with-avatar?username=thanhdatnguyentk&theme=%7B%22backgroundColor%22%3A%22%230f172a%22%2C%22textColor%22%3A%22%23e2e8f0%22%2C%22accentColor%22%3A%22%230ea5e9%22%2C%22borderColor%22%3A%22%231e293b%22%2C%22waterColor%22%3A%22%230ea5e9%22%2C%22streakColor%22%3A%22%2306b6d4%22%7D" alt="GitHub Streak" />
+</div>
 
-The workflow will build with Astro (`base: '/thanhdatnguyentk'`) and deploy
-to https://thanhdatnguyentk.github.io/thanhdatnguyentk/.
+---
 
-### Keeping the GitHub profile README
+## 🌱 Learning Journey  
+> *"AI is not magic — it's just a lot of math, code, and coffee."* ☕  
 
-If you want to keep the classic GitHub profile README at `github.com/thanhdatnguyentk/thanhdatnguyentk`,
-move it into `src/content/profile.md` (or any folder Astro doesn't render)
-and reference it from a hidden path — Astro builds only `src/pages/`.
-
-## Design system
-
-Color palette, typography, spacing scale, motion tokens, and anti-patterns
-are persisted under `design-system/`:
-- `MASTER.md` — global source of truth
-- `pages/home.md` — page-specific overrides
-
-To regenerate:
-```bash
-python3 ~/.claude/skills/ui-ux-pro-max/scripts/search.py \
-  "developer portfolio tech ML AI engineer" \
-  --design-system --persist \
-  -p "thanhdatnguyentk-portfolio"
-```
-
-## Credits
-
-- Design intelligence: [ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
-- Components: [Material Web Components](https://material-web.dev/)
-- Framework: [Astro](https://astro.build/)
-
-© Nguyễn Thành Đạt. MIT.
+- 🚀 **Short-term Goal:** Build high-performance AI systems for production.  
+- 🌟 **Long-term Vision:** Lead AI-powered product development in real-world applications.
