@@ -1,78 +1,79 @@
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=26&pause=1000&color=0EA5E9&center=true&vCenter=true&width=600&lines=Hi,+I'm+Nguy%E1%BB%85n+Th%C3%A0nh+%C4%90%E1%BA%A1t+!+%F0%9F%91%8B;AI+Engineer+in+the+making+%F0%9F%9A%80;Turning+data+into+AI+solutions+%E2%9A%99%EF%B8%8F" alt="Typing SVG" />
-  
-  <p>
-    <em>🎯 <b>Focus:</b> Machine Learning | NLP | Computer Vision | Large Language Models</em>
-  </p>
-  
-  <p>
-    <a href="mailto:23520261@gm.uit.edu.vn">
-      <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail" />
-    </a>
-    <a href="https://github.com/thanhdatnguyentk">
-      <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
-    </a>
-    </p>
+
+# Nguyễn Thành Đạt
+
+### AI Engineer in Training · UIT — VNU-HCM
+
+<br />
+
+<a href="https://thanhdatnguyentk.github.io/thanhdatnguyentk/">
+  <img src="https://img.shields.io/badge/🚀_Portfolio-Live-7C3AED?style=for-the-badge&logoColor=white" alt="Portfolio" />
+</a>
+<a href="mailto:23520261@gm.uit.edu.vn">
+  <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
+</a>
+<a href="https://github.com/thanhdatnguyentk">
+  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+</a>
+
+<br />
+<br />
+
+> _"AI is not magic — it's just a lot of math, code, and coffee."_ ☕
+
 </div>
 
 ---
 
-## 🧠 About Me  
-- 🎓 3rd-year IT student at **[University of Information Technology (UIT) - VNU-HCM](https://www.uit.edu.vn/)**.
-- 🤖 Deeply interested in **Machine Learning**, **Natural Language Processing**, and **AI System Deployment**.
-- 🔍 Exploring **BERT, Transformers, T5, RAG**, and optimizing model inference.
-- ⚡ Love building **end-to-end AI pipelines** — from data preprocessing to scalable deployment.
-- 🏗 Currently experimenting with **MLTK, BlazeFace, UltraFace**, and **custom AI model deployment**.
+## 👋 Hi there
+
+I'm a **3rd-year IT student** at [University of Information Technology (UIT) — VNU-HCM](https://www.uit.edu.vn/), building end-to-end AI systems and exploring the frontiers of **Machine Learning**, **NLP**, **Computer Vision**, and **Large Language Models**.
+
+This repository hosts the source for my personal portfolio site. It's built with **Astro** + **Material Web Components**, themed via the [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) design system, and deployed automatically to GitHub Pages.
+
+### 🌐 **[Visit the live portfolio →](https://thanhdatnguyentk.github.io/thanhdatnguyentk/)**
 
 ---
 
-## 💻 Featured Projects
-*Here are some of the cool things I've been working on:*
-- 💬 **[RAG_film_chatbot](https://github.com/thanhdatnguyentk/RAG_film_chatbot)**: My journey to learn NLP, an AI chatbot for films using Retrieval-Augmented Generation (RAG).
-- ☕ **[JavaTorch](https://github.com/thanhdatnguyentk/JavaTorch)**: Implementing PyTorch deep learning concepts natively in Java.
-- 🌌 **[Milky-Way-Simulation](https://github.com/thanhdatnguyentk/Milky-Way-Simulation-C-CUDA-)**: High-performance physical simulation of the Milky Way using C and CUDA.
-- 🚦 **[Traffic-Monitoring](https://github.com/thanhdatnguyentk/Traffic-Monitoring-Realtime-System)**: Real-time traffic analysis and tracking system using Computer Vision.
+## ✨ Featured projects
+
+| Project | Stack | Description |
+|---------|-------|-------------|
+| ☕ **[JavaTorch](https://github.com/thanhdatnguyentk/JavaTorch)** | Java 21, JCuda, cuDNN | PyTorch-like deep learning framework in pure Java, with GPU acceleration via custom CUDA kernels. 4 ⭐ |
+| 💬 **[RAG Film Chatbot](https://github.com/thanhdatnguyentk/RAG_film_chatbot)** | Python, HF, Vector DB | Retrieval-Augmented Generation chatbot for film Q&A — my journey to learn NLP. |
+| 🚦 **[Traffic Monitoring](https://github.com/thanhdatnguyentk/Traffic-Monitoring-Realtime-System)** | YOLOv8, FastAPI, React | Real-time vehicle detection & analytics dashboard. |
+| 📊 **[UIT_PINANCE](https://github.com/thanhdatnguyentk/UIT_PINANCE)** | Flask, PostgreSQL | Stock trading simulator with portfolio tracking & reports. |
+| 🌌 **[Milky Way Simulation](https://github.com/thanhdatnguyentk/Milky-Way-Simulation-C-CUDA-)** | C, CUDA | N-body gravitational simulation of the galaxy on GPU. |
 
 ---
 
-## 🛠 Tech Stack  
+## 🛠 Tech stack
+
+**Languages** — Python · Java · C++ · JavaScript
+
+**AI / ML** — PyTorch · TensorFlow · Hugging Face · OpenCV · CUDA
+
+**Web & Tools** — React · FastAPI · Flask · Astro · Docker · Git · PostgreSQL
+
+---
+
+## 🎯 Goals
+
+- **Short-term:** Build high-performance AI systems for production.
+- **Long-term:** Lead AI-powered product development in real-world applications.
+
+---
+
+## 📚 Documentation
+
+- **[BUILD.md](./BUILD.md)** — Install, run, and deploy the portfolio site locally.
+- **[design-system/](./design-system/)** — Persisted design tokens from ui-ux-pro-max.
+- **[src/content/PROFILE_README_BACKUP.md](./src/content/PROFILE_README_BACKUP.md)** — Backup of the previous profile-card README (in case you want to restore it).
+
+---
 
 <div align="center">
 
-**Languages** <br>
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-
-**AI / ML Frameworks** <br>
-![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)  
-![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)  
-![Hugging Face](https://img.shields.io/badge/HuggingFace-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)
-![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white)
-
-**Tools & Platforms** <br>
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)  
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![CUDA](https://img.shields.io/badge/CUDA-76B900?style=for-the-badge&logo=nvidia&logoColor=white)
+<sub>© 2026 Nguyễn Thành Đạt · Built with [Astro](https://astro.build) + [Material Web](https://material-web.dev) · MIT License</sub>
 
 </div>
-
----
-
-## 📈 GitHub Stats  
-
-<div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=thanhdatnguyentk&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0f172a" height="165" alt="GitHub Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=thanhdatnguyentk&layout=compact&theme=tokyonight&hide_border=true&bg_color=0f172a" height="165" alt="Top Languages" />
-  <br/><br/>
-  <img src="https://v0-git-hub-streak-score-card-phi.vercel.app/api/card-with-avatar?username=thanhdatnguyentk&theme=%7B%22backgroundColor%22%3A%22%230f172a%22%2C%22textColor%22%3A%22%23e2e8f0%22%2C%22accentColor%22%3A%22%230ea5e9%22%2C%22borderColor%22%3A%22%231e293b%22%2C%22waterColor%22%3A%22%230ea5e9%22%2C%22streakColor%22%3A%22%2306b6d4%22%7D" alt="GitHub Streak" />
-</div>
-
----
-
-## 🌱 Learning Journey  
-> *"AI is not magic — it's just a lot of math, code, and coffee."* ☕  
-
-- 🚀 **Short-term Goal:** Build high-performance AI systems for production.  
-- 🌟 **Long-term Vision:** Lead AI-powered product development in real-world applications.
