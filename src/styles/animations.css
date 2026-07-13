@@ -1,0 +1,241 @@
+/* ============================================
+   Animation Library — Bold & Playful
+   Portfolio: thanhdatnguyentk
+   ============================================ */
+
+/* === Reusable keyframes === */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-down {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-left {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fade-in-right {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes blur-in {
+  from { opacity: 0; filter: blur(12px); transform: scale(0.95); }
+  to   { opacity: 1; filter: blur(0); transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.5); }
+  70%  { box-shadow: 0 0 0 16px rgba(124, 58, 237, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50%      { transform: translateY(-12px) rotate(2deg); }
+}
+
+/* === Scroll-reveal base === */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays (apply via inline `style="--reveal-delay: 100ms"` or class) */
+.reveal[data-delay="0"]   { transition-delay: 0ms; }
+.reveal[data-delay="1"]   { transition-delay: 100ms; }
+.reveal[data-delay="2"]   { transition-delay: 200ms; }
+.reveal[data-delay="3"]   { transition-delay: 300ms; }
+.reveal[data-delay="4"]   { transition-delay: 400ms; }
+.reveal[data-delay="5"]   { transition-delay: 500ms; }
+.reveal[data-delay="6"]   { transition-delay: 600ms; }
+.reveal[data-delay="7"]   { transition-delay: 700ms; }
+.reveal[data-delay="8"]   { transition-delay: 800ms; }
+
+/* Variant: slide from left/right */
+.reveal--left  { transform: translateX(-40px); }
+.reveal--right { transform: translateX(40px); }
+.reveal--left.is-visible,
+.reveal--right.is-visible {
+  transform: translateX(0);
+}
+
+/* Variant: scale + blur */
+.reveal--pop { transform: scale(0.85); filter: blur(8px); }
+.reveal--pop.is-visible { transform: scale(1); filter: blur(0); }
+
+/* === Magnetic button === */
+.magnetic {
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* === 3D tilt card === */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.tilt-card__glare {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, 0.25),
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+.tilt-card:hover .tilt-card__glare {
+  opacity: 1;
+}
+
+/* === Gradient shimmer border === */
+.shimmer-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.shimmer-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    #7c3aed 0%,
+    #ec4899 25%,
+    #6366f1 50%,
+    #ec4899 75%,
+    #7c3aed 100%
+  );
+  background-size: 300% 300%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: gradient-shift 6s ease infinite;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+  z-index: -1;
+}
+
+.shimmer-border:hover::before {
+  opacity: 1;
+}
+
+/* === Parallax blob === */
+.parallax-blob {
+  will-change: transform;
+}
+
+/* === Page-load intro === */
+.intro-fade {
+  animation: fade-in-up 1000ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.intro-fade--delay-1 { animation-delay: 100ms; }
+.intro-fade--delay-2 { animation-delay: 250ms; }
+.intro-fade--delay-3 { animation-delay: 400ms; }
+.intro-fade--delay-4 { animation-delay: 550ms; }
+.intro-fade--delay-5 { animation-delay: 700ms; }
+
+/* === Cursor follower === */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 200ms ease-out, transform 100ms ease-out, width 200ms ease-out, height 200ms ease-out;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot.is-active {
+  opacity: 1;
+}
+
+.cursor-dot.is-hover {
+  width: 36px;
+  height: 36px;
+  background: rgba(124, 58, 237, 0.3);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot {
+    display: none;
+  }
+}
+
+/* === Pulse ring on status indicators === */
+.pulse {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* === Text scramble target (set via JS) === */
+.scramble-text {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+/* === Reduced motion override === */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal--left,
+  .reveal--right,
+  .reveal--pop,
+  .magnetic,
+  .tilt-card {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .tilt-card__glare { display: none; }
+  .shimmer-border::before { display: none; }
+  .pulse { animation: none; }
+}

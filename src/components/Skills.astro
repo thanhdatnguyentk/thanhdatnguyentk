@@ -4,15 +4,16 @@ import { skillGroups } from '../data/projects';
 
 <section class="section skills" id="skills">
   <div class="container">
-    <h2 class="section-title">Tech stack & tools</h2>
-    <p class="section-subtitle">
+    <h2 class="section-title reveal">Tech stack & tools</h2>
+    <p class="section-subtitle reveal" data-delay="1">
       Languages, frameworks, and tools I reach for when building AI systems
       and shipping them to the world.
     </p>
 
     <div class="skills__grid">
       {skillGroups.map((group, idx) => (
-        <md-elevated-card class="skills__card" data-index={idx}>
+        <md-elevated-card class="skills__card tilt-card reveal reveal--pop" data-delay={idx + 2}>
+          <div class="tilt-card__glare" aria-hidden="true"></div>
           <div class="skills__card-inner">
             <div class="skills__card-header">
               <span class="skills__card-num" aria-hidden="true">
@@ -21,8 +22,8 @@ import { skillGroups } from '../data/projects';
               <h3 class="skills__card-title">{group.label}</h3>
             </div>
             <ul class="skills__chip-list">
-              {group.items.map((skill) => (
-                <li>
+              {group.items.map((skill, j) => (
+                <li class="reveal" data-delay={idx * 2 + j + 3}>
                   <md-assist-chip label={skill}>{skill}</md-assist-chip>
                 </li>
               ))}

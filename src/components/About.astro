@@ -4,13 +4,13 @@ const focusAreas = ['Machine Learning', 'NLP', 'Computer Vision', 'Large Languag
 
 <section class="section about" id="about">
   <div class="container">
-    <h2 class="section-title">About me</h2>
-    <p class="section-subtitle">
+    <h2 class="section-title reveal">About me</h2>
+    <p class="section-subtitle reveal" data-delay="1">
       A quick snapshot of who I am and what I'm focused on right now.
     </p>
 
     <div class="about__grid">
-      <md-elevated-card class="about__card about__bio">
+      <md-elevated-card class="about__card about__bio reveal reveal--left" data-delay="2">
         <div class="about__bio-inner">
           <p class="about__intro">
             I'm a <strong>3rd-year IT student</strong> at the
@@ -49,12 +49,12 @@ const focusAreas = ['Machine Learning', 'NLP', 'Computer Vision', 'Large Languag
         </div>
       </md-elevated-card>
 
-      <md-outlined-card class="about__card about__focus">
+      <md-outlined-card class="about__card about__focus reveal reveal--right" data-delay="3">
         <div class="about__focus-inner">
           <h3 class="about__focus-title">Currently focusing on</h3>
           <ul class="about__focus-list">
-            {focusAreas.map((area) => (
-              <li class="about__focus-item">
+            {focusAreas.map((area, i) => (
+              <li class="about__focus-item reveal" data-delay={3 + i}>
                 <span class="about__focus-dot" aria-hidden="true"></span>
                 {area}
               </li>
@@ -64,12 +64,12 @@ const focusAreas = ['Machine Learning', 'NLP', 'Computer Vision', 'Large Languag
           <div class="about__learning">
             <h3 class="about__focus-title">Currently learning</h3>
             <div class="about__learning-chips">
-              <md-assist-chip label="BERT">BERT</md-assist-chip>
-              <md-assist-chip label="Transformers">Transformers</md-assist-chip>
-              <md-assist-chip label="T5">T5</md-assist-chip>
-              <md-assist-chip label="RAG">RAG</md-assist-chip>
-              <md-assist-chip label="BlazeFace">BlazeFace</md-assist-chip>
-              <md-assist-chip label="UltraFace">UltraFace</md-assist-chip>
+              <md-assist-chip label="BERT" class="reveal" data-delay="4">BERT</md-assist-chip>
+              <md-assist-chip label="Transformers" class="reveal" data-delay="4">Transformers</md-assist-chip>
+              <md-assist-chip label="T5" class="reveal" data-delay="5">T5</md-assist-chip>
+              <md-assist-chip label="RAG" class="reveal" data-delay="5">RAG</md-assist-chip>
+              <md-assist-chip label="BlazeFace" class="reveal" data-delay="6">BlazeFace</md-assist-chip>
+              <md-assist-chip label="UltraFace" class="reveal" data-delay="6">UltraFace</md-assist-chip>
             </div>
           </div>
         </div>

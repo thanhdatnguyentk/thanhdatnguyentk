@@ -30,24 +30,22 @@ const typingFallbackPhrases = [
 
 <section class="hero" id="top">
   <div class="ambient-bg" aria-hidden="true">
-    <div class="ambient-blob ambient-blob--1"></div>
-    <div class="ambient-blob ambient-blob--2"></div>
-    <div class="ambient-blob ambient-blob--3"></div>
+    <div class="ambient-blob ambient-blob--1 parallax-blob"></div>
+    <div class="ambient-blob ambient-blob--2 parallax-blob"></div>
+    <div class="ambient-blob ambient-blob--3 parallax-blob"></div>
   </div>
 
   <div class="container hero__inner">
     <div class="hero__content">
-      <md-assist-chip class="hero__chip" label="Available for internships & collabs">
+      <md-assist-chip class="hero__chip intro-fade" label="Available for internships & collabs">
         <span slot="icon" aria-hidden="true">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <circle cx="7" cy="7" r="4" fill="currentColor"/>
-          </svg>
+          <span class="pulse-dot" aria-hidden="true"></span>
         </span>
         Available for internships & collabs
       </md-assist-chip>
 
       <!-- Animated typing tagline — primary source: readme-typing-svg service -->
-      <div class="hero__typing" role="img" aria-label="Rotating tagline: Hi I'm Nguyễn Thành Đạt, AI Engineer in the making, Turning data into AI solutions">
+      <div class="hero__typing intro-fade intro-fade--delay-1" role="img" aria-label="Rotating tagline: Hi I'm Nguyễn Thành Đạt, AI Engineer in the making, Turning data into AI solutions">
         <img
           src={typingSvgUrl}
           alt=""
@@ -63,42 +61,19 @@ const typingFallbackPhrases = [
         </div>
       </div>
 
-      <h1 class="hero__title">
-        Hi, I'm <span class="hero__name">Nguyễn Thành Đạt</span>.<br />
-        An <span class="hero__accent">AI Engineer</span> in the making.
+      <h1 class="hero__title intro-fade intro-fade--delay-2">
+        Hi, I'm <span class="hero__name" data-scramble="Nguyễn Thành Đạt">Nguyễn Thành Đạt</span>.<br />
+        An <span class="hero__accent" data-scramble="AI Engineer">AI Engineer</span> in the making.
       </h1>
 
-<section class="hero" id="top">
-  <div class="ambient-bg" aria-hidden="true">
-    <div class="ambient-blob ambient-blob--1"></div>
-    <div class="ambient-blob ambient-blob--2"></div>
-    <div class="ambient-blob ambient-blob--3"></div>
-  </div>
-
-  <div class="container hero__inner">
-    <div class="hero__content">
-      <md-assist-chip class="hero__chip" label="Available for internships & collabs">
-        <span slot="icon" aria-hidden="true">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <circle cx="7" cy="7" r="4" fill="currentColor"/>
-          </svg>
-        </span>
-        Available for internships & collabs
-      </md-assist-chip>
-
-      <h1 class="hero__title">
-        Hi, I'm <span class="hero__name">Nguyễn Thành Đạt</span>.<br />
-        An <span class="hero__accent">AI Engineer</span> in the making.
-      </h1>
-
-      <p class="hero__tagline">
+      <p class="hero__tagline intro-fade intro-fade--delay-3">
         Turning data into AI solutions. I build end-to-end ML pipelines — from
         data preprocessing to scalable deployment — and I'm exploring BERT,
         Transformers, T5, and RAG.
       </p>
 
-      <div class="hero__actions">
-        <md-filled-button href="#projects" class="hero__btn-primary">
+      <div class="hero__actions intro-fade intro-fade--delay-4">
+        <md-filled-button href="#projects" class="hero__btn-primary magnetic">
           <span slot="icon" aria-hidden="true">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 17l6-6-4-4"/>
@@ -107,7 +82,7 @@ const typingFallbackPhrases = [
           </span>
           View Projects
         </md-filled-button>
-        <md-outlined-button href="#contact">
+        <md-outlined-button href="#contact" class="magnetic">
           <span slot="icon" aria-hidden="true">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -118,18 +93,25 @@ const typingFallbackPhrases = [
         </md-outlined-button>
       </div>
 
-      <ul class="hero__stats" aria-label="Quick stats">
+      <ul class="hero__stats intro-fade intro-fade--delay-5" aria-label="Quick stats">
         {stats.map((s) => (
           <li class="hero__stat">
-            <span class="hero__stat-value">{s.value}</span>
+            <span class="hero__stat-value">
+              {typeof s.value === 'string' && /^\d+$/.test(s.value) ? (
+                <span data-counter={s.value} data-counter-target={s.value}>0</span>
+              ) : (
+                s.value
+              )}
+            </span>
             <span class="hero__stat-label">{s.label}</span>
           </li>
         ))}
       </ul>
     </div>
 
-    <div class="hero__visual" aria-hidden="true">
-      <div class="hero__visual-card">
+    <div class="hero__visual intro-fade intro-fade--delay-3" aria-hidden="true">
+      <div class="hero__visual-card tilt-card shimmer-border">
+        <div class="tilt-card__glare" aria-hidden="true"></div>
         <div class="hero__visual-code">
           <pre><code set:html={codeSnippet} /></pre>
         </div>
@@ -205,6 +187,17 @@ const typingFallbackPhrases = [
 
   .hero__typing-cursor {
     display: none; /* cursor handled by border-right of typing-text */
+  }
+
+  /* Pulse dot replacing the green status circle in chip */
+  .pulse-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #10b981;
+    position: relative;
+    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
   @keyframes typing-rotate {

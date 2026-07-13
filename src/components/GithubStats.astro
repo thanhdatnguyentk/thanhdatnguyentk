@@ -119,8 +119,8 @@ const langBarsSvg = stats
 
 <section class="section ghstats" id="github-stats">
   <div class="container">
-    <h2 class="section-title">GitHub activity</h2>
-    <p class="section-subtitle">
+    <h2 class="section-title reveal">GitHub activity</h2>
+    <p class="section-subtitle reveal" data-delay="1">
       Real-time stats from my
       <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer" class="ghstats__profile-link">
         GitHub profile
@@ -130,7 +130,7 @@ const langBarsSvg = stats
     {stats ? (
       <div class="ghstats__grid">
         <!-- Overview card: avatar + key numbers -->
-        <md-elevated-card class="ghstats__card">
+        <md-elevated-card class="ghstats__card reveal reveal--left" data-delay="2">
           <div class="ghstats__card-inner">
             <div class="ghstats__profile">
               <img
@@ -169,14 +169,14 @@ const langBarsSvg = stats
         </md-elevated-card>
 
         <!-- Languages card: SVG bar chart -->
-        <md-outlined-card class="ghstats__card">
+        <md-outlined-card class="ghstats__card reveal reveal--right" data-delay="3">
           <div class="ghstats__card-inner ghstats__lang-card">
             <div class="ghstats__lang-svg" set:html={langBarsSvg}></div>
           </div>
         </md-outlined-card>
 
         <!-- Activity callout -->
-        <md-elevated-card class="ghstats__card ghstats__card--wide">
+        <md-elevated-card class="ghstats__card ghstats__card--wide reveal" data-delay="4">
           <div class="ghstats__card-inner ghstats__cta">
             <div>
               <h3 class="ghstats__cta-title">Want the full picture?</h3>
