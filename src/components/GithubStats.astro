@@ -1,9 +1,120 @@
 ---
-// GitHub Stats section — preserves badges from the original GitHub profile README
-const githubUsername = 'thanhdatnguyentk';
-const statsCardUrl = `https://github-readme-stats.vercel.app/api?username=${githubUsername}&show_icons=true&theme=radical&hide_border=true&count_private=true`;
-const topLangsUrl = `https://github-readme-stats.vercel.app/api/top-langs/?username=${githubUsername}&layout=compact&theme=radical&hide_border=true`;
-const streakUrl = `https://github-readme-streak-stats.demolab.com?user=${githubUsername}&theme=radical&hide_border=true`;
+// GitHub Stats section — uses GitHub REST API at build time (no third-party service)
+// All data baked into HTML/SVG at build → resilient, fast, offline-friendly.
+
+interface Repo {
+  name: string;
+  stargazers_count: number;
+  language: string | null;
+  forks_count: number;
+}
+
+interface UserStats {
+  login: string;
+  name: string;
+  avatar_url: string;
+  public_repos: number;
+  followers: number;
+  following: number;
+  total_stars: number;
+  top_languages: { lang: string; count: number }[];
+}
+
+const username = 'thanhdatnguyentk';
+
+async function fetchStats(): Promise<UserStats | null> {
+  try {
+    // Use public GitHub API; no auth needed for public profile
+    const userRes = await fetch(`https://api.github.com/users/${username}`, {
+      headers: { Accept: 'application/vnd.github+json' },
+    });
+    if (!userRes.ok) return null;
+    const user = await userRes.json();
+
+    // Fetch up to 100 repos to compute top languages and total stars
+    const reposRes = await fetch(
+      `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`,
+      { headers: { Accept: 'application/vnd.github+json' } }
+    );
+    const repos: Repo[] = reposRes.ok ? await reposRes.json() : [];
+
+    const total_stars = repos.reduce((sum, r) => sum + r.stargazers_count, 0);
+    const langCount = new Map<string, number>();
+    repos.forEach((r) => {
+      if (r.language) langCount.set(r.language, (langCount.get(r.language) ?? 0) + 1);
+    });
+    const top_languages = Array.from(langCount.entries())
+      .map(([lang, count]) => ({ lang, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+
+    return {
+      login: user.login,
+      name: user.name,
+      avatar_url: user.avatar_url,
+      public_repos: user.public_repos,
+      followers: user.followers,
+      following: user.following,
+      total_stars,
+      top_languages,
+    };
+  } catch (err) {
+    console.warn('[GithubStats] Failed to fetch GitHub data:', err);
+    return null;
+  }
+}
+
+const stats = await fetchStats();
+
+const langColors: Record<string, string> = {
+  Python: '#3572A5',
+  Java: '#b07219',
+  'C++': '#f34b7d',
+  JavaScript: '#f1e05a',
+  TypeScript: '#2b7489',
+  HTML: '#e34c26',
+  CSS: '#563d7c',
+  Shell: '#89e051',
+  PowerShell: '#012456',
+};
+
+function langColor(lang: string): string {
+  return langColors[lang] ?? '#8b5cf6';
+}
+
+// Build an inline SVG progress-bar card for language breakdown (no external service)
+const totalRepos = stats?.top_languages.reduce((s, l) => s + l.count, 0) ?? 0;
+const langBarsSvg = stats
+  ? `
+  <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Top languages">
+    <style>
+      .ghb-bg { fill: #faf5ff; }
+      .ghb-title { font: 600 13px 'Space Grotesk', sans-serif; fill: #4c1d95; letter-spacing: .06em; text-transform: uppercase; }
+      .ghb-label { font: 500 12px 'DM Sans', sans-serif; fill: #0f172a; }
+      .ghb-pct { font: 600 11px 'JetBrains Mono', monospace; fill: #6b21a8; }
+      .ghb-bg-bar { fill: #ede9fe; rx: 4; }
+      .ghb-fg-bar { rx: 4; }
+      .ghb-name { font: 600 14px 'Space Grotesk', sans-serif; fill: #0f172a; }
+      .ghb-dot { r: 5; }
+    </style>
+    <rect class="ghb-bg" width="400" height="220" rx="12"/>
+    <text class="ghb-name" x="20" y="28">Top languages</text>
+    ${stats.top_languages
+      .map((l, i) => {
+        const y = 56 + i * 32;
+        const pct = totalRepos ? (l.count / totalRepos) * 100 : 0;
+        const width = (pct / 100) * 220;
+        return `
+        <circle class="ghb-dot" cx="28" cy="${y - 4}" fill="${langColor(l.lang)}"/>
+        <text class="ghb-label" x="40" y="${y}">${l.lang}</text>
+        <text class="ghb-pct" x="380" y="${y}" text-anchor="end">${pct.toFixed(0)}%</text>
+        <rect class="ghb-bg-bar" x="40" y="${y + 6}" width="220" height="6"/>
+        <rect class="ghb-fg-bar" x="40" y="${y + 6}" width="${width}" height="6" fill="${langColor(l.lang)}"/>
+      `;
+      })
+      .join('')}
+  </svg>`
+  : '';
 ---
 
 <section class="section ghstats" id="github-stats">
@@ -11,49 +122,90 @@ const streakUrl = `https://github-readme-streak-stats.demolab.com?user=${githubU
     <h2 class="section-title">GitHub activity</h2>
     <p class="section-subtitle">
       Real-time stats from my
-      <a href={`https://github.com/${githubUsername}`} target="_blank" rel="noopener noreferrer" class="ghstats__profile-link">
+      <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer" class="ghstats__profile-link">
         GitHub profile
-      </a>.
-      Click through to see contributions, top languages, and the streak.
+      </a>. Data fetched at build time directly from the GitHub API.
     </p>
 
-    <div class="ghstats__grid">
-      <div class="ghstats__card">
-        <h3 class="ghstats__card-title">Overview</h3>
-        <img
-          src={statsCardUrl}
-          alt={`${githubUsername}'s GitHub stats`}
-          loading="lazy"
-          width="495"
-          height="195"
-          class="ghstats__img"
-        />
-      </div>
+    {stats ? (
+      <div class="ghstats__grid">
+        <!-- Overview card: avatar + key numbers -->
+        <md-elevated-card class="ghstats__card">
+          <div class="ghstats__card-inner">
+            <div class="ghstats__profile">
+              <img
+                src={stats.avatar_url}
+                alt={`${stats.name}'s avatar`}
+                width="56"
+                height="56"
+                class="ghstats__avatar"
+                loading="lazy"
+              />
+              <div>
+                <h3 class="ghstats__profile-name">{stats.name}</h3>
+                <p class="ghstats__profile-handle">@{stats.login}</p>
+              </div>
+            </div>
 
-      <div class="ghstats__card">
-        <h3 class="ghstats__card-title">Top languages</h3>
-        <img
-          src={topLangsUrl}
-          alt={`${githubUsername}'s top languages`}
-          loading="lazy"
-          width="495"
-          height="195"
-          class="ghstats__img"
-        />
-      </div>
+            <ul class="ghstats__metrics">
+              <li class="ghstats__metric">
+                <span class="ghstats__metric-value">{stats.public_repos}</span>
+                <span class="ghstats__metric-label">Repositories</span>
+              </li>
+              <li class="ghstats__metric">
+                <span class="ghstats__metric-value">{stats.total_stars}</span>
+                <span class="ghstats__metric-label">Stars earned</span>
+              </li>
+              <li class="ghstats__metric">
+                <span class="ghstats__metric-value">{stats.followers}</span>
+                <span class="ghstats__metric-label">Followers</span>
+              </li>
+              <li class="ghstats__metric">
+                <span class="ghstats__metric-value">{stats.following}</span>
+                <span class="ghstats__metric-label">Following</span>
+              </li>
+            </ul>
+          </div>
+        </md-elevated-card>
 
-      <div class="ghstats__card ghstats__card--wide">
-        <h3 class="ghstats__card-title">Streak</h3>
-        <img
-          src={streakUrl}
-          alt={`${githubUsername}'s GitHub streak stats`}
-          loading="lazy"
-          width="770"
-          height="195"
-          class="ghstats__img ghstats__img--wide"
-        />
+        <!-- Languages card: SVG bar chart -->
+        <md-outlined-card class="ghstats__card">
+          <div class="ghstats__card-inner ghstats__lang-card">
+            <div class="ghstats__lang-svg" set:html={langBarsSvg}></div>
+          </div>
+        </md-outlined-card>
+
+        <!-- Activity callout -->
+        <md-elevated-card class="ghstats__card ghstats__card--wide">
+          <div class="ghstats__card-inner ghstats__cta">
+            <div>
+              <h3 class="ghstats__cta-title">Want the full picture?</h3>
+              <p class="ghstats__cta-desc">
+                See contribution graphs, pinned repos, and the live activity stream on my GitHub profile.
+              </p>
+            </div>
+            <md-filled-tonal-button href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer">
+              <span slot="icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.69-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 015.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0023.5 12C23.5 5.65 18.35.5 12 .5z"/>
+                </svg>
+              </span>
+              Visit GitHub profile
+            </md-filled-tonal-button>
+          </div>
+        </md-elevated-card>
       </div>
-    </div>
+    ) : (
+      <div class="ghstats__fallback">
+        <p>
+          ⚠️ Couldn't fetch GitHub data right now. Visit
+          <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer">
+            @{username}
+          </a>
+          directly to see the latest stats.
+        </p>
+      </div>
+    )}
   </div>
 </section>
 
@@ -79,31 +231,122 @@ const streakUrl = `https://github-readme-streak-stats.demolab.com?user=${githubU
   }
 
   .ghstats__card {
-    padding: var(--space-5);
-    background: var(--md-sys-color-surface-container);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--md-sys-color-outline-variant);
-  }
-
-  .ghstats__card-title {
-    font-family: var(--font-display);
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--md-sys-color-on-surface-variant);
-    margin-bottom: var(--space-4);
-  }
-
-  .ghstats__img {
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius-sm);
     display: block;
   }
 
-  .ghstats__img--wide {
-    max-width: 100%;
+  .ghstats__card-inner {
+    padding: var(--space-6);
+  }
+
+  .ghstats__profile {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-5);
+    border-bottom: 1px dashed var(--md-sys-color-outline-variant);
+  }
+
+  .ghstats__avatar {
+    border-radius: var(--radius-full);
+    border: 2px solid var(--md-sys-color-outline-variant);
+    flex-shrink: 0;
+  }
+
+  .ghstats__profile-name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .ghstats__profile-handle {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--md-sys-color-on-surface-variant);
+    margin: 0;
+  }
+
+  .ghstats__metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .ghstats__metric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .ghstats__metric-value {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .ghstats__metric-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .ghstats__lang-svg {
+    display: block;
+    width: 100%;
+    max-width: 480px;
+    margin-inline: auto;
+  }
+
+  .ghstats__lang-svg :global(svg) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+  }
+
+  .ghstats__cta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    align-items: flex-start;
+  }
+
+  .ghstats__cta-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface);
+    margin: 0 0 var(--space-2) 0;
+  }
+
+  .ghstats__cta-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--md-sys-color-on-surface-variant);
+    margin: 0;
+  }
+
+  .ghstats__fallback {
+    padding: var(--space-5);
+    background: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-5);
+    text-align: center;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .ghstats__fallback a {
+    color: var(--md-sys-color-primary);
+    font-weight: 500;
   }
 
   @media (min-width: 768px) {
@@ -114,6 +357,16 @@ const streakUrl = `https://github-readme-streak-stats.demolab.com?user=${githubU
 
     .ghstats__card--wide {
       grid-column: 1 / -1;
+    }
+
+    .ghstats__cta {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ghstats__metrics {
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 </style>
