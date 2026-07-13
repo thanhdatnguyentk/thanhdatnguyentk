@@ -256,49 +256,35 @@ md-icon-button {
 .ambient-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.4;
+  filter: blur(90px);
+  opacity: 0.55;
   will-change: transform;
+  pointer-events: none;
+  /* CSS animation removed — JS handles movement */
 }
 
 .ambient-blob--1 {
-  width: 480px;
-  height: 480px;
+  width: 560px;
+  height: 560px;
   background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
-  top: -120px;
-  right: -120px;
-  animation: float-1 30s ease-in-out infinite;
+  top: -160px;
+  left: -120px;
 }
 
 .ambient-blob--2 {
-  width: 420px;
-  height: 420px;
+  width: 500px;
+  height: 500px;
   background: radial-gradient(circle, #ec4899 0%, transparent 70%);
-  bottom: -100px;
-  left: -100px;
-  animation: float-2 35s ease-in-out infinite;
+  top: 30%;
+  right: -100px;
 }
 
 .ambient-blob--3 {
-  width: 360px;
-  height: 360px;
+  width: 440px;
+  height: 440px;
   background: radial-gradient(circle, #6366f1 0%, transparent 70%);
-  top: 40%;
-  left: 30%;
-  animation: float-3 40s ease-in-out infinite;
-}
-
-@keyframes float-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-60px, 60px) scale(1.1); }
-}
-@keyframes float-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(80px, -40px) scale(1.15); }
-}
-@keyframes float-3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-40px, 80px) scale(0.95); }
+  bottom: -120px;
+  left: 25%;
 }
 
 @media (prefers-reduced-motion: reduce) {

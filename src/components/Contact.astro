@@ -109,18 +109,19 @@
 
   .contact__blob {
     position: absolute;
-    width: 600px;
-    height: 600px;
+    width: 720px;
+    height: 720px;
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      color-mix(in srgb, var(--md-sys-color-tertiary) 18%, transparent),
+      color-mix(in srgb, var(--md-sys-color-tertiary) 25%, transparent),
       transparent 70%
     );
-    filter: blur(80px);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    filter: blur(100px);
+    opacity: 0.65;
+    top: 0;
+    left: 0;
+    will-change: transform;
   }
 
   .contact__inner {

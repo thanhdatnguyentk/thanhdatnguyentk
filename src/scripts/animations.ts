@@ -100,30 +100,11 @@ function initMagnetic() {
 }
 
 /* =====================================================================
-   Parallax blobs — translate based on scroll position
+   Parallax blobs — DISABLED; floating-blobs.ts handles drift + scroll
    ===================================================================== */
 function initParallaxBlobs() {
-  if (prefersReducedMotion) return;
-
-  const blobs = document.querySelectorAll<HTMLElement>('.parallax-blob');
-  if (blobs.length === 0) return;
-
-  let ticking = false;
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const y = window.scrollY;
-      blobs.forEach((blob, idx) => {
-        const speed = 0.15 + (idx % 3) * 0.05;
-        const offset = y * speed;
-        blob.style.transform = `translate3d(0, ${offset}px, 0)`;
-      });
-      ticking = false;
-    });
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
+  // No-op. Floating-blobs system owns .ambient-blob / .parallax-blob
+  // elements and applies combined drift + scrollY transforms.
 }
 
 /* =====================================================================
