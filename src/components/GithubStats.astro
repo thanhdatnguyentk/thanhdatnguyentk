@@ -1,0 +1,119 @@
+---
+// GitHub Stats section — preserves badges from the original GitHub profile README
+const githubUsername = 'thanhdatnguyentk';
+const statsCardUrl = `https://github-readme-stats.vercel.app/api?username=${githubUsername}&show_icons=true&theme=radical&hide_border=true&count_private=true`;
+const topLangsUrl = `https://github-readme-stats.vercel.app/api/top-langs/?username=${githubUsername}&layout=compact&theme=radical&hide_border=true`;
+const streakUrl = `https://github-readme-streak-stats.demolab.com?user=${githubUsername}&theme=radical&hide_border=true`;
+---
+
+<section class="section ghstats" id="github-stats">
+  <div class="container">
+    <h2 class="section-title">GitHub activity</h2>
+    <p class="section-subtitle">
+      Real-time stats from my
+      <a href={`https://github.com/${githubUsername}`} target="_blank" rel="noopener noreferrer" class="ghstats__profile-link">
+        GitHub profile
+      </a>.
+      Click through to see contributions, top languages, and the streak.
+    </p>
+
+    <div class="ghstats__grid">
+      <div class="ghstats__card">
+        <h3 class="ghstats__card-title">Overview</h3>
+        <img
+          src={statsCardUrl}
+          alt={`${githubUsername}'s GitHub stats`}
+          loading="lazy"
+          width="495"
+          height="195"
+          class="ghstats__img"
+        />
+      </div>
+
+      <div class="ghstats__card">
+        <h3 class="ghstats__card-title">Top languages</h3>
+        <img
+          src={topLangsUrl}
+          alt={`${githubUsername}'s top languages`}
+          loading="lazy"
+          width="495"
+          height="195"
+          class="ghstats__img"
+        />
+      </div>
+
+      <div class="ghstats__card ghstats__card--wide">
+        <h3 class="ghstats__card-title">Streak</h3>
+        <img
+          src={streakUrl}
+          alt={`${githubUsername}'s GitHub streak stats`}
+          loading="lazy"
+          width="770"
+          height="195"
+          class="ghstats__img ghstats__img--wide"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ghstats {
+    background: var(--md-sys-color-surface-container-lowest);
+  }
+
+  .ghstats__profile-link {
+    color: var(--md-sys-color-primary);
+    font-weight: 500;
+  }
+
+  .ghstats__profile-link:hover {
+    text-decoration: underline;
+  }
+
+  .ghstats__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+
+  .ghstats__card {
+    padding: var(--space-5);
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .ghstats__card-title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: var(--space-4);
+  }
+
+  .ghstats__img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    display: block;
+  }
+
+  .ghstats__img--wide {
+    max-width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .ghstats__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+
+    .ghstats__card--wide {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
