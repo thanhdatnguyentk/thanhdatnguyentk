@@ -13,7 +13,60 @@ const codeSnippet = `<span class="code-key">class</span> <span class="code-cls">
     <span class="code-key">return</span> <span class="code-fn">train</span>(<span class="code-fn">deploy</span>(idea));
   }
 }`;
+
+// Typing SVG URL — readme-typing-svg by DenverCoder1
+// Renders animated rotating tagline matching the original GitHub profile README.
+// Fallback text is shown if the service is unavailable.
+const typingSvgUrl =
+  'https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=600&size=26&pause=1000&color=0EA5E9&center=true&vCenter=true&width=600&lines=Hi,+I%27m+Nguy%E1%BB%85n+Th%C3%A0nh+%C4%90%E1%BA%A1t+!+%F0%9F%91%8B;AI+Engineer+in+the+making+%F0%9F%9A%80;Turning+data+into+AI+solutions+%E2%9A%99%EF%B8%8F';
+
+// Pure-CSS typing fallback (visible only if <img> fails to load)
+const typingFallbackPhrases = [
+  "Hi, I'm Nguyễn Thành Đạt",
+  'AI Engineer in the making',
+  'Turning data into AI solutions',
+];
 ---
+
+<section class="hero" id="top">
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-blob ambient-blob--1"></div>
+    <div class="ambient-blob ambient-blob--2"></div>
+    <div class="ambient-blob ambient-blob--3"></div>
+  </div>
+
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <md-assist-chip class="hero__chip" label="Available for internships & collabs">
+        <span slot="icon" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="4" fill="currentColor"/>
+          </svg>
+        </span>
+        Available for internships & collabs
+      </md-assist-chip>
+
+      <!-- Animated typing tagline — primary source: readme-typing-svg service -->
+      <div class="hero__typing" role="img" aria-label="Rotating tagline: Hi I'm Nguyễn Thành Đạt, AI Engineer in the making, Turning data into AI solutions">
+        <img
+          src={typingSvgUrl}
+          alt=""
+          width="600"
+          height="60"
+          loading="eager"
+          decoding="async"
+          class="hero__typing-img"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <div class="hero__typing-fallback" aria-hidden="true">
+          <span class="hero__typing-text" data-phrases={JSON.stringify(typingFallbackPhrases)}></span>
+        </div>
+      </div>
+
+      <h1 class="hero__title">
+        Hi, I'm <span class="hero__name">Nguyễn Thành Đạt</span>.<br />
+        An <span class="hero__accent">AI Engineer</span> in the making.
+      </h1>
 
 <section class="hero" id="top">
   <div class="ambient-bg" aria-hidden="true">
@@ -114,6 +167,65 @@ const codeSnippet = `<span class="code-key">class</span> <span class="code-cls">
     --md-assist-chip-container-shape: 9999px;
     --md-assist-chip-label-text-color: var(--md-sys-color-on-primary-container);
     --md-assist-chip-container-color: var(--md-sys-color-primary-container);
+  }
+
+  .hero__typing {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero__typing-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .hero__typing-fallback {
+    display: none;
+    width: 100%;
+    align-items: center;
+    gap: 2px;
+    font-family: 'Fira Code', 'JetBrains Mono', ui-monospace, monospace;
+    font-size: clamp(18px, 3.5vw, 26px);
+    font-weight: 600;
+    color: #0ea5e9;
+    line-height: 1.3;
+  }
+
+  .hero__typing-text {
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid #0ea5e9;
+    animation: typing-rotate 12s steps(40, end) infinite, blink-caret 0.7s step-end infinite;
+  }
+
+  .hero__typing-cursor {
+    display: none; /* cursor handled by border-right of typing-text */
+  }
+
+  @keyframes typing-rotate {
+    0%   { width: 0; content: ''; }
+    10%  { width: 0; }
+    25%  { width: 100%; }
+    85%  { width: 100%; }
+    95%  { width: 0; }
+    100% { width: 0; }
+  }
+
+  @keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: #0ea5e9; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__typing-text {
+      animation: none;
+      width: 100%;
+    }
   }
 
   .hero__title {

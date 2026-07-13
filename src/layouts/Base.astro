@@ -102,6 +102,50 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? siteUrl).toString
         const top = el.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top, behavior: 'smooth' });
       });
+
+      // Typing fallback animation — activates only if the readme-typing-svg
+      // service is unreachable. Cycles through 3 phrases with caret blink.
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function runTypingFallback(el: HTMLElement) {
+        if (prefersReducedMotion) {
+          const phrases = JSON.parse(el.dataset.phrases || '[]') as string[];
+          el.textContent = phrases[0] ?? '';
+          return;
+        }
+
+        const phrases = JSON.parse(el.dataset.phrases || '[]') as string[];
+        if (phrases.length === 0) return;
+
+        let phraseIdx = 0;
+        let charIdx = 0;
+        let deleting = false;
+
+        function tick() {
+          const phrase = phrases[phraseIdx];
+          if (!deleting) {
+            charIdx++;
+            el.textContent = phrase.slice(0, charIdx);
+            if (charIdx === phrase.length) {
+              deleting = true;
+              setTimeout(tick, 1800);
+              return;
+            }
+          } else {
+            charIdx--;
+            el.textContent = phrase.slice(0, charIdx);
+            if (charIdx === 0) {
+              deleting = false;
+              phraseIdx = (phraseIdx + 1) % phrases.length;
+            }
+          }
+          setTimeout(tick, deleting ? 30 : 70);
+        }
+
+        tick();
+      }
+
+      document.querySelectorAll<HTMLElement>('.hero__typing-text').forEach(runTypingFallback);
     </script>
   </body>
 </html>
