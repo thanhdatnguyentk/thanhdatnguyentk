@@ -1,4 +1,7 @@
 ---
+import { uiStrings } from '../data/projects';
+import I18nText from './I18nText.astro';
+
 interface Repo {
   name: string;
   stargazers_count: number;
@@ -91,25 +94,27 @@ const totalRepos = stats?.top_languages.reduce((s, l) => s + l.count, 0) ?? 0;
       <div class="c-ghstats__metrics">
         <div class="c-ghstats__metric">
           <span class="val u-en">{stats.public_repos}</span>
-          <span class="lbl">Repositories</span>
+          <span class="lbl"><I18nText t={uiStrings.aboutPage.ghRepos} /></span>
         </div>
         <div class="c-ghstats__metric">
           <span class="val u-en">{stats.total_stars}</span>
-          <span class="lbl">Stars Earned</span>
+          <span class="lbl"><I18nText t={uiStrings.aboutPage.ghStars} /></span>
         </div>
         <div class="c-ghstats__metric">
           <span class="val u-en">{stats.followers}</span>
-          <span class="lbl">Followers</span>
+          <span class="lbl"><I18nText t={uiStrings.aboutPage.ghFollowers} /></span>
         </div>
         <div class="c-ghstats__metric">
           <span class="val u-en">{stats.following}</span>
-          <span class="lbl">Following</span>
+          <span class="lbl"><I18nText t={uiStrings.aboutPage.ghFollowing} /></span>
         </div>
       </div>
 
       {stats.top_languages.length > 0 && (
         <div class="c-ghstats__langs">
-          <p class="c-ghstats__langs-title u-en">Top Languages Across Public Repos</p>
+          <p class="c-ghstats__langs-title u-en">
+            <I18nText t={uiStrings.aboutPage.ghTopLangs} />
+          </p>
           <div class="c-ghstats__bars">
             {stats.top_languages.map((l) => {
               const pct = totalRepos ? Math.round((l.count / totalRepos) * 100) : 0;
@@ -132,7 +137,7 @@ const totalRepos = stats?.top_languages.reduce((s, l) => s + l.count, 0) ?? 0;
   ) : (
     <div class="c-ghstats__card">
       <p>
-        Live GitHub stats available directly at{' '}
+        GitHub:{' '}
         <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer" style="color:var(--color-orange);font-weight:700">
           github.com/{username} ↗
         </a>

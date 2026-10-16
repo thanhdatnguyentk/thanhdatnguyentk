@@ -1,5 +1,6 @@
 ---
-import { projects, profileInfo } from '../data/projects';
+import { projects, profileInfo, uiStrings } from '../data/projects';
+import I18nText from './I18nText.astro';
 
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 const currentPath = Astro.url.pathname;
@@ -11,79 +12,112 @@ const currentPath = Astro.url.pathname;
       <a href={`${baseUrl}/`} class="l-header__logo u-en" data-nav-link>
         {profileInfo.shortBrand}
       </a>
-      <p class="l-header__text u-en">
-        {profileInfo.headerRoles.map((role, idx) => (
+      <p class="l-header__text" data-i18n-lang="en">
+        {profileInfo.headerRoles.en.map((role, idx) => (
           <>
             {role}
-            {idx < profileInfo.headerRoles.length - 1 && <br />}
+            {idx < profileInfo.headerRoles.en.length - 1 && <br />}
+          </>
+        ))}
+      </p>
+      <p class="l-header__text" data-i18n-lang="vi">
+        {profileInfo.headerRoles.vi.map((role, idx) => (
+          <>
+            {role}
+            {idx < profileInfo.headerRoles.vi.length - 1 && <br />}
+          </>
+        ))}
+      </p>
+      <p class="l-header__text" data-i18n-lang="ja">
+        {profileInfo.headerRoles.ja.map((role, idx) => (
+          <>
+            {role}
+            {idx < profileInfo.headerRoles.ja.length - 1 && <br />}
           </>
         ))}
       </p>
     </div>
 
-    <div class="l-header__menu-wrap">
-      <button
-        class="l-header__menu-button"
-        id="menu-toggle-btn"
-        type="button"
-        aria-label="Toggle navigation menu"
-        aria-controls="header-menu"
-        aria-expanded="false"
-      >
-        <span class="dot" aria-hidden="true"></span>
-        <span class="dot" aria-hidden="true"></span>
-        <span class="dot" aria-hidden="true"></span>
-      </button>
+    <div class="l-header__actions">
+      <!-- EN / VI / JA Language Switcher Pill -->
+      <div class="c-lang-switcher" role="group" aria-label="Language switcher">
+        <button type="button" class="c-lang-switcher__btn" data-set-lang="en" title="English">
+          EN
+        </button>
+        <button type="button" class="c-lang-switcher__btn" data-set-lang="vi" title="Tiếng Việt">
+          VI
+        </button>
+        <button type="button" class="c-lang-switcher__btn" data-set-lang="ja" title="日本語">
+          JA
+        </button>
+      </div>
 
-      <div class="l-header__menu" id="header-menu" inert>
-        <nav class="l-header__menu-nav u-en" aria-label="Main menu">
-          <ul class="l-header__ul">
-            <li class="l-header__li">
-              <a
-                href={`${baseUrl}/`}
-                data-nav-link
-                aria-current={currentPath === `${baseUrl}/` || currentPath === `${baseUrl}` ? 'page' : undefined}
-              >
-                Home
-              </a>
-            </li>
-            <li class="l-header__li">
-              <a
-                href={`${baseUrl}/cases/about/`}
-                data-nav-link
-                aria-current={currentPath.includes('/cases/about') ? 'page' : undefined}
-              >
-                About &amp; Skills
-              </a>
-            </li>
-          </ul>
+      <div class="l-header__menu-wrap">
+        <button
+          class="l-header__menu-button"
+          id="menu-toggle-btn"
+          type="button"
+          aria-label="Toggle navigation menu"
+          aria-controls="header-menu"
+          aria-expanded="false"
+        >
+          <span class="dot" aria-hidden="true"></span>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="dot" aria-hidden="true"></span>
+        </button>
 
-          <ul class="l-header__ul l-header__ul--case">
-            <li class="l-header__li-title">
-              <a href={`${baseUrl}/cases/`} data-nav-link style="color:inherit">Cases (All 5)</a>
-            </li>
-            {projects.map((p, i) => (
+        <div class="l-header__menu" id="header-menu" inert>
+          <nav class="l-header__menu-nav u-en" aria-label="Main menu">
+            <ul class="l-header__ul">
               <li class="l-header__li">
                 <a
-                  href={`${baseUrl}/cases/${p.slug}/`}
+                  href={`${baseUrl}/`}
                   data-nav-link
-                  aria-current={currentPath.includes(`/cases/${p.slug}`) ? 'page' : undefined}
+                  aria-current={currentPath === `${baseUrl}/` || currentPath === `${baseUrl}` ? 'page' : undefined}
                 >
-                  <span>Case {i + 1}</span>
-                  <span class="case-sub">· {p.title}</span>
+                  <I18nText t={uiStrings.nav.home} />
                 </a>
               </li>
-            ))}
-          </ul>
+              <li class="l-header__li">
+                <a
+                  href={`${baseUrl}/cases/about/`}
+                  data-nav-link
+                  aria-current={currentPath.includes('/cases/about') ? 'page' : undefined}
+                >
+                  <I18nText t={uiStrings.nav.about} />
+                </a>
+              </li>
+            </ul>
 
-          <ul class="l-header__ul">
-            <li class="l-header__li">
-              <a href={`${baseUrl}/cases/?case=contact`} data-nav-link>
-                Contact
-              </a>
-            </li>
-          </ul>
-        </nav>
+            <ul class="l-header__ul l-header__ul--case">
+              <li class="l-header__li-title">
+                <a href={`${baseUrl}/cases/`} data-nav-link style="color:inherit">
+                  <I18nText t={uiStrings.nav.casesTitle} />
+                </a>
+              </li>
+              {projects.map((p, i) => (
+                <li class="l-header__li">
+                  <a
+                    href={`${baseUrl}/cases/${p.slug}/`}
+                    data-nav-link
+                    aria-current={currentPath.includes(`/cases/${p.slug}`) ? 'page' : undefined}
+                  >
+                    <span>Case {i + 1}</span>
+                    <span class="case-sub">· {p.title}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <ul class="l-header__ul">
+              <li class="l-header__li">
+                <a href={`${baseUrl}/cases/?case=contact`} data-nav-link>
+                  <I18nText t={uiStrings.nav.contact} />
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
   </div>

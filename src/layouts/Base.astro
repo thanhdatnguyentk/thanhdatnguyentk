@@ -21,11 +21,31 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5" />
     <meta name="theme-color" content="#f7f5f1" />
+
+    <!-- Synchronize language (EN / VI / JA) before first paint to prevent mixed language flash -->
+    <script is:inline>
+      (function () {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var urlLang = params.get('lang');
+          var saved = localStorage.getItem('portfolio_lang');
+          var lang =
+            urlLang === 'en' || urlLang === 'vi' || urlLang === 'ja'
+              ? urlLang
+              : saved === 'en' || saved === 'vi' || saved === 'ja'
+                ? saved
+                : 'en';
+          document.documentElement.setAttribute('data-lang', lang);
+          document.documentElement.setAttribute('lang', lang);
+          localStorage.setItem('portfolio_lang', lang);
+        } catch (e) {}
+      })();
+    </script>
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -46,11 +66,11 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
 
-    <!-- Fonts: Righteous (Display EN) + Plus Jakarta Sans (Body VI/EN) + JetBrains Mono -->
+    <!-- Fonts: Righteous (Display EN) + Plus Jakarta Sans (VI/EN) + Noto Sans JP (JA) + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Righteous&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Righteous&display=swap"
       rel="stylesheet"
     />
 
@@ -60,7 +80,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
       '@type': 'Person',
       name: profileInfo.name,
       alternateName: profileInfo.handle,
-      jobTitle: profileInfo.role,
+      jobTitle: 'AI Engineer in Training',
       url: canonicalURL,
       sameAs: [profileInfo.github],
       knowsAbout: [
@@ -72,7 +92,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
       ],
       alumniOf: {
         '@type': 'CollegeOrUniversity',
-        name: profileInfo.school,
+        name: 'University of Information Technology (UIT) — VNU-HCM',
       },
     })} />
   </head>

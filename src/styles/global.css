@@ -1,8 +1,8 @@
 /* ============================================
-   Mild Sugar Design Style System
+   Mild Sugar Design Style System (EN / VI / JA Synchronized)
    Portfolio: Nguyễn Thành Đạt (thanhdatnguyentk)
    Palette: Warm Cream (#F7F5F1), Deep Charcoal Brown (#3C3728), Citrus Orange (#FEA831)
-   Typography: Righteous (Display / EN) + Plus Jakarta Sans (Body / VI-EN) + JetBrains Mono
+   Typography: Righteous (Display) + Plus Jakarta Sans (EN/VI) + Noto Sans JP (JA) + JetBrains Mono
    ============================================ */
 
 :root {
@@ -17,9 +17,19 @@
   --custom-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --expo-ease: cubic-bezier(0.16, 1, 0.3, 1);
 
-  --font-en: 'Righteous', system-ui, -apple-system, sans-serif;
-  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-en: 'Righteous', 'Plus Jakarta Sans', 'Noto Sans JP', system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+/* ============================================
+   Zero-FOUC Multi-Language Visibility Rules (EN / VI / JA)
+   ============================================ */
+html[data-lang="en"] [data-i18n-lang]:not([data-i18n-lang="en"]),
+html[data-lang="vi"] [data-i18n-lang]:not([data-i18n-lang="vi"]),
+html[data-lang="ja"] [data-i18n-lang]:not([data-i18n-lang="ja"]),
+html:not([data-lang]) [data-i18n-lang]:not([data-i18n-lang="en"]) {
+  display: none !important;
 }
 
 *,
@@ -50,6 +60,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
+}
+
+html[data-lang="ja"] body {
+  font-feature-settings: "palt";
+  line-break: strict;
 }
 
 p, table, blockquote, address, pre, iframe, form, figure, dl, h1, h2, h3, h4, h5, h6 {
@@ -191,7 +206,7 @@ main:focus-visible {
 }
 
 /* ============================================
-   Fixed Header & Morphing 3-Dot Orange Menu
+   Fixed Header, Language Switcher & Morphing 3-Dot Menu
    ============================================ */
 .l-header {
   position: fixed;
@@ -247,13 +262,56 @@ main:focus-visible {
 
 .l-header__text {
   font-size: 12px;
-  line-height: 1.25;
+  line-height: 1.3;
+  font-weight: 600;
   opacity: 0.85;
+}
+
+.l-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: auto;
+}
+
+/* Language Switcher Pill (EN / VI / JA) */
+.c-lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(247, 245, 241, 0.92);
+  backdrop-filter: blur(8px);
+  border: 2px solid var(--color-black);
+  border-radius: 100vmax;
+  padding: 4px;
+  gap: 2px;
+  box-shadow: 0 4px 14px rgba(60, 55, 40, 0.08);
+}
+
+.c-lang-switcher__btn {
+  font-family: var(--font-en);
+  font-size: 12px;
+  line-height: 1;
+  padding: 8px 11px;
+  border-radius: 100vmax;
+  color: var(--color-black);
+  opacity: 0.65;
+  transition: all 0.25s var(--custom-ease);
+}
+
+.c-lang-switcher__btn:hover {
+  opacity: 1;
+}
+
+html[data-lang="en"] .c-lang-switcher__btn[data-set-lang="en"],
+html[data-lang="vi"] .c-lang-switcher__btn[data-set-lang="vi"],
+html[data-lang="ja"] .c-lang-switcher__btn[data-set-lang="ja"] {
+  background: var(--color-orange);
+  color: #fff;
+  opacity: 1;
 }
 
 .l-header__menu-wrap {
   position: relative;
-  pointer-events: auto;
 }
 
 .l-header__menu-button {
@@ -333,8 +391,8 @@ main:focus-visible {
 }
 
 .l-header__menu.is-open {
-  width: 248px;
-  height: 450px;
+  width: 268px;
+  height: 460px;
   pointer-events: auto;
   box-shadow: 0 20px 48px rgba(60, 55, 40, 0.22);
 }
@@ -342,7 +400,7 @@ main:focus-visible {
 .l-header__menu-nav {
   position: absolute;
   top: 44px;
-  left: 36px;
+  left: 34px;
   white-space: nowrap;
   display: flex;
   flex-direction: column;
@@ -361,7 +419,7 @@ main:focus-visible {
 
 .l-header__li-title {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.65);
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -394,7 +452,7 @@ main:focus-visible {
   font-family: var(--font-body);
   font-size: 11px;
   font-weight: 600;
-  opacity: 0.78;
+  opacity: 0.82;
 }
 
 @media (hover: hover) {

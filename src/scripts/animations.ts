@@ -1,6 +1,7 @@
 /**
- * Mild Sugar Design Interactive Controller
+ * Mild Sugar Design Interactive Controller (EN / VI / JA Synchronized)
  * Powers:
+ * 0. Instant Language Switcher (EN / VI / JA) persisted in localStorage
  * 1. Morphing 3-dot orange menu (#menu-toggle-btn / #header-menu)
  * 2. Home orange loading cover (#home-loading)
  * 3. Interactive AI Room (Afternoon/Night toggle + Slide-out profile drawer)
@@ -10,6 +11,32 @@
  */
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* =====================================================================
+   0. Instant Language Switcher (EN / VI / JA)
+   ===================================================================== */
+function initLanguageSwitcher() {
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-set-lang]');
+  if (buttons.length === 0) return;
+
+  function applyLang(lang: 'en' | 'vi' | 'ja') {
+    document.documentElement.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang);
+    try {
+      localStorage.setItem('portfolio_lang', lang);
+    } catch {}
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const lang = btn.dataset.setLang;
+      if (lang === 'en' || lang === 'vi' || lang === 'ja') {
+        applyLang(lang);
+      }
+    });
+  });
+}
 
 /* =====================================================================
    1. Morphing 3-Dot Orange Header Menu
@@ -58,7 +85,6 @@ function initHomeExperience() {
   const openPill = document.getElementById('open-drawer-pill');
   const closeBtn = document.getElementById('close-drawer-btn');
   const timeBtn = document.getElementById('time-toggle-btn');
-  const timeLabel = document.getElementById('time-toggle-label');
 
   if (loading) {
     const alreadyShown = sessionStorage.getItem('msd_intro_shown') === '1';
@@ -77,13 +103,18 @@ function initHomeExperience() {
   if (!contents) return;
 
   // Auto-detect Afternoon vs Night mode from current hour
-  if (roomWrap && timeBtn && timeLabel) {
+  if (roomWrap && timeBtn) {
     const hour = new Date().getHours();
     let mode: 'afternoon' | 'night' = hour >= 18 || hour < 6 ? 'night' : 'afternoon';
+    const lblAfternoon = timeBtn.querySelector<HTMLElement>('.time-lbl-afternoon');
+    const lblNight = timeBtn.querySelector<HTMLElement>('.time-lbl-night');
 
     const applyTimeMode = (m: 'afternoon' | 'night') => {
       roomWrap.setAttribute('data-time-mode', m);
-      timeLabel.textContent = m === 'afternoon' ? 'Afternoon Lab ☀️' : 'Night Lab 🌙';
+      if (lblAfternoon && lblNight) {
+        lblAfternoon.style.display = m === 'afternoon' ? 'inline' : 'none';
+        lblNight.style.display = m === 'night' ? 'inline' : 'none';
+      }
     };
 
     applyTimeMode(mode);
@@ -101,9 +132,12 @@ function initHomeExperience() {
       trigger.setAttribute('aria-expanded', String(open));
     }
     if (openPill) {
-      openPill.querySelector('span')!.textContent = open
-        ? 'Hide Profile'
-        : 'Say “Hey!” / Open Profile';
+      const openSpan = openPill.querySelector<HTMLElement>('.drawer-lbl-open');
+      const hideSpan = openPill.querySelector<HTMLElement>('.drawer-lbl-hide');
+      if (openSpan && hideSpan) {
+        openSpan.style.display = open ? 'none' : 'inline';
+        hideSpan.style.display = open ? 'inline' : 'none';
+      }
     }
   }
 
@@ -158,7 +192,7 @@ function initCaseShowcase() {
   const total = slides.length;
   if (total === 0) return;
 
-  let currentIndex = 1; // 1-based index matching data-list / data-background / data-nav
+  let currentIndex = 1;
   let isTransitioning = false;
 
   function goToSlide(targetIdx: number) {
@@ -185,7 +219,6 @@ function initCaseShowcase() {
     }
   }
 
-  // Check URL query parameter ?case=contact or ?case=1..7
   const params = new URLSearchParams(window.location.search);
   const caseParam = params.get('case');
   if (caseParam) {
@@ -201,7 +234,6 @@ function initCaseShowcase() {
     }
   }
 
-  // Dot nav buttons
   navButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const target = Number(btn.dataset.nav);
@@ -216,7 +248,6 @@ function initCaseShowcase() {
     nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
   }
 
-  // Mouse wheel navigation with cooldown
   window.addEventListener(
     'wheel',
     (e) => {
@@ -235,7 +266,6 @@ function initCaseShowcase() {
     { passive: true }
   );
 
-  // Keyboard arrow navigation
   window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
       e.preventDefault();
@@ -246,7 +276,6 @@ function initCaseShowcase() {
     }
   });
 
-  // Touch swipe up/down
   let touchStartY = 0;
   showcase.addEventListener(
     'touchstart',
@@ -355,6 +384,7 @@ function initSingleAndTransitions() {
 }
 
 function init() {
+  initLanguageSwitcher();
   initHeaderMenu();
   initHomeExperience();
   initCaseShowcase();

@@ -2,7 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import CaseVisual from '../../components/CaseVisual.astro';
-import { projects, profileInfo, type Project } from '../../data/projects';
+import I18nText from '../../components/I18nText.astro';
+import { projects, profileInfo, uiStrings, type Project } from '../../data/projects';
 
 export function getStaticPaths() {
   return projects.map((project, index) => {
@@ -21,12 +22,14 @@ interface Props {
 
 const { project, nextProject } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
-const headlineWords = project.headline.split(' ');
+const headlineWordsEn = project.headline.en.split(' ');
+const headlineWordsVi = project.headline.vi.split(' ');
+const labels = uiStrings.caseDetail;
 ---
 
 <Base
   title={`${project.title} (${project.caseLabel}) / ${profileInfo.name}`}
-  description={project.longDescription}
+  description={project.longDescription.en}
   namespace="single"
 >
   <Nav />
@@ -37,13 +40,31 @@ const headlineWords = project.headline.split(' ');
           {project.caseLabel} · {project.category}
         </p>
         <h1 class="p-single-head__title">
-          {headlineWords.map((w, idx) => (
+          <span data-i18n-lang="en">
+            {headlineWordsEn.map((w, idx) => (
+              <span class="word">
+                <span class="word__inner" style={`transition-delay: ${Math.min(idx * 28, 600)}ms`}>
+                  {w}
+                </span>
+              </span>
+            ))}
+          </span>
+          <span data-i18n-lang="vi">
+            {headlineWordsVi.map((w, idx) => (
+              <span class="word">
+                <span class="word__inner" style={`transition-delay: ${Math.min(idx * 28, 600)}ms`}>
+                  {w}
+                </span>
+              </span>
+            ))}
+          </span>
+          <span data-i18n-lang="ja">
             <span class="word">
-              <span class="word__inner" style={`transition-delay: ${Math.min(idx * 30, 600)}ms`}>
-                {w}
+              <span class="word__inner" style="transition-delay: 80ms">
+                {project.headline.ja}
               </span>
             </span>
-          ))}
+          </span>
         </h1>
       </div>
 
@@ -57,15 +78,15 @@ const headlineWords = project.headline.split(' ');
 
         <div class="scope">
           <div class="scope__item">
-            <span class="scope__title">Role</span>
-            <span class="scope__text">{project.scope.role}</span>
+            <span class="scope__title"><I18nText t={labels.role} /></span>
+            <span class="scope__text"><I18nText t={project.scope.role} /></span>
           </div>
           <div class="scope__item">
-            <span class="scope__title">Domain</span>
-            <span class="scope__text">{project.scope.domain}</span>
+            <span class="scope__title"><I18nText t={labels.domain} /></span>
+            <span class="scope__text"><I18nText t={project.scope.domain} /></span>
           </div>
           <div class="scope__item">
-            <span class="scope__title">Core Stack</span>
+            <span class="scope__title"><I18nText t={labels.stack} /></span>
             <span class="scope__text">{project.scope.stack}</span>
           </div>
         </div>
@@ -73,20 +94,20 @@ const headlineWords = project.headline.split(' ');
         <!-- Overview & Visual -->
         <div class="body-group">
           <h2 class="body-group__title">
-            <span>Overview</span>
+            <I18nText t={labels.overview} />
           </h2>
           <div class="body-group__contents">
             <p>
-              <b>{project.longDescription}</b>
+              <b><I18nText t={project.longDescription} /></b>
             </p>
-            <p>{project.story.motivation}</p>
+            <I18nText tag="p" t={project.story.motivation} />
             <div class="visual-box">
               <div style="width:230px;height:230px">
                 <CaseVisual type={project.visualType} />
               </div>
             </div>
             <small class="caption">
-              {project.caseLabel}: {project.title} — {project.scope.domain}
+              {project.caseLabel}: {project.title} — <I18nText t={project.scope.domain} />
             </small>
           </div>
         </div>
@@ -94,21 +115,37 @@ const headlineWords = project.headline.split(' ');
         <!-- Architecture & Implementation -->
         <div class="body-group">
           <h2 class="body-group__title">
-            <span>Architecture</span>
+            <I18nText t={labels.architecture} />
           </h2>
           <div class="body-group__contents">
-            <p>{project.story.architecture}</p>
+            <I18nText tag="p" t={project.story.architecture} />
           </div>
         </div>
 
-        <!-- Key Highlights -->
+        <!-- Key Highlights (EN / VI / JA) -->
         <div class="body-group">
           <h2 class="body-group__title">
-            <span>Highlights</span>
+            <I18nText t={labels.highlights} />
           </h2>
           <div class="body-group__contents">
-            <ul class="highlight-list">
-              {project.highlights.map((h) => (
+            <ul class="highlight-list" data-i18n-lang="en">
+              {project.highlights.en.map((h) => (
+                <li class="highlight-list__item">
+                  <span class="dot" aria-hidden="true"></span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+            <ul class="highlight-list" data-i18n-lang="vi">
+              {project.highlights.vi.map((h) => (
+                <li class="highlight-list__item">
+                  <span class="dot" aria-hidden="true"></span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+            <ul class="highlight-list" data-i18n-lang="ja">
+              {project.highlights.ja.map((h) => (
                 <li class="highlight-list__item">
                   <span class="dot" aria-hidden="true"></span>
                   <span>{h}</span>
@@ -121,10 +158,10 @@ const headlineWords = project.headline.split(' ');
         <!-- Outcome & Source Code Link -->
         <div class="body-group">
           <h2 class="body-group__title">
-            <span>Impact &amp; Code</span>
+            <I18nText t={labels.impact} />
           </h2>
           <div class="body-group__contents">
-            <p>{project.story.impact}</p>
+            <I18nText tag="p" t={project.story.impact} />
             <div class="repo-cta">
               <a
                 href={project.url}
@@ -132,7 +169,9 @@ const headlineWords = project.headline.split(' ');
                 rel="noopener noreferrer"
                 class="repo-cta__btn u-en"
               >
-                <span>Explore {project.title} on GitHub</span>
+                <span>
+                  <I18nText t={labels.exploreGithub} /> ({project.title})
+                </span>
                 <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                   <path d="M33.6508 10.7936L5.47619 39.0476C4.84127 39.6825 4.08677 40 3.2127 40C2.34074 40 1.5873 39.6825 0.95238 39.0476C0.317459 38.4127 0 37.6582 0 36.7841C0 35.9122 0.317459 35.1587 0.95238 34.5238L29.2064 6.34921H5.07936C4.17989 6.34921 3.4254 6.0455 2.81587 5.43809C2.20847 4.82857 1.90476 4.07407 1.90476 3.1746C1.90476 2.27513 2.20847 1.52064 2.81587 0.911112C3.4254 0.303704 4.17989 0 5.07936 0H36.8254C37.7249 0 38.4783 0.303704 39.0857 0.911112C39.6952 1.52064 40 2.27513 40 3.1746V34.9206C40 35.8201 39.6952 36.5735 39.0857 37.181C38.4783 37.7905 37.7249 38.0952 36.8254 38.0952C35.9259 38.0952 35.1725 37.7905 34.5651 37.181C33.9556 36.5735 33.6508 35.8201 33.6508 34.9206V10.7936Z" fill="#ffffff" />
                 </svg>
@@ -158,12 +197,16 @@ const headlineWords = project.headline.split(' ');
             data-stalker="detail"
             data-nav-link
           >
-            <span class="p-single-next__eyebrow">Next Case</span>
+            <span class="p-single-next__eyebrow">
+              <I18nText t={labels.nextCase} />
+            </span>
             <p class="title u-en"><span>{nextProject.caseLabel}</span></p>
             <div class="image">
               <CaseVisual type={nextProject.visualType} />
             </div>
-            <p class="text">{nextProject.title} — {nextProject.description}</p>
+            <p class="text">
+              {nextProject.title} — <I18nText t={nextProject.description} />
+            </p>
             <div class="tags">
               {nextProject.tech.slice(0, 3).map((t) => (
                 <span class="c-tag">{t}</span>
@@ -180,8 +223,8 @@ const headlineWords = project.headline.split(' ');
             <path d="M6.34921 10.7936L34.5238 39.0476C35.1587 39.6825 35.9132 40 36.7873 40C37.6593 40 38.4127 39.6825 39.0476 39.0476C39.6825 38.4127 40 37.6582 40 36.7841C40 35.9122 39.6825 35.1587 39.0476 34.5238L10.7936 6.34921H34.9206C35.8201 6.34921 36.5746 6.0455 37.1841 5.43809C37.7915 4.82857 38.0952 4.07407 38.0952 3.1746C38.0952 2.27513 37.7915 1.52064 37.1841 0.911112C36.5746 0.303704 35.8201 0 34.9206 0H3.1746C2.27513 0 1.52169 0.303704 0.914288 0.911112C0.304764 1.52064 0 2.27513 0 3.1746V34.9206C0 35.8201 0.304764 36.5735 0.914288 37.181C1.52169 37.7905 2.27513 38.0952 3.1746 38.0952C4.07407 38.0952 4.82751 37.7905 5.43492 37.181C6.04445 36.5735 6.34921 35.8201 6.34921 34.9206V10.7936Z" fill="#FEA831" />
           </svg>
           <span class="label">
-            <span class="label-text">Back to the list</span>
-            <span class="label-text label-text--clone" aria-hidden="true">Back to the list</span>
+            <span class="label-text"><I18nText t={labels.backToList} /></span>
+            <span class="label-text label-text--clone" aria-hidden="true"><I18nText t={labels.backToList} /></span>
           </span>
         </a>
         <small class="p-single-copyright">&copy; {profileInfo.name}</small>

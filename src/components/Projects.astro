@@ -1,6 +1,7 @@
 ---
-import { projects, profileInfo } from '../data/projects';
+import { projects, profileInfo, uiStrings } from '../data/projects';
 import CaseVisual from './CaseVisual.astro';
+import I18nText from './I18nText.astro';
 
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -8,19 +9,20 @@ const slides = [
   {
     index: 1,
     id: 'about',
-    navLabel: 'About',
+    navLabel: uiStrings.cases.aboutNav,
     title: 'About',
+    subtitle: undefined,
     href: `${baseUrl}/cases/about/`,
     visual: 'about' as const,
-    text: 'Từ toán học, mã nguồn và cà phê đến các hệ thống AI thực tiễn. Khám phá hành trình nghiên cứu ML, NLP, Computer Vision & LLMs tại UIT-VNUHCM.',
+    text: uiStrings.cases.aboutSummary,
     marquee:
       'From mathematical foundations to scalable AI pipelines. Exploring BERT, Transformers, T5, RAG, and GPU computing at UIT-VNUHCM.',
-    tags: ['AI Engineer in Training', 'UIT - VNU-HCM', 'ML / NLP / CV'],
+    tags: ['AI Engineer', 'UIT - VNU-HCM', 'ML / NLP / CV'],
   },
   ...projects.map((p, idx) => ({
     index: idx + 2,
     id: p.slug,
-    navLabel: `Case ${idx + 1}`,
+    navLabel: { en: `Case ${idx + 1}`, vi: `Case ${idx + 1}`, ja: `Case ${idx + 1}` },
     title: p.caseLabel,
     subtitle: p.title,
     href: `${baseUrl}/cases/${p.slug}/`,
@@ -60,7 +62,7 @@ const contactIndex = slides.length + 1;
     >
       <div class="c-marquee-track u-en">
         <p><span>Open for AI/ML internships, research collaborations, and engineering conversations in Ho Chi Minh City &amp; beyond.</span></p>
-        <p><span>Open for AI/ML internships, research collaborations, and engineering collaborations in Ho Chi Minh City &amp; beyond.</span></p>
+        <p><span>Open for AI/ML internships, research collaborations, and engineering conversations in Ho Chi Minh City &amp; beyond.</span></p>
       </div>
     </div>
 
@@ -86,7 +88,9 @@ const contactIndex = slides.length + 1;
           <div class="image">
             <CaseVisual type={slide.visual} />
           </div>
-          <p class="text">{slide.text}</p>
+          <p class="text">
+            <I18nText t={slide.text} />
+          </p>
           <div class="tags">
             {slide.tags.map((tag) => (
               <p class="tag">{tag}</p>
@@ -116,7 +120,9 @@ const contactIndex = slides.length + 1;
             <path d="M33.6508 10.7936L5.47619 39.0476C4.84127 39.6825 4.08677 40 3.2127 40C2.34074 40 1.5873 39.6825 0.95238 39.0476C0.317459 38.4127 0 37.6582 0 36.7841C0 35.9122 0.317459 35.1587 0.95238 34.5238L29.2064 6.34921H5.07936C4.17989 6.34921 3.4254 6.0455 2.81587 5.43809C2.20847 4.82857 1.90476 4.07407 1.90476 3.1746C1.90476 2.27513 2.20847 1.52064 2.81587 0.911112C3.4254 0.303704 4.17989 0 5.07936 0H36.8254C37.7249 0 38.4783 0.303704 39.0857 0.911112C39.6952 1.52064 40 2.27513 40 3.1746V34.9206C40 35.8201 39.6952 36.5735 39.0857 37.181C38.4783 37.7905 37.7249 38.0952 36.8254 38.0952C35.9259 38.0952 35.1725 37.7905 34.5651 37.181C33.9556 36.5735 33.6508 35.8201 33.6508 34.9206V10.7936Z" fill="#FEA831" />
           </svg>
         </a>
-        <p class="title-sub u-en">Drop me an email or connect on GitHub anytime!</p>
+        <p class="title-sub">
+          <I18nText t={uiStrings.cases.contactSub} />
+        </p>
 
         <div class="image">
           <CaseVisual type="contact" />
@@ -143,7 +149,9 @@ const contactIndex = slides.length + 1;
               type="button"
               data-nav={slide.index}
             >
-              <span class="label">{slide.navLabel}</span>
+              <span class="label">
+                <I18nText t={slide.navLabel} />
+              </span>
               <span class="dot" aria-hidden="true"></span>
             </button>
           </li>
@@ -154,18 +162,24 @@ const contactIndex = slides.length + 1;
             type="button"
             data-nav={contactIndex}
           >
-            <span class="label">Contact</span>
+            <span class="label">
+              <I18nText t={uiStrings.cases.contactNav} />
+            </span>
             <span class="dot" aria-hidden="true"></span>
           </button>
         </li>
       </ul>
     </nav>
 
-    <!-- Prev / Next Quick Stepper (Bottom Center helper for accessibility) -->
+    <!-- Prev / Next Quick Stepper -->
     <div class="p-case-stepper u-en">
-      <button type="button" id="case-prev-btn" aria-label="Previous case">← Prev</button>
+      <button type="button" id="case-prev-btn" aria-label="Previous case">
+        <I18nText t={uiStrings.cases.prev} />
+      </button>
       <span id="case-counter">1 / {contactIndex}</span>
-      <button type="button" id="case-next-btn" aria-label="Next case">Next →</button>
+      <button type="button" id="case-next-btn" aria-label="Next case">
+        <I18nText t={uiStrings.cases.next} />
+      </button>
     </div>
 
     <small class="p-case-copyright u-en">&copy; {profileInfo.name} ({profileInfo.handle})</small>
@@ -316,8 +330,9 @@ const contactIndex = slides.length + 1;
   }
 
   .title-sub {
-    font-size: 18px;
-    line-height: 1.4;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.5;
     margin-top: 6px;
     margin-bottom: 14px;
     text-align: center;
@@ -331,7 +346,6 @@ const contactIndex = slides.length + 1;
     margin-top: 8px;
   }
 
-  /* Bottom-Right Dot Navigation */
   .p-case-contents__nav {
     position: absolute;
     right: 40px;

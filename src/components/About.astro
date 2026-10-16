@@ -1,96 +1,113 @@
 ---
-import { projects, skillGroups, profileInfo } from '../data/projects';
+import { projects, skillGroups, profileInfo, uiStrings } from '../data/projects';
 import CaseVisual from './CaseVisual.astro';
 import GithubStats from './GithubStats.astro';
+import I18nText from './I18nText.astro';
 
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 const firstCase = projects[0];
-const headlineWords =
-  'From mathematical foundations and raw tensors to scalable AI solutions — exploring the beauty of utility in Machine Learning, NLP, and Computer Vision.'.split(
-    ' '
-  );
+const s = uiStrings.aboutPage;
+
+const headlineWordsEn = s.headline.en.split(' ');
+const headlineWordsVi = s.headline.vi.split(' ');
 ---
 
 <div class="p-single" id="single-page">
   <div class="p-single-head">
-    <p class="p-single-head__eyebrow u-en">About / {profileInfo.name}</p>
+    <p class="p-single-head__eyebrow u-en">
+      <I18nText t={s.eyebrow} />
+    </p>
     <h1 class="p-single-head__title">
-      {headlineWords.map((w, idx) => (
+      <span data-i18n-lang="en">
+        {headlineWordsEn.map((w, idx) => (
+          <span class="word">
+            <span class="word__inner" style={`transition-delay: ${Math.min(idx * 25, 600)}ms`}>
+              {w}
+            </span>
+          </span>
+        ))}
+      </span>
+      <span data-i18n-lang="vi">
+        {headlineWordsVi.map((w, idx) => (
+          <span class="word">
+            <span class="word__inner" style={`transition-delay: ${Math.min(idx * 25, 600)}ms`}>
+              {w}
+            </span>
+          </span>
+        ))}
+      </span>
+      <span data-i18n-lang="ja">
         <span class="word">
-          <span class="word__inner" style={`transition-delay: ${Math.min(idx * 28, 600)}ms`}>
-            {w}
+          <span class="word__inner" style="transition-delay: 80ms">
+            {s.headline.ja}
           </span>
         </span>
-      ))}
+      </span>
     </h1>
   </div>
 
   <section class="p-single-contents">
     <div class="category">
-      <span class="c-tag">AI Engineer in Training</span>
-      <span class="c-tag">UIT — VNU-HCM (3rd Year)</span>
-      <span class="c-tag">Ho Chi Minh City, Vietnam</span>
+      <span class="c-tag"><I18nText t={s.tagRole} /></span>
+      <span class="c-tag"><I18nText t={s.tagSchool} /></span>
+      <span class="c-tag"><I18nText t={s.tagLocation} /></span>
     </div>
 
     <div class="scope">
       <div class="scope__item">
-        <span class="scope__title">Full Name</span>
+        <span class="scope__title"><I18nText t={s.scopeNameLabel} /></span>
         <span class="scope__text">{profileInfo.name}</span>
       </div>
       <div class="scope__item">
-        <span class="scope__title">University</span>
+        <span class="scope__title"><I18nText t={s.scopeUniLabel} /></span>
         <span class="scope__text">UIT — VNU-HCM</span>
       </div>
       <div class="scope__item">
-        <span class="scope__title">Primary Focus</span>
+        <span class="scope__title"><I18nText t={s.scopeFocusLabel} /></span>
         <span class="scope__text">ML, NLP, CV &amp; LLMs</span>
       </div>
     </div>
 
-    <!-- Section 1: About Me -->
+    <!-- Section 1: Who I Am -->
     <div class="body-group">
       <h2 class="body-group__title">
-        <span>Who I Am</span>
+        <I18nText t={s.whoTitle} />
       </h2>
       <div class="body-group__contents">
-        <p>
-          Mình là <b>Nguyễn Thành Đạt</b>, sinh viên năm 3 ngành Công nghệ Thông tin tại <b>Trường Đại học Công nghệ Thông tin — ĐHQG TP.HCM (UIT - VNU-HCM)</b>, định hướng chuyên sâu về <b>Machine Learning, Natural Language Processing (NLP), Computer Vision</b> và <b>Triển khai hệ thống AI (AI System Deployment)</b>.
-        </p>
-        <p>
-          Nếu phải gói gọn cách tiếp cận của mình trong một câu nói, đó là: <b>“{profileInfo.quote}”</b>. Mình không chỉ dừng lại ở việc gọi các thư viện bậc cao mà luôn tìm hiểu bản chất toán học bên dưới — từ việc tự tay cài đặt lại nhân <b>PyTorch Autograd bằng Java &amp; CUDA (JavaTorch)</b>, mô phỏng vật lý thiên văn <b>N-body trên GPU</b>, cho tới thiết kế các pipeline <b>BERT, Transformers, T5 và RAG</b> hoàn chỉnh.
-        </p>
+        <I18nText tag="p" t={s.whoP1} />
+        <I18nText tag="p" t={s.whoP2} />
         <div class="visual-box">
           <div style="width:220px;height:220px">
             <CaseVisual type="about" />
           </div>
         </div>
         <small class="caption">
-          Kết hợp tư duy nền tảng (First-principles math &amp; GPU systems) với khả năng xây dựng sản phẩm AI thực tế.
+          <I18nText t={s.whoCaption} />
         </small>
       </div>
     </div>
 
-    <!-- Section 2: What I Can Do -->
+    <!-- Section 2: What I Do -->
     <div class="body-group">
       <h2 class="body-group__title">
-        <span>What I Do</span>
+        <I18nText t={s.whatTitle} />
       </h2>
       <div class="body-group__contents">
         <p>
-          <b>1. Natural Language Processing &amp; LLM Systems (BERT / T5 / RAG)</b><br />
-          Nghiên cứu kiến trúc Transformer, tối ưu hóa truy xuất ngữ nghĩa (Semantic Vector Retrieval), thiết kế pipeline <b>Retrieval-Augmented Generation (RAG)</b> giảm thiểu ảo giác (hallucination) và gắn trích dẫn nguồn minh bạch.
+          <b><I18nText t={s.what1Title} /></b><br />
+          <I18nText t={s.what1Body} />
         </p>
         <p>
-          <b>2. Computer Vision &amp; Real-time Edge AI (YOLOv8 / BlazeFace / UltraFace / MLTK)</b><br />
-          Xây dựng các hệ thống nhận diện và theo dõi đối tượng thời gian thực từ luồng camera RTSP/YouTube Live, kết hợp tối ưu hóa suy luận (model quantization &amp; inference optimization) với <b>MLTK, BlazeFace, UltraFace</b>.
+          <b><I18nText t={s.what2Title} /></b><br />
+          <I18nText t={s.what2Body} />
         </p>
         <p>
-          <b>3. Deep Learning Foundations &amp; GPU Computing (CUDA / JCuda / cuDNN)</b><br />
-          Hiểu sâu về cấu trúc bộ nhớ Tensor, đồ thị tính toán động (Dynamic Computation Graphs), giải thuật lan truyền ngược (Reverse-mode Autograd) và lập trình song song trên GPU bằng <b>C/CUDA</b>.
+          <b><I18nText t={s.what3Title} /></b><br />
+          <I18nText t={s.what3Body} />
         </p>
         <p>
-          <b>4. End-to-End AI Product Engineering (FastAPI / Flask / React / Vue / Docker)</b><br />
-          Đưa mô hình từ Jupyter Notebook ra môi trường thực tế thông qua REST/WebSocket APIs, cơ sở dữ liệu PostgreSQL/Vector DB và giao diện trực quan hóa dữ liệu thời gian thực.
+          <b><I18nText t={s.what4Title} /></b><br />
+          <I18nText t={s.what4Body} />
         </p>
       </div>
     </div>
@@ -98,13 +115,17 @@ const headlineWords =
     <!-- Section 3: Tech Stack & Tools -->
     <div class="body-group" id="skills">
       <h2 class="body-group__title">
-        <span>Tech Stack</span>
+        <I18nText t={s.techTitle} />
       </h2>
       <div class="body-group__contents">
         {skillGroups.map((group) => (
           <div class="skill-block">
-            <p class="skill-block__title">{group.label}</p>
-            <p class="skill-block__sub">{group.subtitle}</p>
+            <p class="skill-block__title">
+              <I18nText t={group.label} />
+            </p>
+            <p class="skill-block__sub">
+              <I18nText t={group.subtitle} />
+            </p>
             <div class="skill-block__pills">
               {group.items.map((item) => (
                 <span class="c-tag c-tag--outline">{item}</span>
@@ -115,23 +136,23 @@ const headlineWords =
       </div>
     </div>
 
-    <!-- Section 4: Engineering Approach & Goals -->
+    <!-- Section 4: Vision & Goals -->
     <div class="body-group">
       <h2 class="body-group__title">
-        <span>Vision &amp; Goals</span>
+        <I18nText t={s.visionTitle} />
       </h2>
       <div class="body-group__contents">
         <p>
-          <b>Quy trình làm việc của mình:</b><br />
-          Hiểu rõ bài toán &amp; dữ liệu → Nắm vững toán học &amp; kiến trúc mô hình → Thử nghiệm &amp; đo lường định lượng → Tối ưu hóa tốc độ suy luận → Đóng gói thành hệ thống End-to-End có thể mở rộng.
+          <b><I18nText t={s.workflowTitle} /></b><br />
+          <I18nText t={s.workflowSteps} />
         </p>
         <p>
-          <b>🚀 Mục tiêu ngắn hạn (Short-term):</b><br />
-          Xây dựng các hệ thống AI hiệu năng cao, sẵn sàng vận hành trong môi trường Production và tham gia các dự án thực tập / nghiên cứu chuyên sâu về AI/ML.
+          <b><I18nText t={s.shortTermTitle} /></b><br />
+          <I18nText t={s.shortTermBody} />
         </p>
         <p>
-          <b>🌟 Tầm nhìn dài hạn (Long-term):</b><br />
-          Dẫn dắt việc phát triển các sản phẩm ứng dụng AI giải quyết những bài toán thực tiễn có quy mô lớn cho người dùng và doanh nghiệp.
+          <b><I18nText t={s.longTermTitle} /></b><br />
+          <I18nText t={s.longTermBody} />
         </p>
       </div>
     </div>
@@ -139,12 +160,10 @@ const headlineWords =
     <!-- Section 5: Live GitHub Activity -->
     <div class="body-group" id="github-stats">
       <h2 class="body-group__title">
-        <span>GitHub Stats</span>
+        <I18nText t={s.ghTitle} />
       </h2>
       <div class="body-group__contents">
-        <p>
-          Dữ liệu thống kê trực tiếp từ tài khoản GitHub <b>@{profileInfo.handle}</b> được tổng hợp tự động qua GitHub REST API khi build:
-        </p>
+        <I18nText tag="p" t={s.ghDesc} />
         <GithubStats />
       </div>
     </div>
@@ -166,12 +185,16 @@ const headlineWords =
         data-stalker="detail"
         data-nav-link
       >
-        <span class="p-single-next__eyebrow">Next Case</span>
+        <span class="p-single-next__eyebrow">
+          <I18nText t={uiStrings.caseDetail.nextCase} />
+        </span>
         <p class="title u-en"><span>{firstCase.caseLabel}</span></p>
         <div class="image">
           <CaseVisual type={firstCase.visualType} />
         </div>
-        <p class="text">{firstCase.title} — {firstCase.description}</p>
+        <p class="text">
+          {firstCase.title} — <I18nText t={firstCase.description} />
+        </p>
         <div class="tags">
           {firstCase.tech.slice(0, 3).map((t) => (
             <span class="c-tag">{t}</span>
@@ -188,8 +211,8 @@ const headlineWords =
         <path d="M6.34921 10.7936L34.5238 39.0476C35.1587 39.6825 35.9132 40 36.7873 40C37.6593 40 38.4127 39.6825 39.0476 39.0476C39.6825 38.4127 40 37.6582 40 36.7841C40 35.9122 39.6825 35.1587 39.0476 34.5238L10.7936 6.34921H34.9206C35.8201 6.34921 36.5746 6.0455 37.1841 5.43809C37.7915 4.82857 38.0952 4.07407 38.0952 3.1746C38.0952 2.27513 37.7915 1.52064 37.1841 0.911112C36.5746 0.303704 35.8201 0 34.9206 0H3.1746C2.27513 0 1.52169 0.303704 0.914288 0.911112C0.304764 1.52064 0 2.27513 0 3.1746V34.9206C0 35.8201 0.304764 36.5735 0.914288 37.181C1.52169 37.7905 2.27513 38.0952 3.1746 38.0952C4.07407 38.0952 4.82751 37.7905 5.43492 37.181C6.04445 36.5735 6.34921 35.8201 6.34921 34.9206V10.7936Z" fill="#FEA831" />
       </svg>
       <span class="label">
-        <span class="label-text">Back to the list</span>
-        <span class="label-text label-text--clone" aria-hidden="true">Back to the list</span>
+        <span class="label-text"><I18nText t={uiStrings.caseDetail.backToList} /></span>
+        <span class="label-text label-text--clone" aria-hidden="true"><I18nText t={uiStrings.caseDetail.backToList} /></span>
       </span>
     </a>
     <small class="p-single-copyright">&copy; {profileInfo.name}</small>
@@ -212,6 +235,7 @@ const headlineWords =
   .skill-block__title {
     font-family: var(--font-en);
     font-size: 18px;
+    font-weight: 700;
     margin-bottom: 4px !important;
   }
 
