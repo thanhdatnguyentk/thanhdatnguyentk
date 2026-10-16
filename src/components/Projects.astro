@@ -1,273 +1,432 @@
 ---
-import { projects } from '../data/projects';
+import { projects, profileInfo } from '../data/projects';
+import CaseVisual from './CaseVisual.astro';
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const slides = [
+  {
+    index: 1,
+    id: 'about',
+    navLabel: 'About',
+    title: 'About',
+    href: `${baseUrl}/cases/about/`,
+    visual: 'about' as const,
+    text: 'Từ toán học, mã nguồn và cà phê đến các hệ thống AI thực tiễn. Khám phá hành trình nghiên cứu ML, NLP, Computer Vision & LLMs tại UIT-VNUHCM.',
+    marquee:
+      'From mathematical foundations to scalable AI pipelines. Exploring BERT, Transformers, T5, RAG, and GPU computing at UIT-VNUHCM.',
+    tags: ['AI Engineer in Training', 'UIT - VNU-HCM', 'ML / NLP / CV'],
+  },
+  ...projects.map((p, idx) => ({
+    index: idx + 2,
+    id: p.slug,
+    navLabel: `Case ${idx + 1}`,
+    title: p.caseLabel,
+    subtitle: p.title,
+    href: `${baseUrl}/cases/${p.slug}/`,
+    visual: p.visualType,
+    text: p.description,
+    marquee: p.marqueeText,
+    tags: [p.category, ...p.tech.slice(0, 3)],
+  })),
+];
+
+const contactIndex = slides.length + 1;
 ---
 
-<section class="section projects" id="projects">
-  <div class="container">
-    <h2 class="section-title reveal">Featured projects</h2>
-    <p class="section-subtitle reveal" data-delay="1">
-      A selection of things I've built. Click through to read the code, the
-      design notes, and the lessons learned along the way.
-    </p>
+<div class="p-case" id="case-showcase">
+  <h1 class="u-sr">Cases &amp; Featured Projects — {profileInfo.name}</h1>
 
-    <div class="projects__grid">
-      {projects.map((project, idx) => (
-        <article class="projects__item reveal reveal--pop" data-delay={idx + 2}>
-          <md-outlined-card class="projects__card tilt-card shimmer-border">
-            <div class="tilt-card__glare" aria-hidden="true"></div>
-            <div class="projects__card-inner">
-              <header class="projects__card-header">
-                <span class={`projects__category projects__category--${project.category.toLowerCase().replace(/[^a-z]/g, '')}`}>
-                  {project.category}
-                </span>
-                {project.stars !== undefined && (
-                  <span class="projects__stars" aria-label={`${project.stars} stars`}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                    {project.stars}
-                  </span>
-                )}
-              </header>
+  <div class="p-case-contents">
+    <!-- Background 120px Orange Scrolling Marquees (1 per Slide) -->
+    {slides.map((slide, idx) => (
+      <div
+        class={`p-case-contents__background ${idx === 0 ? 'is-active' : ''}`}
+        aria-hidden="true"
+        data-background={slide.index}
+      >
+        <div class="c-marquee-track u-en">
+          <p><span>{slide.marquee}</span></p>
+          <p><span>{slide.marquee}</span></p>
+        </div>
+      </div>
+    ))}
 
-              <h3 class="projects__card-title">{project.title}</h3>
-              <p class="projects__card-desc">{project.description}</p>
-
-              {project.highlights && (
-                <ul class="projects__highlights">
-                  {project.highlights.map((h) => (
-                    <li class="projects__highlight">
-                      <span class="projects__highlight-dot" aria-hidden="true"></span>
-                      {h}
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              <footer class="projects__card-footer">
-                <ul class="projects__tech">
-                  {project.tech.slice(0, 4).map((t) => (
-                    <li class="projects__tech-item">{t}</li>
-                  ))}
-                </ul>
-
-                <a
-                  href={project.url}
-                  class="projects__link magnetic"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`View ${project.title} on GitHub`}
-                >
-                  <span>View on GitHub</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M7 17L17 7"/>
-                    <path d="M7 7h10v10"/>
-                  </svg>
-                </a>
-              </footer>
-            </div>
-          </md-outlined-card>
-        </article>
-      ))}
+    <!-- Contact Slide Background Marquee -->
+    <div
+      class="p-case-contents__background"
+      aria-hidden="true"
+      data-background={contactIndex}
+    >
+      <div class="c-marquee-track u-en">
+        <p><span>Open for AI/ML internships, research collaborations, and engineering conversations in Ho Chi Minh City &amp; beyond.</span></p>
+        <p><span>Open for AI/ML internships, research collaborations, and engineering collaborations in Ho Chi Minh City &amp; beyond.</span></p>
+      </div>
     </div>
 
-    <div class="projects__more reveal" data-delay="6">
-      <md-outlined-button href="https://github.com/thanhdatnguyentk?tab=repositories" target="_blank" rel="noopener noreferrer" class="magnetic">
-        <span slot="icon" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.69-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 015.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0023.5 12C23.5 5.65 18.35.5 12 .5z"/>
+    <!-- Foreground Centered Case Cards (About + Case 1..5) -->
+    {slides.map((slide, idx) => (
+      <div
+        class={`p-case-contents__main ${idx === 0 ? 'is-active' : ''}`}
+        data-list={slide.index}
+        data-case-id={slide.id}
+      >
+        <a
+          href={slide.href}
+          class="p-case-contents__main-item"
+          data-stalker="detail"
+          data-nav-link
+        >
+          <p class="title u-en">
+            <span>{slide.title}</span>
+          </p>
+          {slide.subtitle && (
+            <p class="subtitle u-en">{slide.subtitle}</p>
+          )}
+          <div class="image">
+            <CaseVisual type={slide.visual} />
+          </div>
+          <p class="text">{slide.text}</p>
+          <div class="tags">
+            {slide.tags.map((tag) => (
+              <p class="tag">{tag}</p>
+            ))}
+          </div>
+        </a>
+      </div>
+    ))}
+
+    <!-- Slide 7: Contact ("Say 'Hey!'") -->
+    <div
+      class="p-case-contents__main"
+      data-list={contactIndex}
+      data-case-id="contact"
+      id="contact"
+    >
+      <div class="p-case-contents__main-item p-case-contents__main-item--contact">
+        <a
+          href={`mailto:${profileInfo.email}`}
+          class="title u-en c-clone-link"
+        >
+          <span class="label">
+            <span class="label-text">Say “Hey!”</span>
+            <span class="label-text label-text--clone" aria-hidden="true">Say “Hey!”</span>
+          </span>
+          <svg class="arrow-icon" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M33.6508 10.7936L5.47619 39.0476C4.84127 39.6825 4.08677 40 3.2127 40C2.34074 40 1.5873 39.6825 0.95238 39.0476C0.317459 38.4127 0 37.6582 0 36.7841C0 35.9122 0.317459 35.1587 0.95238 34.5238L29.2064 6.34921H5.07936C4.17989 6.34921 3.4254 6.0455 2.81587 5.43809C2.20847 4.82857 1.90476 4.07407 1.90476 3.1746C1.90476 2.27513 2.20847 1.52064 2.81587 0.911112C3.4254 0.303704 4.17989 0 5.07936 0H36.8254C37.7249 0 38.4783 0.303704 39.0857 0.911112C39.6952 1.52064 40 2.27513 40 3.1746V34.9206C40 35.8201 39.6952 36.5735 39.0857 37.181C38.4783 37.7905 37.7249 38.0952 36.8254 38.0952C35.9259 38.0952 35.1725 37.7905 34.5651 37.181C33.9556 36.5735 33.6508 35.8201 33.6508 34.9206V10.7936Z" fill="#FEA831" />
           </svg>
-        </span>
-        See all 44 repositories
-      </md-outlined-button>
+        </a>
+        <p class="title-sub u-en">Drop me an email or connect on GitHub anytime!</p>
+
+        <div class="image">
+          <CaseVisual type="contact" />
+        </div>
+
+        <div class="contact-pills">
+          <a href={`mailto:${profileInfo.email}`} class="c-tag">
+            ✉ {profileInfo.email}
+          </a>
+          <a href={profileInfo.github} target="_blank" rel="noopener noreferrer" class="c-tag c-tag--outline">
+            GitHub @{profileInfo.handle} ↗
+          </a>
+        </div>
+      </div>
     </div>
+
+    <!-- Bottom-Right Case Dot Navigation (Mild Sugar Signature) -->
+    <nav class="p-case-contents__nav" aria-label="Case study navigation">
+      <ul class="p-case-contents__nav-list">
+        {slides.map((slide, idx) => (
+          <li class="p-case-contents__nav-item">
+            <button
+              class={`button u-en ${idx === 0 ? 'is-current' : ''}`}
+              type="button"
+              data-nav={slide.index}
+            >
+              <span class="label">{slide.navLabel}</span>
+              <span class="dot" aria-hidden="true"></span>
+            </button>
+          </li>
+        ))}
+        <li class="p-case-contents__nav-item">
+          <button
+            class="button u-en"
+            type="button"
+            data-nav={contactIndex}
+          >
+            <span class="label">Contact</span>
+            <span class="dot" aria-hidden="true"></span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Prev / Next Quick Stepper (Bottom Center helper for accessibility) -->
+    <div class="p-case-stepper u-en">
+      <button type="button" id="case-prev-btn" aria-label="Previous case">← Prev</button>
+      <span id="case-counter">1 / {contactIndex}</span>
+      <button type="button" id="case-next-btn" aria-label="Next case">Next →</button>
+    </div>
+
+    <small class="p-case-copyright u-en">&copy; {profileInfo.name} ({profileInfo.handle})</small>
   </div>
-</section>
+</div>
 
 <style>
-  .projects__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
-    margin-top: var(--space-5);
+  .p-case-contents {
+    width: 100%;
+    height: 100svh;
+    overflow: clip;
+    position: relative;
+    background: var(--color-white);
   }
 
-  .projects__card {
-    display: block;
-    height: 100%;
-    transition: transform var(--duration-base) var(--ease-out),
-                box-shadow var(--duration-base) var(--ease-out);
-  }
-
-  .projects__card:hover {
-    transform: translateY(-6px);
-    --md-outlined-card-container-shadow: var(--elevation-3);
-  }
-
-  .projects__card-inner {
-    padding: var(--space-6);
-    height: 100%;
+  .p-case-contents__background {
     display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100svh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.55s var(--custom-ease), visibility 0.55s var(--custom-ease);
+  }
+
+  .p-case-contents__background.is-active {
+    opacity: 0.28;
+    visibility: visible;
+  }
+
+  .p-case-contents__main {
+    width: 100%;
+    height: 100svh;
+    display: flex;
+    justify-content: center;
     flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(28px);
+    transition:
+      opacity 0.5s var(--expo-ease),
+      transform 0.5s var(--expo-ease),
+      visibility 0.5s var(--expo-ease);
+    pointer-events: none;
   }
 
-  .projects__card-header {
+  .p-case-contents__main.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .p-case-contents__main-item {
     display: flex;
+    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-    margin-bottom: var(--space-4);
+    position: relative;
+    padding: 28px 36px;
+    border-radius: 36px;
+    background: rgba(247, 245, 241, 0.82);
+    backdrop-filter: blur(6px);
+    border: 1.5px solid rgba(60, 55, 40, 0.07);
+    transition: transform 0.35s var(--custom-ease), box-shadow 0.35s var(--custom-ease);
   }
 
-  .projects__category {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 10px;
-    border-radius: var(--radius-full);
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    background: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
+  @media (hover: hover) {
+    .p-case-contents__main-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 44px rgba(60, 55, 40, 0.09);
+    }
   }
 
-  .projects__category--aiml {
-    background: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-on-primary-container);
+  @media (max-width: 767px) {
+    .p-case-contents__main-item {
+      padding: 20px;
+      margin-inline: 16px;
+    }
   }
 
-  .projects__category--web {
-    background: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
+  .p-case-contents__main-item .title {
+    font-size: clamp(48px, 6vw, 64px);
+    line-height: 1;
+    margin-bottom: 4px;
+    color: var(--color-black);
   }
 
-  .projects__category--systems {
-    background: var(--md-sys-color-tertiary-container);
-    color: var(--md-sys-color-on-tertiary-container);
+  .p-case-contents__main-item .subtitle {
+    font-size: 18px;
+    color: var(--color-orange);
+    margin-bottom: 12px;
   }
 
-  .projects__stars {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #d97706;
+  .p-case-contents__main-item .image {
+    width: 240px;
+    height: 240px;
+    margin-bottom: 18px;
   }
 
-  .projects__card-title {
-    font-family: var(--font-display);
-    font-size: 22px;
+  @media (max-width: 767px) and (max-height: 700px) {
+    .p-case-contents__main-item .image {
+      width: 170px;
+      height: 170px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .p-case-contents__main-item .text {
+    width: 400px;
+    max-width: 84vw;
+    font-size: 15.5px;
     font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: var(--space-3);
-    color: var(--md-sys-color-on-surface);
-  }
-
-  .projects__card-desc {
-    font-size: 15px;
     line-height: 1.55;
-    color: var(--md-sys-color-on-surface-variant);
-    margin-bottom: var(--space-4);
+    text-align: center;
+    color: var(--color-black);
   }
 
-  .projects__highlights {
+  .p-case-contents__main-item .tags {
+    width: 400px;
+    max-width: 84vw;
     display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    margin-bottom: var(--space-5);
-    padding: var(--space-4);
-    background: var(--md-sys-color-surface-container-lowest);
-    border-radius: var(--radius-sm);
-    border: 1px dashed var(--md-sys-color-outline-variant);
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
   }
 
-  .projects__highlight {
+  .p-case-contents__main-item .tag {
+    width: fit-content;
+    font-family: var(--font-en);
+    font-size: 12px;
+    color: #fff;
+    line-height: 1;
+    background: var(--color-orange);
+    border-radius: 100vmax;
+    padding: 10px 16px;
+  }
+
+  .title-sub {
+    font-size: 18px;
+    line-height: 1.4;
+    margin-top: 6px;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  .contact-pills {
     display: flex;
-    align-items: flex-start;
-    gap: var(--space-2);
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--md-sys-color-on-surface);
-  }
-
-  .projects__highlight-dot {
-    flex-shrink: 0;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--md-sys-color-primary);
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
     margin-top: 8px;
   }
 
-  .projects__card-footer {
-    margin-top: auto;
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--md-sys-color-outline-variant);
+  /* Bottom-Right Dot Navigation */
+  .p-case-contents__nav {
+    position: absolute;
+    right: 40px;
+    bottom: 24px;
+    z-index: 5;
+  }
+
+  @media (max-width: 767px) {
+    .p-case-contents__nav {
+      right: 16px;
+      bottom: 20px;
+    }
+  }
+
+  .p-case-contents__nav-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+    align-items: flex-end;
+    gap: 6px;
   }
 
-  .projects__tech {
+  .p-case-contents__nav .button {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-
-  .projects__tech-item {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 8px;
-    border-radius: var(--radius-xs);
-    background: var(--md-sys-color-surface-container-high);
-    color: var(--md-sys-color-on-surface);
-  }
-
-  .projects__link {
-    display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
-    align-self: flex-start;
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-full);
-    background: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
-    font-weight: 500;
-    font-size: 14px;
-    transition: background var(--duration-fast) var(--ease-out),
-                transform var(--duration-fast) var(--ease-out);
+    gap: 8px;
+    font-size: 12px;
+    line-height: 1.2;
+    color: var(--color-black);
+    opacity: 0.35;
+    cursor: pointer;
+    padding: 3px 0;
+    transition: opacity 0.35s var(--custom-ease), transform 0.35s var(--custom-ease);
   }
 
-  .projects__link:hover {
-    background: var(--md-sys-color-secondary);
-    transform: translateX(2px);
+  .p-case-contents__nav .button .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-orange);
+    border-radius: 50%;
+    transition: transform 0.35s var(--custom-ease);
   }
 
-  .projects__more {
+  @media (hover: hover) {
+    .p-case-contents__nav .button:hover {
+      opacity: 1;
+    }
+  }
+
+  .p-case-contents__nav .button.is-current {
+    opacity: 1;
+    font-weight: 700;
+  }
+
+  .p-case-contents__nav .button.is-current .dot {
+    transform: scale(1.45);
+  }
+
+  .p-case-stepper {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
     display: flex;
-    justify-content: center;
-    margin-top: var(--space-7);
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+    background: var(--color-surface);
+    padding: 8px 18px;
+    border-radius: 100vmax;
   }
 
-  @media (min-width: 768px) {
-    .projects__grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-6);
-    }
-
-    .projects__card-footer {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
+  .p-case-stepper button {
+    opacity: 0.7;
+    transition: opacity 0.2s ease, color 0.2s ease;
   }
 
-  @media (min-width: 1024px) {
-    .projects__grid {
-      grid-template-columns: repeat(3, 1fr);
+  .p-case-stepper button:hover {
+    opacity: 1;
+    color: var(--color-orange);
+  }
+
+  .p-case-copyright {
+    position: fixed;
+    left: 40px;
+    bottom: 24px;
+    font-size: 12px;
+    color: var(--color-black);
+    opacity: 0.5;
+    z-index: 4;
+  }
+
+  @media (max-width: 767px) {
+    .p-case-copyright {
+      display: none;
     }
   }
 </style>

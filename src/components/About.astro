@@ -1,220 +1,229 @@
 ---
-const focusAreas = ['Machine Learning', 'NLP', 'Computer Vision', 'Large Language Models'];
+import { projects, skillGroups, profileInfo } from '../data/projects';
+import CaseVisual from './CaseVisual.astro';
+import GithubStats from './GithubStats.astro';
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const firstCase = projects[0];
+const headlineWords =
+  'From mathematical foundations and raw tensors to scalable AI solutions — exploring the beauty of utility in Machine Learning, NLP, and Computer Vision.'.split(
+    ' '
+  );
 ---
 
-<section class="section about" id="about">
-  <div class="container">
-    <h2 class="section-title reveal">About me</h2>
-    <p class="section-subtitle reveal" data-delay="1">
-      A quick snapshot of who I am and what I'm focused on right now.
-    </p>
+<div class="p-single" id="single-page">
+  <div class="p-single-head">
+    <p class="p-single-head__eyebrow u-en">About / {profileInfo.name}</p>
+    <h1 class="p-single-head__title">
+      {headlineWords.map((w, idx) => (
+        <span class="word">
+          <span class="word__inner" style={`transition-delay: ${Math.min(idx * 28, 600)}ms`}>
+            {w}
+          </span>
+        </span>
+      ))}
+    </h1>
+  </div>
 
-    <div class="about__grid">
-      <md-elevated-card class="about__card about__bio reveal reveal--left" data-delay="2">
-        <div class="about__bio-inner">
-          <p class="about__intro">
-            I'm a <strong>3rd-year IT student</strong> at the
-            <strong>University of Information Technology (UIT) — VNU-HCM</strong>,
-            deeply interested in Machine Learning, NLP, and AI System Deployment.
-          </p>
+  <section class="p-single-contents">
+    <div class="category">
+      <span class="c-tag">AI Engineer in Training</span>
+      <span class="c-tag">UIT — VNU-HCM (3rd Year)</span>
+      <span class="c-tag">Ho Chi Minh City, Vietnam</span>
+    </div>
 
-          <p class="about__intro">
-            Currently exploring <strong>BERT, Transformers, T5, RAG</strong>, and
-            optimising model inference. I love building end-to-end AI pipelines —
-            from data preprocessing to scalable deployment — and I'm experimenting
-            with MLTK, BlazeFace, UltraFace, and custom AI model deployment.
-          </p>
+    <div class="scope">
+      <div class="scope__item">
+        <span class="scope__title">Full Name</span>
+        <span class="scope__text">{profileInfo.name}</span>
+      </div>
+      <div class="scope__item">
+        <span class="scope__title">University</span>
+        <span class="scope__text">UIT — VNU-HCM</span>
+      </div>
+      <div class="scope__item">
+        <span class="scope__title">Primary Focus</span>
+        <span class="scope__text">ML, NLP, CV &amp; LLMs</span>
+      </div>
+    </div>
 
-          <blockquote class="about__quote">
-            <span aria-hidden="true" class="about__quote-mark">“</span>
-            AI is not magic — it's just a lot of math, code, and coffee.
-          </blockquote>
-
-          <div class="about__goals">
-            <div class="about__goal">
-              <h3 class="about__goal-title">
-                <span class="about__goal-icon" aria-hidden="true">→</span>
-                Short-term
-              </h3>
-              <p>Build high-performance AI systems for production.</p>
-            </div>
-            <div class="about__goal">
-              <h3 class="about__goal-title">
-                <span class="about__goal-icon" aria-hidden="true">★</span>
-                Long-term
-              </h3>
-              <p>Lead AI-powered product development in real-world applications.</p>
-            </div>
+    <!-- Section 1: About Me -->
+    <div class="body-group">
+      <h2 class="body-group__title">
+        <span>Who I Am</span>
+      </h2>
+      <div class="body-group__contents">
+        <p>
+          Mình là <b>Nguyễn Thành Đạt</b>, sinh viên năm 3 ngành Công nghệ Thông tin tại <b>Trường Đại học Công nghệ Thông tin — ĐHQG TP.HCM (UIT - VNU-HCM)</b>, định hướng chuyên sâu về <b>Machine Learning, Natural Language Processing (NLP), Computer Vision</b> và <b>Triển khai hệ thống AI (AI System Deployment)</b>.
+        </p>
+        <p>
+          Nếu phải gói gọn cách tiếp cận của mình trong một câu nói, đó là: <b>“{profileInfo.quote}”</b>. Mình không chỉ dừng lại ở việc gọi các thư viện bậc cao mà luôn tìm hiểu bản chất toán học bên dưới — từ việc tự tay cài đặt lại nhân <b>PyTorch Autograd bằng Java &amp; CUDA (JavaTorch)</b>, mô phỏng vật lý thiên văn <b>N-body trên GPU</b>, cho tới thiết kế các pipeline <b>BERT, Transformers, T5 và RAG</b> hoàn chỉnh.
+        </p>
+        <div class="visual-box">
+          <div style="width:220px;height:220px">
+            <CaseVisual type="about" />
           </div>
         </div>
-      </md-elevated-card>
+        <small class="caption">
+          Kết hợp tư duy nền tảng (First-principles math &amp; GPU systems) với khả năng xây dựng sản phẩm AI thực tế.
+        </small>
+      </div>
+    </div>
 
-      <md-outlined-card class="about__card about__focus reveal reveal--right" data-delay="3">
-        <div class="about__focus-inner">
-          <h3 class="about__focus-title">Currently focusing on</h3>
-          <ul class="about__focus-list">
-            {focusAreas.map((area, i) => (
-              <li class="about__focus-item reveal" data-delay={3 + i}>
-                <span class="about__focus-dot" aria-hidden="true"></span>
-                {area}
-              </li>
-            ))}
-          </ul>
+    <!-- Section 2: What I Can Do -->
+    <div class="body-group">
+      <h2 class="body-group__title">
+        <span>What I Do</span>
+      </h2>
+      <div class="body-group__contents">
+        <p>
+          <b>1. Natural Language Processing &amp; LLM Systems (BERT / T5 / RAG)</b><br />
+          Nghiên cứu kiến trúc Transformer, tối ưu hóa truy xuất ngữ nghĩa (Semantic Vector Retrieval), thiết kế pipeline <b>Retrieval-Augmented Generation (RAG)</b> giảm thiểu ảo giác (hallucination) và gắn trích dẫn nguồn minh bạch.
+        </p>
+        <p>
+          <b>2. Computer Vision &amp; Real-time Edge AI (YOLOv8 / BlazeFace / UltraFace / MLTK)</b><br />
+          Xây dựng các hệ thống nhận diện và theo dõi đối tượng thời gian thực từ luồng camera RTSP/YouTube Live, kết hợp tối ưu hóa suy luận (model quantization &amp; inference optimization) với <b>MLTK, BlazeFace, UltraFace</b>.
+        </p>
+        <p>
+          <b>3. Deep Learning Foundations &amp; GPU Computing (CUDA / JCuda / cuDNN)</b><br />
+          Hiểu sâu về cấu trúc bộ nhớ Tensor, đồ thị tính toán động (Dynamic Computation Graphs), giải thuật lan truyền ngược (Reverse-mode Autograd) và lập trình song song trên GPU bằng <b>C/CUDA</b>.
+        </p>
+        <p>
+          <b>4. End-to-End AI Product Engineering (FastAPI / Flask / React / Vue / Docker)</b><br />
+          Đưa mô hình từ Jupyter Notebook ra môi trường thực tế thông qua REST/WebSocket APIs, cơ sở dữ liệu PostgreSQL/Vector DB và giao diện trực quan hóa dữ liệu thời gian thực.
+        </p>
+      </div>
+    </div>
 
-          <div class="about__learning">
-            <h3 class="about__focus-title">Currently learning</h3>
-            <div class="about__learning-chips">
-              <md-assist-chip label="BERT" class="reveal" data-delay="4">BERT</md-assist-chip>
-              <md-assist-chip label="Transformers" class="reveal" data-delay="4">Transformers</md-assist-chip>
-              <md-assist-chip label="T5" class="reveal" data-delay="5">T5</md-assist-chip>
-              <md-assist-chip label="RAG" class="reveal" data-delay="5">RAG</md-assist-chip>
-              <md-assist-chip label="BlazeFace" class="reveal" data-delay="6">BlazeFace</md-assist-chip>
-              <md-assist-chip label="UltraFace" class="reveal" data-delay="6">UltraFace</md-assist-chip>
+    <!-- Section 3: Tech Stack & Tools -->
+    <div class="body-group" id="skills">
+      <h2 class="body-group__title">
+        <span>Tech Stack</span>
+      </h2>
+      <div class="body-group__contents">
+        {skillGroups.map((group) => (
+          <div class="skill-block">
+            <p class="skill-block__title">{group.label}</p>
+            <p class="skill-block__sub">{group.subtitle}</p>
+            <div class="skill-block__pills">
+              {group.items.map((item) => (
+                <span class="c-tag c-tag--outline">{item}</span>
+              ))}
             </div>
           </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Section 4: Engineering Approach & Goals -->
+    <div class="body-group">
+      <h2 class="body-group__title">
+        <span>Vision &amp; Goals</span>
+      </h2>
+      <div class="body-group__contents">
+        <p>
+          <b>Quy trình làm việc của mình:</b><br />
+          Hiểu rõ bài toán &amp; dữ liệu → Nắm vững toán học &amp; kiến trúc mô hình → Thử nghiệm &amp; đo lường định lượng → Tối ưu hóa tốc độ suy luận → Đóng gói thành hệ thống End-to-End có thể mở rộng.
+        </p>
+        <p>
+          <b>🚀 Mục tiêu ngắn hạn (Short-term):</b><br />
+          Xây dựng các hệ thống AI hiệu năng cao, sẵn sàng vận hành trong môi trường Production và tham gia các dự án thực tập / nghiên cứu chuyên sâu về AI/ML.
+        </p>
+        <p>
+          <b>🌟 Tầm nhìn dài hạn (Long-term):</b><br />
+          Dẫn dắt việc phát triển các sản phẩm ứng dụng AI giải quyết những bài toán thực tiễn có quy mô lớn cho người dùng và doanh nghiệp.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section 5: Live GitHub Activity -->
+    <div class="body-group" id="github-stats">
+      <h2 class="body-group__title">
+        <span>GitHub Stats</span>
+      </h2>
+      <div class="body-group__contents">
+        <p>
+          Dữ liệu thống kê trực tiếp từ tài khoản GitHub <b>@{profileInfo.handle}</b> được tổng hợp tự động qua GitHub REST API khi build:
+        </p>
+        <GithubStats />
+      </div>
+    </div>
+  </section>
+
+  <!-- Next Case Preview (Case 1: JavaTorch) -->
+  <div class="p-single-next">
+    <div class="p-single-next__background" aria-hidden="true">
+      <div class="c-marquee-track u-en">
+        <p><span>{firstCase.marqueeText}</span></p>
+        <p><span>{firstCase.marqueeText}</span></p>
+      </div>
+    </div>
+
+    <div class="p-single-next__main">
+      <a
+        href={`${baseUrl}/cases/${firstCase.slug}/`}
+        class="p-single-next__main-item"
+        data-stalker="detail"
+        data-nav-link
+      >
+        <span class="p-single-next__eyebrow">Next Case</span>
+        <p class="title u-en"><span>{firstCase.caseLabel}</span></p>
+        <div class="image">
+          <CaseVisual type={firstCase.visualType} />
         </div>
-      </md-outlined-card>
+        <p class="text">{firstCase.title} — {firstCase.description}</p>
+        <div class="tags">
+          {firstCase.tech.slice(0, 3).map((t) => (
+            <span class="c-tag">{t}</span>
+          ))}
+        </div>
+      </a>
     </div>
   </div>
-</section>
+
+  <!-- Back to List Footer -->
+  <div class="p-single-back">
+    <a href={`${baseUrl}/cases/`} class="p-single-back__text u-en c-clone-link" data-nav-link>
+      <svg class="arrow-icon" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M6.34921 10.7936L34.5238 39.0476C35.1587 39.6825 35.9132 40 36.7873 40C37.6593 40 38.4127 39.6825 39.0476 39.0476C39.6825 38.4127 40 37.6582 40 36.7841C40 35.9122 39.6825 35.1587 39.0476 34.5238L10.7936 6.34921H34.9206C35.8201 6.34921 36.5746 6.0455 37.1841 5.43809C37.7915 4.82857 38.0952 4.07407 38.0952 3.1746C38.0952 2.27513 37.7915 1.52064 37.1841 0.911112C36.5746 0.303704 35.8201 0 34.9206 0H3.1746C2.27513 0 1.52169 0.303704 0.914288 0.911112C0.304764 1.52064 0 2.27513 0 3.1746V34.9206C0 35.8201 0.304764 36.5735 0.914288 37.181C1.52169 37.7905 2.27513 38.0952 3.1746 38.0952C4.07407 38.0952 4.82751 37.7905 5.43492 37.181C6.04445 36.5735 6.34921 35.8201 6.34921 34.9206V10.7936Z" fill="#FEA831" />
+      </svg>
+      <span class="label">
+        <span class="label-text">Back to the list</span>
+        <span class="label-text label-text--clone" aria-hidden="true">Back to the list</span>
+      </span>
+    </a>
+    <small class="p-single-copyright">&copy; {profileInfo.name}</small>
+  </div>
+</div>
 
 <style>
-  .about__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
-    margin-top: var(--space-5);
+  .skill-block {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--color-border);
   }
 
-  .about__card {
-    display: block;
-  }
-
-  .about__bio-inner,
-  .about__focus-inner {
-    padding: var(--space-6);
-  }
-
-  .about__intro {
-    font-size: 17px;
-    line-height: 1.7;
-    color: var(--md-sys-color-on-surface);
-    margin-bottom: var(--space-4);
-  }
-
-  .about__intro:last-of-type {
+  .skill-block:last-child {
     margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
   }
 
-  .about__intro strong {
-    color: var(--md-sys-color-primary);
-    font-weight: 600;
-  }
-
-  .about__quote {
-    position: relative;
-    margin: var(--space-6) 0;
-    padding: var(--space-5) var(--space-5) var(--space-5) var(--space-7);
-    background: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-on-primary-container);
-    border-radius: var(--radius-md);
-    font-family: var(--font-display);
+  .skill-block__title {
+    font-family: var(--font-en);
     font-size: 18px;
-    font-style: italic;
-    line-height: 1.5;
+    margin-bottom: 4px !important;
   }
 
-  .about__quote-mark {
-    position: absolute;
-    left: var(--space-4);
-    top: var(--space-3);
-    font-family: var(--font-display);
-    font-size: 36px;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--md-sys-color-primary);
+  .skill-block__sub {
+    font-size: 13px !important;
+    color: var(--color-muted) !important;
+    margin-bottom: 12px !important;
   }
 
-  .about__goals {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-    margin-top: var(--space-5);
-    padding-top: var(--space-5);
-    border-top: 1px dashed var(--md-sys-color-outline-variant);
-  }
-
-  .about__goal-title {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--md-sys-color-primary);
-    margin-bottom: var(--space-2);
-  }
-
-  .about__goal p {
-    font-size: 15px;
-    color: var(--md-sys-color-on-surface-variant);
-    line-height: 1.6;
-  }
-
-  .about__goal-icon {
-    font-size: 18px;
-    line-height: 1;
-  }
-
-  .about__focus-title {
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--md-sys-color-on-surface-variant);
-    margin-bottom: var(--space-4);
-  }
-
-  .about__focus-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    margin-bottom: var(--space-6);
-  }
-
-  .about__focus-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    font-family: var(--font-display);
-    font-size: 17px;
-    font-weight: 500;
-    color: var(--md-sys-color-on-surface);
-  }
-
-  .about__focus-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
-    flex-shrink: 0;
-  }
-
-  .about__learning-chips {
+  .skill-block__pills {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-
-  @media (min-width: 768px) {
-    .about__grid {
-      grid-template-columns: 1.4fr 1fr;
-      gap: var(--space-6);
-    }
-
-    .about__goals {
-      grid-template-columns: 1fr 1fr;
-    }
+    gap: 8px;
   }
 </style>

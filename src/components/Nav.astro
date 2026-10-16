@@ -1,112 +1,90 @@
 ---
-const links = [
-  { href: '#about', label: 'About' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#github-stats', label: 'Stats' },
-  { href: '#contact', label: 'Contact' },
-];
+import { projects, profileInfo } from '../data/projects';
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const currentPath = Astro.url.pathname;
 ---
 
-<header class="nav">
-  <div class="nav__inner container">
-    <a href="#top" class="nav__brand" aria-label="Home">
-      <span class="nav__brand-mark" aria-hidden="true">td</span>
-      <span class="nav__brand-name">Nguyễn Thành Đạt</span>
-    </a>
+<header class="l-header">
+  <div class="l-header__inner">
+    <div class="l-header__texts">
+      <a href={`${baseUrl}/`} class="l-header__logo u-en" data-nav-link>
+        {profileInfo.shortBrand}
+      </a>
+      <p class="l-header__text u-en">
+        {profileInfo.headerRoles.map((role, idx) => (
+          <>
+            {role}
+            {idx < profileInfo.headerRoles.length - 1 && <br />}
+          </>
+        ))}
+      </p>
+    </div>
 
-    <nav class="nav__links" aria-label="Primary">
-      {links.map((link) => (
-        <a href={link.href} class="nav__link">{link.label}</a>
-      ))}
-    </nav>
+    <div class="l-header__menu-wrap">
+      <button
+        class="l-header__menu-button"
+        id="menu-toggle-btn"
+        type="button"
+        aria-label="Toggle navigation menu"
+        aria-controls="header-menu"
+        aria-expanded="false"
+      >
+        <span class="dot" aria-hidden="true"></span>
+        <span class="dot" aria-hidden="true"></span>
+        <span class="dot" aria-hidden="true"></span>
+      </button>
 
-    <md-filled-tonal-button class="nav__cta" href="#contact">
-      <span slot="icon" aria-hidden="true">✉</span>
-      Hire me
-    </md-filled-tonal-button>
+      <div class="l-header__menu" id="header-menu" inert>
+        <nav class="l-header__menu-nav u-en" aria-label="Main menu">
+          <ul class="l-header__ul">
+            <li class="l-header__li">
+              <a
+                href={`${baseUrl}/`}
+                data-nav-link
+                aria-current={currentPath === `${baseUrl}/` || currentPath === `${baseUrl}` ? 'page' : undefined}
+              >
+                Home
+              </a>
+            </li>
+            <li class="l-header__li">
+              <a
+                href={`${baseUrl}/cases/about/`}
+                data-nav-link
+                aria-current={currentPath.includes('/cases/about') ? 'page' : undefined}
+              >
+                About &amp; Skills
+              </a>
+            </li>
+          </ul>
+
+          <ul class="l-header__ul l-header__ul--case">
+            <li class="l-header__li-title">
+              <a href={`${baseUrl}/cases/`} data-nav-link style="color:inherit">Cases (All 5)</a>
+            </li>
+            {projects.map((p, i) => (
+              <li class="l-header__li">
+                <a
+                  href={`${baseUrl}/cases/${p.slug}/`}
+                  data-nav-link
+                  aria-current={currentPath.includes(`/cases/${p.slug}`) ? 'page' : undefined}
+                >
+                  <span>Case {i + 1}</span>
+                  <span class="case-sub">· {p.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <ul class="l-header__ul">
+            <li class="l-header__li">
+              <a href={`${baseUrl}/cases/?case=contact`} data-nav-link>
+                Contact
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </div>
 </header>
-
-<style>
-  .nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    height: var(--nav-height);
-    background: color-mix(in srgb, var(--md-sys-color-background) 80%, transparent);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
-  }
-
-  .nav__inner {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-  }
-
-  .nav__brand {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 16px;
-    color: var(--md-sys-color-on-background);
-  }
-
-  .nav__brand-mark {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-sm);
-    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
-    color: var(--md-sys-color-on-primary);
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: -0.02em;
-  }
-
-  .nav__brand-name {
-    display: none;
-  }
-
-  .nav__links {
-    display: none;
-    gap: var(--space-2);
-  }
-
-  .nav__link {
-    padding: var(--space-2) var(--space-3);
-    border-radius: var(--radius-full);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--md-sys-color-on-surface-variant);
-    transition: background var(--duration-fast) var(--ease-out),
-                color var(--duration-fast) var(--ease-out);
-  }
-
-  .nav__link:hover,
-  .nav__link:focus-visible {
-    background: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
-  }
-
-  .nav__cta {
-    --md-filled-tonal-button-container-shape: 9999px;
-  }
-
-  @media (min-width: 768px) {
-    .nav__brand-name {
-      display: inline;
-    }
-    .nav__links {
-      display: flex;
-    }
-  }
-</style>

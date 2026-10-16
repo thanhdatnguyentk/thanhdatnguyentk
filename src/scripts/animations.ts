@@ -1,276 +1,365 @@
 /**
- * Animation controllers — wired in src/layouts/Base.astro
- * Runs on every page load. Idempotent and reduced-motion aware.
+ * Mild Sugar Design Interactive Controller
+ * Powers:
+ * 1. Morphing 3-dot orange menu (#menu-toggle-btn / #header-menu)
+ * 2. Home orange loading cover (#home-loading)
+ * 3. Interactive AI Room (Afternoon/Night toggle + Slide-out profile drawer)
+ * 4. Full-screen Case Showcase switcher (wheel, touch swipe, keyboard, dot nav, ?case= query)
+ * 5. 220px Orange Floating Stalker Cursor ("Hey!" & "View Detail ↗")
+ * 6. Editorial single page word-by-word reveal & Orange Curtain transition
  */
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* =====================================================================
-   Scroll reveal observer — adds `is-visible` to `.reveal` elements
+   1. Morphing 3-Dot Orange Header Menu
    ===================================================================== */
-function initScrollReveal() {
-  const reveals = document.querySelectorAll<HTMLElement>('.reveal');
-  if (reveals.length === 0) return;
+function initHeaderMenu() {
+  const btn = document.getElementById('menu-toggle-btn');
+  const menu = document.getElementById('header-menu');
+  if (!btn || !menu) return;
 
-  if (prefersReducedMotion) {
-    reveals.forEach((el) => el.classList.add('is-visible'));
-    return;
+  function setMenuOpen(open: boolean) {
+    btn!.setAttribute('aria-expanded', String(open));
+    menu!.classList.toggle('is-open', open);
+    if (open) {
+      menu!.removeAttribute('inert');
+    } else {
+      menu!.setAttribute('inert', '');
+    }
   }
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.15, rootMargin: '0px 0px -80px 0px' }
-  );
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    setMenuOpen(!isOpen);
+  });
 
-  reveals.forEach((el) => observer.observe(el));
-}
+  document.addEventListener('click', (e) => {
+    const target = e.target as Node;
+    if (!menu.contains(target) && !btn.contains(target)) {
+      setMenuOpen(false);
+    }
+  });
 
-/* =====================================================================
-   3D tilt effect — applies to elements with `.tilt-card`
-   ===================================================================== */
-function initTiltCards() {
-  if (prefersReducedMotion) return;
-
-  const cards = document.querySelectorAll<HTMLElement>('.tilt-card');
-  cards.forEach((card) => {
-    let rafId: number | null = null;
-
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const cx = e.clientX - rect.left;
-      const cy = e.clientY - rect.top;
-      const xPct = (cx / rect.width - 0.5) * 2;   // -1..1
-      const yPct = (cy / rect.height - 0.5) * 2;  // -1..1
-      const maxAngle = 6;
-
-      card.style.setProperty('--mx', `${cx}px`);
-      card.style.setProperty('--my', `${cy}px`);
-
-      if (rafId !== null) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        card.style.transform = `perspective(900px) rotateY(${xPct * maxAngle}deg) rotateX(${-yPct * maxAngle}deg) translateZ(0)`;
-      });
-    });
-
-    card.addEventListener('mouseleave', () => {
-      if (rafId !== null) cancelAnimationFrame(rafId);
-      card.style.transform = 'perspective(900px) rotateY(0) rotateX(0)';
-      card.style.removeProperty('--mx');
-      card.style.removeProperty('--my');
-    });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setMenuOpen(false);
   });
 }
 
 /* =====================================================================
-   Magnetic buttons — slight pull toward cursor
+   2. Home Orange Loading Cover & Interactive Room + Drawer
    ===================================================================== */
-function initMagnetic() {
-  if (prefersReducedMotion) return;
+function initHomeExperience() {
+  const loading = document.getElementById('home-loading');
+  const contents = document.getElementById('home-contents');
+  const roomWrap = document.getElementById('room-wrap');
+  const trigger = document.getElementById('character-trigger');
+  const openPill = document.getElementById('open-drawer-pill');
+  const closeBtn = document.getElementById('close-drawer-btn');
+  const timeBtn = document.getElementById('time-toggle-btn');
+  const timeLabel = document.getElementById('time-toggle-label');
 
-  const magnets = document.querySelectorAll<HTMLElement>('.magnetic');
-  magnets.forEach((el) => {
-    let rafId: number | null = null;
-
-    el.addEventListener('mousemove', (e) => {
-      const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
-      const strength = 0.25;
-
-      if (rafId !== null) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        el.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
-      });
-    });
-
-    el.addEventListener('mouseleave', () => {
-      if (rafId !== null) cancelAnimationFrame(rafId);
-      el.style.transform = 'translate(0, 0)';
-    });
-  });
-}
-
-/* =====================================================================
-   Parallax blobs — DISABLED; floating-blobs.ts handles drift + scroll
-   ===================================================================== */
-function initParallaxBlobs() {
-  // No-op. Floating-blobs system owns .ambient-blob / .parallax-blob
-  // elements and applies combined drift + scrollY transforms.
-}
-
-/* =====================================================================
-   Number counter — animates from 0 to target when in view
-   ===================================================================== */
-function initCounters() {
-  if (prefersReducedMotion) {
-    document.querySelectorAll<HTMLElement>('[data-counter]').forEach((el) => {
-      el.textContent = el.dataset.counterTarget ?? el.textContent ?? '';
-    });
-    return;
+  if (loading) {
+    const alreadyShown = sessionStorage.getItem('msd_intro_shown') === '1';
+    if (prefersReducedMotion || alreadyShown) {
+      loading.classList.add('is-hidden');
+    } else {
+      const hide = () => {
+        loading.classList.add('is-hidden');
+        sessionStorage.setItem('msd_intro_shown', '1');
+      };
+      setTimeout(hide, 950);
+      loading.addEventListener('click', hide, { once: true });
+    }
   }
 
-  const counters = document.querySelectorAll<HTMLElement>('[data-counter]');
-  if (counters.length === 0) return;
+  if (!contents) return;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target as HTMLElement;
-        const target = parseInt(el.dataset.counter ?? '0', 10);
-        const duration = 1500;
-        const startTime = performance.now();
+  // Auto-detect Afternoon vs Night mode from current hour
+  if (roomWrap && timeBtn && timeLabel) {
+    const hour = new Date().getHours();
+    let mode: 'afternoon' | 'night' = hour >= 18 || hour < 6 ? 'night' : 'afternoon';
 
-        function step(now: number) {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          // ease-out cubic
-          const eased = 1 - Math.pow(1 - progress, 3);
-          el.textContent = Math.round(target * eased).toLocaleString();
-          if (progress < 1) requestAnimationFrame(step);
-        }
+    const applyTimeMode = (m: 'afternoon' | 'night') => {
+      roomWrap.setAttribute('data-time-mode', m);
+      timeLabel.textContent = m === 'afternoon' ? 'Afternoon Lab ☀️' : 'Night Lab 🌙';
+    };
 
-        requestAnimationFrame(step);
-        observer.unobserve(el);
-      });
-    },
-    { threshold: 0.5 }
-  );
+    applyTimeMode(mode);
 
-  counters.forEach((el) => observer.observe(el));
+    timeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mode = mode === 'afternoon' ? 'night' : 'afternoon';
+      applyTimeMode(mode);
+    });
+  }
+
+  function setDrawerOpen(open: boolean) {
+    contents!.classList.toggle('is-drawer-open', open);
+    if (trigger) {
+      trigger.setAttribute('aria-expanded', String(open));
+    }
+    if (openPill) {
+      openPill.querySelector('span')!.textContent = open
+        ? 'Hide Profile'
+        : 'Say “Hey!” / Open Profile';
+    }
+  }
+
+  if (trigger) {
+    trigger.addEventListener('click', () => {
+      const isOpen = contents.classList.contains('is-drawer-open');
+      setDrawerOpen(!isOpen);
+    });
+
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const isOpen = contents.classList.contains('is-drawer-open');
+        setDrawerOpen(!isOpen);
+      }
+    });
+  }
+
+  if (openPill) {
+    openPill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = contents.classList.contains('is-drawer-open');
+      setDrawerOpen(!isOpen);
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => setDrawerOpen(false));
+  }
 }
 
 /* =====================================================================
-   Cursor follower — glowing dot following cursor
+   3. Full-Screen Case Showcase Switcher (/cases/)
    ===================================================================== */
-function initCursorFollower() {
+function initCaseShowcase() {
+  const showcase = document.getElementById('case-showcase');
+  if (!showcase) return;
+
+  const backgrounds = Array.from(
+    showcase.querySelectorAll<HTMLElement>('.p-case-contents__background')
+  );
+  const slides = Array.from(
+    showcase.querySelectorAll<HTMLElement>('.p-case-contents__main')
+  );
+  const navButtons = Array.from(
+    showcase.querySelectorAll<HTMLButtonElement>('.p-case-contents__nav .button')
+  );
+  const prevBtn = document.getElementById('case-prev-btn');
+  const nextBtn = document.getElementById('case-next-btn');
+  const counterEl = document.getElementById('case-counter');
+
+  const total = slides.length;
+  if (total === 0) return;
+
+  let currentIndex = 1; // 1-based index matching data-list / data-background / data-nav
+  let isTransitioning = false;
+
+  function goToSlide(targetIdx: number) {
+    const normalized = ((targetIdx - 1 + total) % total) + 1;
+    currentIndex = normalized;
+
+    backgrounds.forEach((bg) => {
+      const idx = Number(bg.dataset.background);
+      bg.classList.toggle('is-active', idx === currentIndex);
+    });
+
+    slides.forEach((slide) => {
+      const idx = Number(slide.dataset.list);
+      slide.classList.toggle('is-active', idx === currentIndex);
+    });
+
+    navButtons.forEach((btn) => {
+      const idx = Number(btn.dataset.nav);
+      btn.classList.toggle('is-current', idx === currentIndex);
+    });
+
+    if (counterEl) {
+      counterEl.textContent = `${currentIndex} / ${total}`;
+    }
+  }
+
+  // Check URL query parameter ?case=contact or ?case=1..7
+  const params = new URLSearchParams(window.location.search);
+  const caseParam = params.get('case');
+  if (caseParam) {
+    if (caseParam.toLowerCase() === 'contact') {
+      goToSlide(total);
+    } else if (/^\d+$/.test(caseParam)) {
+      goToSlide(Number(caseParam));
+    } else {
+      const matched = slides.find((s) => s.dataset.caseId === caseParam);
+      if (matched && matched.dataset.list) {
+        goToSlide(Number(matched.dataset.list));
+      }
+    }
+  }
+
+  // Dot nav buttons
+  navButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = Number(btn.dataset.nav);
+      if (target) goToSlide(target);
+    });
+  });
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+  }
+
+  // Mouse wheel navigation with cooldown
+  window.addEventListener(
+    'wheel',
+    (e) => {
+      if (isTransitioning) return;
+      if (Math.abs(e.deltaY) < 24) return;
+      isTransitioning = true;
+      if (e.deltaY > 0) {
+        goToSlide(currentIndex + 1);
+      } else {
+        goToSlide(currentIndex - 1);
+      }
+      setTimeout(() => {
+        isTransitioning = false;
+      }, 650);
+    },
+    { passive: true }
+  );
+
+  // Keyboard arrow navigation
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      goToSlide(currentIndex + 1);
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goToSlide(currentIndex - 1);
+    }
+  });
+
+  // Touch swipe up/down
+  let touchStartY = 0;
+  showcase.addEventListener(
+    'touchstart',
+    (e) => {
+      touchStartY = e.touches[0]?.clientY ?? 0;
+    },
+    { passive: true }
+  );
+
+  showcase.addEventListener(
+    'touchend',
+    (e) => {
+      const touchEndY = e.changedTouches[0]?.clientY ?? 0;
+      const diff = touchStartY - touchEndY;
+      if (Math.abs(diff) > 45) {
+        if (diff > 0) goToSlide(currentIndex + 1);
+        else goToSlide(currentIndex - 1);
+      }
+    },
+    { passive: true }
+  );
+}
+
+/* =====================================================================
+   4. Floating 220px Orange Stalker Cursor
+   ===================================================================== */
+function initStalkerCursor() {
   if (prefersReducedMotion) return;
   if (!window.matchMedia('(hover: hover)').matches) return;
 
-  const dot = document.createElement('div');
-  dot.className = 'cursor-dot';
-  document.body.appendChild(dot);
+  const stalker = document.getElementById('stalker-cursor');
+  const stalkerText = document.getElementById('stalker-text');
+  const stalkerArrow = document.getElementById('stalker-arrow');
+  if (!stalker || !stalkerText || !stalkerArrow) return;
 
-  let dotX = 0;
-  let dotY = 0;
-  let mouseX = 0;
-  let mouseY = 0;
-  let visible = false;
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let curX = mouseX;
+  let curY = mouseY;
+  let isVisible = false;
 
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    if (!visible) {
-      dot.classList.add('is-active');
-      visible = true;
+
+    const target = (e.target as HTMLElement | null)?.closest<HTMLElement>('[data-stalker]');
+    if (target) {
+      const mode = target.dataset.stalker;
+      isVisible = true;
+      stalker.classList.add('is-visible');
+      if (mode === 'detail') {
+        stalker.classList.add('is-detail');
+        stalkerText.textContent = 'View Detail';
+        stalkerArrow.style.display = 'block';
+      } else {
+        stalker.classList.remove('is-detail');
+        stalkerText.textContent = 'Hey!';
+        stalkerArrow.style.display = 'none';
+      }
+    } else if (isVisible) {
+      isVisible = false;
+      stalker.classList.remove('is-visible');
     }
-  });
-
-  document.addEventListener('mouseleave', () => {
-    dot.classList.remove('is-active');
-    visible = false;
-  });
-
-  // Enlarge when hovering interactive elements
-  const interactive = 'a, button, md-filled-button, md-outlined-button, md-filled-tonal-button, md-icon-button, .magnetic, .projects__card, .skills__card, .tilt-card';
-  document.addEventListener('mouseover', (e) => {
-    const target = e.target as HTMLElement;
-    if (target.closest(interactive)) dot.classList.add('is-hover');
-  });
-  document.addEventListener('mouseout', (e) => {
-    const target = e.target as HTMLElement;
-    if (target.closest(interactive)) dot.classList.remove('is-hover');
   });
 
   function tick() {
-    dotX += (mouseX - dotX) * 0.2;
-    dotY += (mouseY - dotY) * 0.2;
-    dot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
+    curX += (mouseX - curX) * 0.16;
+    curY += (mouseY - curY) * 0.16;
+    const scale = isVisible ? 1 : 0.35;
+    stalker!.style.transform = `translate3d(${curX}px, ${curY}px, 0) translate(-50%, -50%) scale(${scale})`;
     requestAnimationFrame(tick);
-  }
-  tick();
-}
-
-/* =====================================================================
-   Text scramble — scrambles target text on hover
-   ===================================================================== */
-const SCRAMBLE_CHARS = '!<>-_\\/[]{}—=+*^?#________';
-
-function scramble(el: HTMLElement, finalText: string, duration = 800) {
-  if (prefersReducedMotion) {
-    el.textContent = finalText;
-    return;
-  }
-  const chars = finalText.split('');
-  const total = chars.length;
-  const start = performance.now();
-  let frame = 0;
-
-  function tick(now: number) {
-    const elapsed = now - start;
-    const progress = Math.min(elapsed / duration, 1);
-    let output = '';
-    for (let i = 0; i < total; i++) {
-      const charProgress = Math.max(0, Math.min(1, (progress * 1.4) - i / total * 0.5));
-      if (charProgress === 1) {
-        output += chars[i];
-      } else if (charProgress > 0) {
-        output += SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
-      } else {
-        output += ' ';
-      }
-    }
-    el.textContent = output;
-    if (progress < 1) requestAnimationFrame(tick);
-    else el.textContent = finalText;
-    frame++;
   }
 
   requestAnimationFrame(tick);
-  void frame;
-}
-
-function initScramble() {
-  if (prefersReducedMotion) return;
-  const targets = document.querySelectorAll<HTMLElement>('[data-scramble]');
-  targets.forEach((el) => {
-    const original = el.dataset.scramble ?? el.textContent ?? '';
-    el.classList.add('scramble-text');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            scramble(el, original, 1200);
-            observer.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-    observer.observe(el);
-  });
 }
 
 /* =====================================================================
-   Init all
+   5. Single Editorial Headline Reveal & Orange Curtain Transition
    ===================================================================== */
+function initSingleAndTransitions() {
+  const single = document.getElementById('single-page');
+  if (single) {
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        single.classList.add('is-ready');
+      }, 60);
+    });
+  }
+
+  const curtain = document.getElementById('page-transition');
+  if (!curtain || prefersReducedMotion) return;
+
+  document.querySelectorAll<HTMLAnchorElement>('a[data-nav-link]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || link.target === '_blank' || e.metaKey || e.ctrlKey) {
+        return;
+      }
+      e.preventDefault();
+      curtain.classList.add('is-active');
+      setTimeout(() => {
+        window.location.href = href;
+      }, 320);
+    });
+  });
+}
+
 function init() {
-  initScrollReveal();
-  initTiltCards();
-  initMagnetic();
-  initParallaxBlobs();
-  initCounters();
-  initCursorFollower();
-  initScramble();
+  initHeaderMenu();
+  initHomeExperience();
+  initCaseShowcase();
+  initStalkerCursor();
+  initSingleAndTransitions();
 }
 
 if (document.readyState === 'loading') {

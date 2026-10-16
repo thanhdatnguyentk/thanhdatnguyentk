@@ -1,361 +1,673 @@
 ---
-import { stats } from '../data/projects';
+import { stats, profileInfo } from '../data/projects';
 
-const codeSnippet = `<span class="code-key">class</span> <span class="code-cls">AIEngineer</span> {
-  <span class="code-key">constructor</span>() {
-    <span class="code-var">this</span>.name = <span class="code-str">'Nguyễn Thành Đạt'</span>;
-    <span class="code-var">this</span>.focus = [<span class="code-str">'ML'</span>, <span class="code-str">'NLP'</span>, <span class="code-str">'CV'</span>, <span class="code-str">'LLMs'</span>];
-    <span class="code-var">this</span>.school = <span class="code-str">'UIT - VNU-HCM'</span>;
-    <span class="code-var">this</span>.coffee = <span class="code-num">Infinity</span>;
-  }
-
-  <span class="code-fn">build</span>(idea) {
-    <span class="code-key">return</span> <span class="code-fn">train</span>(<span class="code-fn">deploy</span>(idea));
-  }
-}`;
-
-// Typing SVG URL — readme-typing-svg by DenverCoder1
-// Renders animated rotating tagline matching the original GitHub profile README.
-// Fallback text is shown if the service is unavailable.
-const typingSvgUrl =
-  'https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=600&size=26&pause=1000&color=0EA5E9&center=true&vCenter=true&width=600&lines=Hi,+I%27m+Nguy%E1%BB%85n+Th%C3%A0nh+%C4%90%E1%BA%A1t+!+%F0%9F%91%8B;AI+Engineer+in+the+making+%F0%9F%9A%80;Turning+data+into+AI+solutions+%E2%9A%99%EF%B8%8F';
-
-// Pure-CSS typing fallback (visible only if <img> fails to load)
-const typingFallbackPhrases = [
-  "Hi, I'm Nguyễn Thành Đạt",
-  'AI Engineer in the making',
-  'Turning data into AI solutions',
-];
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<section class="hero" id="top">
-  <div class="ambient-bg" aria-hidden="true">
-    <div class="ambient-blob ambient-blob--1 parallax-blob"></div>
-    <div class="ambient-blob ambient-blob--2 parallax-blob"></div>
-    <div class="ambient-blob ambient-blob--3 parallax-blob"></div>
+<div class="p-index">
+  <h1 class="u-sr">{profileInfo.name} — {profileInfo.role}</h1>
+
+  <!-- Orange Loading Cover (Mild Sugar Signature Intro) -->
+  <div class="p-index-loading" id="home-loading" role="status" aria-label="Loading portfolio">
+    <div class="p-index-loading__contents u-en">
+      <div class="p-index-loading__contents-cover">
+        <p class="text">
+          Don’t be shy.<br />Feel free to say
+        </p>
+        <p class="title">“Hey!”</p>
+      </div>
+      <!-- Rotating Circular Typography Badge -->
+      <svg class="circle" width="320" height="320" viewBox="0 0 320 320" aria-hidden="true">
+        <defs>
+          <path
+            id="loadingCirclePath"
+            d="M 160, 160 m -124, 0 a 124,124 0 1,1 248,0 a 124,124 0 1,1 -248,0"
+          />
+        </defs>
+        <text fill="#ffffff" font-family="Righteous, sans-serif" font-size="13.5" letter-spacing="3.2">
+          <textPath href="#loadingCirclePath">
+            NGUYEN THANH DAT • AI ENGINEER IN THE MAKING • UIT VNU-HCM •
+          </textPath>
+        </text>
+      </svg>
+    </div>
+    <div class="p-index-loading__filter" aria-hidden="true"></div>
   </div>
 
-  <div class="container hero__inner">
-    <div class="hero__content">
-      <md-assist-chip class="hero__chip intro-fade" label="Available for internships & collabs">
-        <span slot="icon" aria-hidden="true">
-          <span class="pulse-dot" aria-hidden="true"></span>
-        </span>
-        Available for internships & collabs
-      </md-assist-chip>
+  <!-- Interactive Room & Slide-Out Drawer -->
+  <div class="p-index-contents" id="home-contents">
+    <div class="p-index-contents__room-wrap" id="room-wrap" data-time-mode="afternoon">
+      <!-- Time of Day / Ambience Switcher + Quick Hint -->
+      <div class="p-index-controls">
+        <button
+          type="button"
+          class="p-index-control-pill u-en"
+          id="time-toggle-btn"
+          aria-label="Switch room lighting between Afternoon and Night mode"
+        >
+          <span class="dot"></span>
+          <span id="time-toggle-label">Afternoon Lab</span>
+        </button>
 
-      <!-- Animated typing tagline — primary source: readme-typing-svg service -->
-      <div class="hero__typing intro-fade intro-fade--delay-1" role="img" aria-label="Rotating tagline: Hi I'm Nguyễn Thành Đạt, AI Engineer in the making, Turning data into AI solutions">
-        <img
-          src={typingSvgUrl}
-          alt=""
-          width="600"
-          height="60"
-          loading="eager"
-          decoding="async"
-          class="hero__typing-img"
-          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-        />
-        <div class="hero__typing-fallback" aria-hidden="true">
-          <span class="hero__typing-text" data-phrases={JSON.stringify(typingFallbackPhrases)}></span>
+        <button
+          type="button"
+          class="p-index-control-pill p-index-control-pill--cta u-en"
+          id="open-drawer-pill"
+        >
+          <span>Say “Hey!” / Open Profile</span>
+        </button>
+      </div>
+
+      <!-- Illustrated Interactive AI Engineer Room (Afternoon & Night Responsive) -->
+      <div
+        class="p-index-room-Trigger"
+        id="character-trigger"
+        role="button"
+        tabindex="0"
+        data-stalker="hey"
+        aria-label="Click to say Hey and open Nguyễn Thành Đạt's profile drawer"
+        aria-expanded="false"
+      >
+        <svg
+          class="room-svg"
+          viewBox="0 0 1440 900"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="xMidYMid slice"
+        >
+          <!-- Room Background Wall -->
+          <rect class="wall-bg" width="1440" height="900" fill="#EFECE6" />
+
+          <!-- Subtle Architectural Grid -->
+          <g class="room-grid" stroke="#3C3728" stroke-opacity="0.06" stroke-width="1.5">
+            <line x1="0" y1="680" x2="1440" y2="680" />
+            <line x1="280" y1="0" x2="280" y2="680" />
+            <line x1="1160" y1="0" x2="1160" y2="680" />
+          </g>
+
+          <!-- Large Studio Window (Left-Center) showing HCMC / UIT Sky -->
+          <g transform="translate(170, 130)">
+            <rect x="0" y="0" width="280" height="360" rx="24" class="window-sky" fill="#FFFDF9" stroke="#3C3728" stroke-width="4" />
+            <!-- Sun / Moon -->
+            <circle cx="200" cy="88" r="36" class="sky-orb" fill="#FEA831" />
+            <!-- Night Stars (visible in night mode) -->
+            <g class="night-stars" opacity="0">
+              <circle cx="70" cy="70" r="3" fill="#FFF" />
+              <circle cx="120" cy="110" r="2.5" fill="#FEA831" />
+              <circle cx="85" cy="160" r="2" fill="#FFF" />
+              <circle cx="220" cy="180" r="3" fill="#FFF" />
+            </g>
+            <!-- Distant skyline / clouds -->
+            <path d="M20 290 C80 260, 140 275, 260 280 L260 340 L20 340 Z" fill="#FEA831" fill-opacity="0.22" />
+            <line x1="140" y1="0" x2="140" y2="360" stroke="#3C3728" stroke-width="4" />
+            <line x1="0" y1="180" x2="280" y2="180" stroke="#3C3728" stroke-width="4" />
+          </g>
+
+          <!-- Wall Whiteboard: Neural Network & Transformer Architecture -->
+          <g transform="translate(520, 120)">
+            <rect x="0" y="0" width="420" height="230" rx="18" fill="#F7F5F1" stroke="#3C3728" stroke-width="4" />
+            <rect x="18" y="18" width="110" height="26" rx="13" fill="#FEA831" />
+            <text x="73" y="35" text-anchor="middle" fill="#3C3728" font-family="Righteous, sans-serif" font-size="12">BERT • RAG • T5</text>
+
+            <!-- Neural Graph Nodes on Whiteboard -->
+            <g stroke="#3C3728" stroke-width="2.5">
+              <line x1="65" y1="95" x2="145" y2="75" />
+              <line x1="65" y1="95" x2="145" y2="125" />
+              <line x1="65" y1="145" x2="145" y2="75" />
+              <line x1="65" y1="145" x2="145" y2="125" />
+              <line x1="145" y1="75" x2="225" y2="105" />
+              <line x1="145" y1="125" x2="225" y2="105" />
+            </g>
+            <circle cx="65" cy="95" r="11" fill="#F7F5F1" stroke="#3C3728" stroke-width="3" />
+            <circle cx="65" cy="145" r="11" fill="#F7F5F1" stroke="#3C3728" stroke-width="3" />
+            <circle cx="145" cy="75" r="11" fill="#FEA831" stroke="#3C3728" stroke-width="3" />
+            <circle cx="145" cy="125" r="11" fill="#FEA831" stroke="#3C3728" stroke-width="3" />
+            <circle cx="225" cy="105" r="13" fill="#3C3728" />
+
+            <!-- Formula & Loss curve note -->
+            <rect x="268" y="56" width="126" height="92" rx="12" fill="#EFECE6" stroke="#3C3728" stroke-width="2.5" />
+            <path d="M284 78 Q305 128 378 132" stroke="#FEA831" stroke-width="3.5" stroke-linecap="round" fill="none" />
+            <text x="331" y="74" text-anchor="middle" fill="#3C3728" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">loss ↓ 0.012</text>
+
+            <text x="24" y="198" fill="#3C3728" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700">
+              “AI is math, code &amp; coffee.” — UIT-VNUHCM
+            </text>
+          </g>
+
+          <!-- Bookshelf & GPU Server Rack (Right) -->
+          <g transform="translate(1010, 170)">
+            <rect x="0" y="0" width="210" height="320" rx="18" fill="#F7F5F1" stroke="#3C3728" stroke-width="4" />
+            <line x1="0" y1="105" x2="210" y2="105" stroke="#3C3728" stroke-width="4" />
+            <line x1="0" y1="210" x2="210" y2="210" stroke="#3C3728" stroke-width="4" />
+            <!-- Books -->
+            <rect x="24" y="35" width="22" height="68" rx="4" fill="#FEA831" stroke="#3C3728" stroke-width="2.5" />
+            <rect x="50" y="43" width="26" height="60" rx="4" fill="#3C3728" />
+            <rect x="82" y="38" width="22" height="65" rx="4" fill="#EFECE6" stroke="#3C3728" stroke-width="2.5" transform="rotate(-8 82 38)" />
+            <!-- CUDA GPU Node Cluster -->
+            <rect x="24" y="130" width="162" height="58" rx="10" fill="#3C3728" />
+            <circle cx="46" cy="159" r="6" fill="#FEA831" class="gpu-pulse" />
+            <circle cx="68" cy="159" r="6" fill="#10B981" />
+            <text x="132" y="164" text-anchor="middle" fill="#F7F5F1" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">CUDA • GPU</text>
+            <!-- Potted Plant -->
+            <rect x="80" y="256" width="50" height="50" rx="10" fill="#FEA831" stroke="#3C3728" stroke-width="3" />
+            <path d="M105 256 C85 230, 75 240, 72 222 C95 220, 102 238, 105 256 Z" fill="#3C3728" />
+            <path d="M105 256 C125 226, 138 236, 140 218 C115 218, 108 236, 105 256 Z" fill="#3C3728" />
+          </g>
+
+          <!-- Main Desk & Dual Monitors + Character Centerpiece -->
+          <g transform="translate(0, 20)">
+            <!-- Character (AI Engineer at Desk) -->
+            <g class="character-group" transform="translate(610, 320)">
+              <!-- Floating Speech Bubble Prompt -->
+              <g class="speech-bubble" transform="translate(155, -35)">
+                <rect x="0" y="0" width="136" height="48" rx="24" fill="#FEA831" stroke="#3C3728" stroke-width="3.5" />
+                <text x="68" y="30" text-anchor="middle" fill="#3C3728" font-family="Righteous, sans-serif" font-size="20">Click “Hey!”</text>
+              </g>
+
+              <!-- Head & Hair & Glasses -->
+              <rect x="58" y="88" width="104" height="90" rx="38" fill="#3C3728" />
+              <circle cx="110" cy="62" r="42" fill="#F7F5F1" stroke="#3C3728" stroke-width="4" />
+              <!-- Hair -->
+              <path d="M68 58 C68 26, 152 26, 152 58 C140 42, 85 42, 68 58 Z" fill="#3C3728" />
+              <!-- Glasses -->
+              <rect x="82" y="52" width="24" height="16" rx="5" fill="#FEA831" fill-opacity="0.25" stroke="#3C3728" stroke-width="3" />
+              <rect x="114" y="52" width="24" height="16" rx="5" fill="#FEA831" fill-opacity="0.25" stroke="#3C3728" stroke-width="3" />
+              <line x1="106" y1="60" x2="114" y2="60" stroke="#3C3728" stroke-width="3" />
+              <!-- Friendly smile -->
+              <path d="M101 78 Q110 85 119 78" stroke="#3C3728" stroke-width="3" stroke-linecap="round" fill="none" />
+              <!-- Hoodie Accent -->
+              <path d="M84 90 L110 120 L136 90" stroke="#FEA831" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- Wide Desk Surface -->
+            <rect x="220" y="500" width="1000" height="28" rx="14" fill="#3C3728" />
+            <rect x="280" y="528" width="24" height="220" rx="8" fill="#3C3728" />
+            <rect x="1136" y="528" width="24" height="220" rx="8" fill="#3C3728" />
+
+            <!-- Left Monitor: Code & Terminal -->
+            <g transform="translate(360, 360)">
+              <rect x="0" y="0" width="210" height="124" rx="14" fill="#3C3728" />
+              <rect x="10" y="10" width="190" height="104" rx="8" fill="#252219" />
+              <rect x="24" y="26" width="76" height="8" rx="4" fill="#FEA831" />
+              <rect x="24" y="44" width="130" height="7" rx="3.5" fill="#F7F5F1" opacity="0.7" />
+              <rect x="38" y="60" width="110" height="7" rx="3.5" fill="#10B981" opacity="0.85" />
+              <rect x="38" y="76" width="94" height="7" rx="3.5" fill="#FEA831" opacity="0.85" />
+              <rect x="24" y="92" width="60" height="7" rx="3.5" fill="#F7F5F1" opacity="0.5" />
+              <rect x="92" y="124" width="26" height="16" fill="#3C3728" />
+              <rect x="70" y="136" width="70" height="6" rx="3" fill="#3C3728" />
+            </g>
+
+            <!-- Center Laptop (thanhdat.ai) -->
+            <g transform="translate(650, 420)">
+              <rect x="0" y="0" width="140" height="76" rx="10" fill="#FEA831" stroke="#3C3728" stroke-width="4" />
+              <circle cx="70" cy="38" r="14" fill="#F7F5F1" stroke="#3C3728" stroke-width="3" />
+              <rect x="-12" y="74" width="164" height="8" rx="4" fill="#3C3728" />
+            </g>
+
+            <!-- Steaming Coffee Mug (Right of Laptop) -->
+            <g transform="translate(855, 444)">
+              <path class="coffee-steam" d="M18 -8 Q24 -18 18 -28" stroke="#FEA831" stroke-width="3" stroke-linecap="round" fill="none" />
+              <path class="coffee-steam" style="animation-delay: 0.9s" d="M32 -6 Q38 -16 32 -26" stroke="#3C3728" stroke-width="2.5" stroke-linecap="round" fill="none" />
+              <rect x="6" y="0" width="38" height="48" rx="8" fill="#F7F5F1" stroke="#3C3728" stroke-width="3.5" />
+              <path d="M44 10 H52 C57 10 57 34 52 34 H44" stroke="#3C3728" stroke-width="3.5" fill="none" />
+              <rect x="12" y="16" width="26" height="12" rx="4" fill="#FEA831" />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Right Slide-Out Profile Drawer (Mild Sugar Signature Panel) -->
+    <aside class="p-index-contents__side" id="profile-drawer" aria-label="About Nguyễn Thành Đạt">
+      <button
+        type="button"
+        class="p-index-contents__side-close u-en"
+        id="close-drawer-btn"
+        aria-label="Close profile drawer"
+      >
+        × Close
+      </button>
+
+      <div class="p-index-contents__side-cover">
+        <div class="p-index-contents__side-head">
+          <div class="p-index-contents__chip">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            <span>Available for AI/ML internships &amp; research collaborations</span>
+          </div>
+          <p class="p-index-contents__side-hey u-en">Hey! 🤝</p>
+          <p class="p-index-contents__side-profile-en u-en">
+            I’m Nguyễn Thành Đạt,<br />
+            an AI Engineer in<br />
+            training @ UIT.
+          </p>
+        </div>
+
+        <div class="p-index-contents__side-profile-body">
+          <p>
+            Xin chào! Mình là <strong>Nguyễn Thành Đạt</strong> (<code>@{profileInfo.handle}</code>), sinh viên năm 3 ngành Công nghệ Thông tin tại <strong>Trường Đại học Công nghệ Thông tin — ĐHQG TP.HCM (UIT - VNU-HCM)</strong>.
+          </p>
+          <p>
+            Mình đam mê xây dựng các hệ thống <strong>Machine Learning, Natural Language Processing (BERT, Transformers, T5, RAG)</strong> và <strong>Computer Vision (YOLOv8, BlazeFace, UltraFace)</strong> từ bước tiền xử lý dữ liệu, tối ưu hóa suy luận trên GPU (CUDA / cuDNN) cho tới triển khai thực tế.
+          </p>
+        </div>
+
+        <!-- Quick Stats Grid -->
+        <ul class="p-index-contents__stats" aria-label="Quick highlights">
+          {stats.map((s) => (
+            <li class="p-index-contents__stat">
+              <span class="stat-val u-en">{s.value}</span>
+              <span class="stat-lbl">{s.label}</span>
+            </li>
+          ))}
+        </ul>
+
+        <!-- Quote Badge -->
+        <div class="p-index-contents__quote">
+          <p>“{profileInfo.quote}”</p>
         </div>
       </div>
 
-      <h1 class="hero__title intro-fade intro-fade--delay-2">
-        Hi, I'm <span class="hero__name" data-scramble="Nguyễn Thành Đạt">Nguyễn Thành Đạt</span>.<br />
-        An <span class="hero__accent" data-scramble="AI Engineer">AI Engineer</span> in the making.
-      </h1>
-
-      <p class="hero__tagline intro-fade intro-fade--delay-3">
-        Turning data into AI solutions. I build end-to-end ML pipelines — from
-        data preprocessing to scalable deployment — and I'm exploring BERT,
-        Transformers, T5, and RAG.
-      </p>
-
-      <div class="hero__actions intro-fade intro-fade--delay-4">
-        <md-filled-button href="#projects" class="hero__btn-primary magnetic">
-          <span slot="icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 17l6-6-4-4"/>
-              <path d="M12 19h8"/>
-            </svg>
+      <!-- Giant Clone-Hover Link to Cases -->
+      <div class="p-index-contents__side-link u-en">
+        <a href={`${baseUrl}/cases/`} class="c-clone-link" data-nav-link>
+          <span class="label">
+            <span class="label-text">Get to know me</span>
+            <span class="label-text label-text--clone" aria-hidden="true">Get to know me</span>
           </span>
-          View Projects
-        </md-filled-button>
-        <md-outlined-button href="#contact" class="magnetic">
-          <span slot="icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
-          </span>
-          Contact
-        </md-outlined-button>
+          <svg class="arrow-icon" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M33.6508 10.7936L5.47619 39.0476C4.84127 39.6825 4.08677 40 3.2127 40C2.34074 40 1.5873 39.6825 0.95238 39.0476C0.317459 38.4127 0 37.6582 0 36.7841C0 35.9122 0.317459 35.1587 0.95238 34.5238L29.2064 6.34921H5.07936C4.17989 6.34921 3.4254 6.0455 2.81587 5.43809C2.20847 4.82857 1.90476 4.07407 1.90476 3.1746C1.90476 2.27513 2.20847 1.52064 2.81587 0.911112C3.4254 0.303704 4.17989 0 5.07936 0H36.8254C37.7249 0 38.4783 0.303704 39.0857 0.911112C39.6952 1.52064 40 2.27513 40 3.1746V34.9206C40 35.8201 39.6952 36.5735 39.0857 37.181C38.4783 37.7905 37.7249 38.0952 36.8254 38.0952C35.9259 38.0952 35.1725 37.7905 34.5651 37.181C33.9556 36.5735 33.6508 35.8201 33.6508 34.9206V10.7936Z" fill="#FEA831" />
+          </svg>
+        </a>
       </div>
-
-      <ul class="hero__stats intro-fade intro-fade--delay-5" aria-label="Quick stats">
-        {stats.map((s) => (
-          <li class="hero__stat">
-            <span class="hero__stat-value">
-              {typeof s.value === 'string' && /^\d+$/.test(s.value) ? (
-                <span data-counter={s.value} data-counter-target={s.value}>0</span>
-              ) : (
-                s.value
-              )}
-            </span>
-            <span class="hero__stat-label">{s.label}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-
-    <div class="hero__visual intro-fade intro-fade--delay-3" aria-hidden="true">
-      <div class="hero__visual-card tilt-card shimmer-border">
-        <div class="tilt-card__glare" aria-hidden="true"></div>
-        <div class="hero__visual-code">
-          <pre><code set:html={codeSnippet} /></pre>
-        </div>
-      </div>
-    </div>
+    </aside>
   </div>
-</section>
+</div>
 
 <style>
-  .hero {
-    position: relative;
-    padding-top: var(--space-7);
-    padding-bottom: var(--space-9);
-    overflow: hidden;
-    isolation: isolate;
-  }
-
-  .hero__inner {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-7);
-    align-items: center;
-  }
-
-  .hero__content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-  }
-
-  .hero__chip {
-    align-self: flex-start;
-    --md-assist-chip-container-shape: 9999px;
-    --md-assist-chip-label-text-color: var(--md-sys-color-on-primary-container);
-    --md-assist-chip-container-color: var(--md-sys-color-primary-container);
-  }
-
-  .hero__typing {
+  .p-index {
     position: relative;
     width: 100%;
-    max-width: 600px;
-    min-height: 48px;
-    display: flex;
-    align-items: center;
+    min-height: 100svh;
   }
 
-  .hero__typing-img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .hero__typing-fallback {
-    display: none;
-    width: 100%;
-    align-items: center;
-    gap: 2px;
-    font-family: 'Fira Code', 'JetBrains Mono', ui-monospace, monospace;
-    font-size: clamp(18px, 3.5vw, 26px);
-    font-weight: 600;
-    color: #0ea5e9;
-    line-height: 1.3;
-  }
-
-  .hero__typing-text {
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 2px solid #0ea5e9;
-    animation: typing-rotate 12s steps(40, end) infinite, blink-caret 0.7s step-end infinite;
-  }
-
-  .hero__typing-cursor {
-    display: none; /* cursor handled by border-right of typing-text */
-  }
-
-  /* Pulse dot replacing the green status circle in chip */
-  .pulse-dot {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #10b981;
-    position: relative;
-    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  @keyframes typing-rotate {
-    0%   { width: 0; content: ''; }
-    10%  { width: 0; }
-    25%  { width: 100%; }
-    85%  { width: 100%; }
-    95%  { width: 0; }
-    100% { width: 0; }
-  }
-
-  @keyframes blink-caret {
-    from, to { border-color: transparent; }
-    50% { border-color: #0ea5e9; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero__typing-text {
-      animation: none;
-      width: 100%;
-    }
-  }
-
-  .hero__title {
-    font-size: clamp(36px, 6vw, 64px);
-    font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-  }
-
-  .hero__name {
-    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-tertiary));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .hero__accent {
-    color: var(--md-sys-color-tertiary);
-  }
-
-  .hero__tagline {
-    font-size: 18px;
-    line-height: 1.6;
-    color: var(--md-sys-color-on-surface-variant);
-    max-width: 56ch;
-  }
-
-  .hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-  }
-
-  .hero__btn-primary {
-    --md-filled-button-container-shape: 9999px;
-  }
-
-  .hero__btn-primary::part(button) {
-    padding-inline: var(--space-5);
-  }
-
-  md-outlined-button {
-    --md-outlined-button-container-shape: 9999px;
-  }
-
-  .hero__stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-4);
-    margin-top: var(--space-4);
-    padding-top: var(--space-5);
-    border-top: 1px solid var(--md-sys-color-outline-variant);
-  }
-
-  .hero__stat {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .hero__stat-value {
-    font-family: var(--font-display);
-    font-size: 28px;
-    font-weight: 700;
-    line-height: 1;
-    background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-secondary));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .hero__stat-label {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--md-sys-color-on-surface-variant);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
-  .hero__visual {
-    display: none;
-  }
-
-  .hero__visual-card {
-    position: relative;
-    padding: var(--space-5);
-    background: var(--md-sys-color-surface-container-low);
-    border: 1px solid var(--md-sys-color-outline-variant);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--elevation-3);
-    overflow: hidden;
-  }
-
-  .hero__visual-card::before {
-    content: '';
-    position: absolute;
+  /* ============================================
+     Orange Loading Cover
+     ============================================ */
+  .p-index-loading {
+    position: fixed;
     inset: 0;
-    background: radial-gradient(
-      circle at top right,
-      color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent),
-      transparent 60%
-    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100svh;
+    z-index: 9999;
+    transition: opacity 0.55s var(--expo-ease), visibility 0.55s var(--expo-ease);
+  }
+
+  .p-index-loading.is-hidden {
+    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
   }
 
-  .hero__visual-code {
+  .p-index-loading__contents {
     position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .p-index-loading__contents-cover {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .p-index-loading__contents .text {
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 12px;
+    line-height: 1.35;
+  }
+
+  .p-index-loading__contents .title {
+    font-size: 64px;
+    color: #fff;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .p-index-loading__contents .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: index-loading-circle 22s linear infinite;
+    pointer-events: none;
+  }
+
+  .p-index-loading__filter {
+    position: absolute;
+    inset: 0;
+    background: var(--color-orange);
+    z-index: 0;
+  }
+
+  /* ============================================
+     Main Room Viewport & Night Mode
+     ============================================ */
+  .p-index-contents {
+    width: 100%;
+    height: 100svh;
+    background: var(--color-white);
+    overflow: clip;
+    position: relative;
+  }
+
+  @media (max-width: 767px) {
+    .p-index-contents {
+      height: auto;
+      min-height: 100svh;
+    }
+  }
+
+  .p-index-contents__room-wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: filter 0.5s ease, background-color 0.5s ease;
+  }
+
+  @media (max-width: 767px) {
+    .p-index-contents__room-wrap {
+      height: 76svh;
+    }
+  }
+
+  /* Night mode color shifts */
+  .p-index-contents__room-wrap[data-time-mode="night"] .wall-bg {
+    fill: #232018;
+  }
+
+  .p-index-contents__room-wrap[data-time-mode="night"] .window-sky {
+    fill: #181610;
+  }
+
+  .p-index-contents__room-wrap[data-time-mode="night"] .sky-orb {
+    fill: #F7F5F1;
+  }
+
+  .p-index-contents__room-wrap[data-time-mode="night"] .night-stars {
+    opacity: 1;
+  }
+
+  .p-index-room-Trigger {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .room-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--expo-ease);
+  }
+
+  .p-index-contents.is-drawer-open .room-svg {
+    transform: translateX(-14%) scale(0.96);
+  }
+
+  @media (max-width: 767px) {
+    .p-index-contents.is-drawer-open .room-svg {
+      transform: none;
+    }
+  }
+
+  .speech-bubble {
+    animation: float-gentle 3.2s ease-in-out infinite;
+  }
+
+  .coffee-steam {
+    animation: steam-rise 2.4s ease-in-out infinite;
+  }
+
+  .gpu-pulse {
+    animation: pulse-dot 1.8s ease-in-out infinite;
+  }
+
+  /* Bottom-left controls */
+  .p-index-controls {
+    position: absolute;
+    left: 40px;
+    bottom: 28px;
+    z-index: 3;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media (max-width: 767px) {
+    .p-index-controls {
+      left: 16px;
+      bottom: 24px;
+    }
+  }
+
+  .p-index-control-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 100vmax;
+    background: rgba(247, 245, 241, 0.92);
+    backdrop-filter: blur(8px);
+    border: 2px solid var(--color-black);
+    font-size: 13px;
+    color: var(--color-black);
+    transition: transform 0.25s var(--custom-ease), background-color 0.25s ease;
+  }
+
+  .p-index-control-pill .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-orange);
+  }
+
+  .p-index-control-pill--cta {
+    background: var(--color-orange);
+    color: #fff;
+    border-color: var(--color-orange);
+  }
+
+  @media (hover: hover) {
+    .p-index-control-pill:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  /* ============================================
+     Slide-out Right Profile Drawer (p-index-contents__side)
+     ============================================ */
+  .p-index-contents__side {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 700px;
+    max-width: 92vw;
+    height: 100svh;
+    background: var(--color-white);
+    border-radius: 40px 0 0 40px;
+    padding: 56px 56px 38px;
+    z-index: 10;
+    box-shadow: -20px 0 60px rgba(60, 55, 40, 0.14);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-orange) transparent;
+    transform: translateX(104%);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 0.55s var(--expo-ease),
+      opacity 0.45s var(--expo-ease);
+  }
+
+  .p-index-contents.is-drawer-open .p-index-contents__side {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (max-width: 767px) {
+    .p-index-contents__side {
+      position: relative;
+      top: 0;
+      right: auto;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      margin-top: -12svh;
+      border-radius: 40px 40px 0 0;
+      padding: 36px 24px 36px;
+      transform: none;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .p-index-contents__side-close {
+      display: none !important;
+    }
+  }
+
+  .p-index-contents__side-close {
+    align-self: flex-start;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 100vmax;
+    background: var(--color-surface);
+    color: var(--color-black);
+    margin-bottom: 16px;
+    transition: background-color 0.25s ease;
+  }
+
+  .p-index-contents__side-close:hover {
+    background: var(--color-orange);
+    color: #fff;
+  }
+
+  .p-index-contents__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 100vmax;
+    background: var(--color-surface);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .p-index-contents__chip .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    animation: pulse-dot 2s infinite;
+  }
+
+  .p-index-contents__side-head {
+    margin-bottom: 24px;
+  }
+
+  .p-index-contents__side-hey {
+    font-size: clamp(68px, 8vw, 108px);
+    line-height: 1;
+    margin-bottom: 12px;
+    color: var(--color-black);
+  }
+
+  .p-index-contents__side-profile-en {
+    font-size: clamp(30px, 3.8vw, 44px);
+    line-height: 1.12;
+    color: var(--color-black);
+  }
+
+  .p-index-contents__side-profile-body {
+    font-size: 15.5px;
+    line-height: 1.75;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .p-index-contents__side-profile-body code {
     font-family: var(--font-mono);
     font-size: 13px;
-    line-height: 1.7;
-    color: var(--md-sys-color-on-surface);
-    overflow-x: auto;
+    background: var(--color-surface);
+    padding: 2px 6px;
+    border-radius: 6px;
   }
 
-  .hero__visual-code pre {
-    margin: 0;
+  .p-index-contents__stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
   }
 
-  .code-key { color: var(--md-sys-color-tertiary); font-weight: 600; }
-  .code-cls { color: var(--md-sys-color-primary); }
-  .code-var { color: var(--md-sys-color-secondary); }
-  .code-str { color: #059669; }
-  .code-num { color: #d97706; }
-  .code-fn { color: var(--md-sys-color-primary); }
-
-  @media (min-width: 960px) {
-    .hero__inner {
-      grid-template-columns: 1.3fr 1fr;
-      gap: var(--space-8);
+  @media (max-width: 520px) {
+    .p-index-contents__stats {
+      grid-template-columns: repeat(2, 1fr);
     }
+  }
 
-    .hero__visual {
-      display: block;
-    }
+  .p-index-contents__stat {
+    background: var(--color-surface);
+    padding: 14px 12px;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 
-    .hero__stats {
-      grid-template-columns: repeat(4, 1fr);
-    }
+  .p-index-contents__stat .stat-val {
+    font-size: 24px;
+    color: var(--color-orange);
+    line-height: 1;
+  }
+
+  .p-index-contents__stat .stat-lbl {
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.75;
+  }
+
+  .p-index-contents__quote {
+    padding: 16px 20px;
+    border-left: 4px solid var(--color-orange);
+    background: var(--color-surface);
+    border-radius: 0 14px 14px 0;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .p-index-contents__side-link {
+    width: fit-content;
+    margin-left: auto;
+    font-size: clamp(40px, 5vw, 60px);
+    line-height: 1;
+    padding-top: 12px;
   }
 </style>

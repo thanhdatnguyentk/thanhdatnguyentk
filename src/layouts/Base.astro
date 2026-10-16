@@ -1,28 +1,31 @@
 ---
 import '../styles/global.css';
 import '../styles/animations.css';
+import { profileInfo } from '../data/projects';
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
+  namespace?: 'home' | 'case' | 'single';
 }
 
 const {
-  title,
-  description = 'Nguyễn Thành Đạt — AI Engineer in training. Portfolio showcasing ML, NLP, and computer vision projects.',
+  title = 'Nguyễn Thành Đạt — AI Engineer in training',
+  description = 'Portfolio of Nguyễn Thành Đạt (thanhdatnguyentk), a 3rd-year IT student at UIT-VNUHCM specialising in Machine Learning, NLP, Computer Vision, and LLM systems.',
+  namespace = 'home',
 } = Astro.props;
 
 const siteUrl = Astro.site?.toString() ?? 'https://thanhdatnguyentk.github.io/thanhdatnguyentk/';
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? siteUrl).toString();
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#7c3aed" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5" />
+    <meta name="theme-color" content="#f7f5f1" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -33,6 +36,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? siteUrl).toString
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="Nguyễn Thành Đạt — AI Portfolio" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -40,13 +44,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? siteUrl).toString
     <meta name="twitter:description" content={description} />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/favicon.svg`} />
 
-    <!-- Fonts: Space Grotesk (display) + DM Sans (body) -->
+    <!-- Fonts: Righteous (Display EN) + Plus Jakarta Sans (Body VI/EN) + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Righteous&display=swap"
       rel="stylesheet"
     />
 
@@ -54,107 +58,45 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? siteUrl).toString
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'Person',
-      name: 'Nguyễn Thành Đạt',
-      jobTitle: 'AI Engineer in Training',
+      name: profileInfo.name,
+      alternateName: profileInfo.handle,
+      jobTitle: profileInfo.role,
       url: canonicalURL,
-      sameAs: [
-        'https://github.com/thanhdatnguyentk',
-      ],
+      sameAs: [profileInfo.github],
       knowsAbout: [
         'Machine Learning',
         'Natural Language Processing',
         'Computer Vision',
         'Large Language Models',
+        'CUDA GPU Programming',
       ],
       alumniOf: {
         '@type': 'CollegeOrUniversity',
-        name: 'University of Information Technology - VNU-HCM',
+        name: profileInfo.school,
       },
     })} />
   </head>
 
-  <body>
+  <body class="l-body">
     <a href="#main" class="skip-link">Skip to content</a>
 
-    <slot />
+    <div class="l-wrapper" data-namespace={namespace}>
+      <slot />
+    </div>
 
-    <!-- Material Web Components — individual imports for tree-shaking -->
-    <script>
-      import '@material/web/button/filled-button.js';
-      import '@material/web/button/filled-tonal-button.js';
-      import '@material/web/button/outlined-button.js';
-      import '@material/web/button/text-button.js';
-      import '@material/web/iconbutton/icon-button.js';
-      import '@material/web/chips/assist-chip.js';
-      import '@material/web/labs/card/elevated-card.js';
-      import '@material/web/labs/card/outlined-card.js';
+    <!-- Floating Stalker Cursor (220px Orange Circle) -->
+    <div class="c-stalker" id="stalker-cursor" aria-hidden="true">
+      <span id="stalker-text">Hey!</span>
+      <svg id="stalker-arrow" style="display:none" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M33.6508 10.7936L5.47619 39.0476C4.84127 39.6825 4.08677 40 3.2127 40C2.34074 40 1.5873 39.6825 0.95238 39.0476C0.317459 38.4127 0 37.6582 0 36.7841C0 35.9122 0.317459 35.1587 0.95238 34.5238L29.2064 6.34921H5.07936C4.17989 6.34921 3.4254 6.0455 2.81587 5.43809C2.20847 4.82857 1.90476 4.07407 1.90476 3.1746C1.90476 2.27513 2.20847 1.52064 2.81587 0.911112C3.4254 0.303704 4.17989 0 5.07936 0H36.8254C37.7249 0 38.4783 0.303704 39.0857 0.911112C39.6952 1.52064 40 2.27513 40 3.1746V34.9206C40 35.8201 39.6952 36.5735 39.0857 37.181C38.4783 37.7905 37.7249 38.0952 36.8254 38.0952C35.9259 38.0952 35.1725 37.7905 34.5651 37.181C33.9556 36.5735 33.6508 35.8201 33.6508 34.9206V10.7936Z" fill="#ffffff" />
+      </svg>
+    </div>
 
-      // Smooth-scroll for in-page anchors (Material Web Buttons use href for navigation)
-      document.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
-        const anchor = target.closest('a[href^="#"]') as HTMLAnchorElement | null;
-        if (!anchor) return;
-        const href = anchor.getAttribute('href');
-        if (!href || href === '#') return;
-        const el = document.querySelector(href);
-        if (!el) return;
-        e.preventDefault();
-        const offset = 80;
-        const top = el.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: 'smooth' });
-      });
+    <!-- Orange Curtain Page Transition -->
+    <div class="l-transition" id="page-transition" aria-hidden="true"></div>
 
-      // Typing fallback animation — activates only if the readme-typing-svg
-      // service is unreachable. Cycles through 3 phrases with caret blink.
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      function runTypingFallback(el: HTMLElement) {
-        if (prefersReducedMotion) {
-          const phrases = JSON.parse(el.dataset.phrases || '[]') as string[];
-          el.textContent = phrases[0] ?? '';
-          return;
-        }
-
-        const phrases = JSON.parse(el.dataset.phrases || '[]') as string[];
-        if (phrases.length === 0) return;
-
-        let phraseIdx = 0;
-        let charIdx = 0;
-        let deleting = false;
-
-        function tick() {
-          const phrase = phrases[phraseIdx];
-          if (!deleting) {
-            charIdx++;
-            el.textContent = phrase.slice(0, charIdx);
-            if (charIdx === phrase.length) {
-              deleting = true;
-              setTimeout(tick, 1800);
-              return;
-            }
-          } else {
-            charIdx--;
-            el.textContent = phrase.slice(0, charIdx);
-            if (charIdx === 0) {
-              deleting = false;
-              phraseIdx = (phraseIdx + 1) % phrases.length;
-            }
-          }
-          setTimeout(tick, deleting ? 30 : 70);
-        }
-
-        tick();
-      }
-
-      document.querySelectorAll<HTMLElement>('.hero__typing-text').forEach(runTypingFallback);
-    </script>
-
-    <!-- Animation controllers — scroll reveal, tilt, magnetic, parallax,
-         counters, cursor follower, text scramble. See src/scripts/animations.ts. -->
     <script>
       import '../scripts/animations.ts';
-      import '../scripts/floating-blobs.ts';
-    </script>
     </script>
   </body>
 </html>

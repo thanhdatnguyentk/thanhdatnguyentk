@@ -1,0 +1,238 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import CaseVisual from '../../components/CaseVisual.astro';
+import { projects, profileInfo, type Project } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((project, index) => {
+    const nextProject = projects[(index + 1) % projects.length];
+    return {
+      params: { slug: project.slug },
+      props: { project, nextProject },
+    };
+  });
+}
+
+interface Props {
+  project: Project;
+  nextProject: Project;
+}
+
+const { project, nextProject } = Astro.props;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const headlineWords = project.headline.split(' ');
+---
+
+<Base
+  title={`${project.title} (${project.caseLabel}) / ${profileInfo.name}`}
+  description={project.longDescription}
+  namespace="single"
+>
+  <Nav />
+  <main class="l-main" id="main" tabindex="-1">
+    <div class="p-single" id="single-page">
+      <div class="p-single-head">
+        <p class="p-single-head__eyebrow u-en">
+          {project.caseLabel} · {project.category}
+        </p>
+        <h1 class="p-single-head__title">
+          {headlineWords.map((w, idx) => (
+            <span class="word">
+              <span class="word__inner" style={`transition-delay: ${Math.min(idx * 30, 600)}ms`}>
+                {w}
+              </span>
+            </span>
+          ))}
+        </h1>
+      </div>
+
+      <section class="p-single-contents">
+        <div class="category">
+          <span class="c-tag">{project.category}</span>
+          {project.tech.map((t) => (
+            <span class="c-tag c-tag--outline">{t}</span>
+          ))}
+        </div>
+
+        <div class="scope">
+          <div class="scope__item">
+            <span class="scope__title">Role</span>
+            <span class="scope__text">{project.scope.role}</span>
+          </div>
+          <div class="scope__item">
+            <span class="scope__title">Domain</span>
+            <span class="scope__text">{project.scope.domain}</span>
+          </div>
+          <div class="scope__item">
+            <span class="scope__title">Core Stack</span>
+            <span class="scope__text">{project.scope.stack}</span>
+          </div>
+        </div>
+
+        <!-- Overview & Visual -->
+        <div class="body-group">
+          <h2 class="body-group__title">
+            <span>Overview</span>
+          </h2>
+          <div class="body-group__contents">
+            <p>
+              <b>{project.longDescription}</b>
+            </p>
+            <p>{project.story.motivation}</p>
+            <div class="visual-box">
+              <div style="width:230px;height:230px">
+                <CaseVisual type={project.visualType} />
+              </div>
+            </div>
+            <small class="caption">
+              {project.caseLabel}: {project.title} — {project.scope.domain}
+            </small>
+          </div>
+        </div>
+
+        <!-- Architecture & Implementation -->
+        <div class="body-group">
+          <h2 class="body-group__title">
+            <span>Architecture</span>
+          </h2>
+          <div class="body-group__contents">
+            <p>{project.story.architecture}</p>
+          </div>
+        </div>
+
+        <!-- Key Highlights -->
+        <div class="body-group">
+          <h2 class="body-group__title">
+            <span>Highlights</span>
+          </h2>
+          <div class="body-group__contents">
+            <ul class="highlight-list">
+              {project.highlights.map((h) => (
+                <li class="highlight-list__item">
+                  <span class="dot" aria-hidden="true"></span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Outcome & Source Code Link -->
+        <div class="body-group">
+          <h2 class="body-group__title">
+            <span>Impact &amp; Code</span>
+          </h2>
+          <div class="body-group__contents">
+            <p>{project.story.impact}</p>
+            <div class="repo-cta">
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="repo-cta__btn u-en"
+              >
+                <span>Explore {project.title} on GitHub</span>
+                <svg width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M33.6508 10.7936L5.47619 39.0476C4.84127 39.6825 4.08677 40 3.2127 40C2.34074 40 1.5873 39.6825 0.95238 39.0476C0.317459 38.4127 0 37.6582 0 36.7841C0 35.9122 0.317459 35.1587 0.95238 34.5238L29.2064 6.34921H5.07936C4.17989 6.34921 3.4254 6.0455 2.81587 5.43809C2.20847 4.82857 1.90476 4.07407 1.90476 3.1746C1.90476 2.27513 2.20847 1.52064 2.81587 0.911112C3.4254 0.303704 4.17989 0 5.07936 0H36.8254C37.7249 0 38.4783 0.303704 39.0857 0.911112C39.6952 1.52064 40 2.27513 40 3.1746V34.9206C40 35.8201 39.6952 36.5735 39.0857 37.181C38.4783 37.7905 37.7249 38.0952 36.8254 38.0952C35.9259 38.0952 35.1725 37.7905 34.5651 37.181C33.9556 36.5735 33.6508 35.8201 33.6508 34.9206V10.7936Z" fill="#ffffff" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Next Case Preview -->
+      <div class="p-single-next">
+        <div class="p-single-next__background" aria-hidden="true">
+          <div class="c-marquee-track u-en">
+            <p><span>{nextProject.marqueeText}</span></p>
+            <p><span>{nextProject.marqueeText}</span></p>
+          </div>
+        </div>
+
+        <div class="p-single-next__main">
+          <a
+            href={`${baseUrl}/cases/${nextProject.slug}/`}
+            class="p-single-next__main-item"
+            data-stalker="detail"
+            data-nav-link
+          >
+            <span class="p-single-next__eyebrow">Next Case</span>
+            <p class="title u-en"><span>{nextProject.caseLabel}</span></p>
+            <div class="image">
+              <CaseVisual type={nextProject.visualType} />
+            </div>
+            <p class="text">{nextProject.title} — {nextProject.description}</p>
+            <div class="tags">
+              {nextProject.tech.slice(0, 3).map((t) => (
+                <span class="c-tag">{t}</span>
+              ))}
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Back to the list -->
+      <div class="p-single-back">
+        <a href={`${baseUrl}/cases/`} class="p-single-back__text u-en c-clone-link" data-nav-link>
+          <svg class="arrow-icon" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M6.34921 10.7936L34.5238 39.0476C35.1587 39.6825 35.9132 40 36.7873 40C37.6593 40 38.4127 39.6825 39.0476 39.0476C39.6825 38.4127 40 37.6582 40 36.7841C40 35.9122 39.6825 35.1587 39.0476 34.5238L10.7936 6.34921H34.9206C35.8201 6.34921 36.5746 6.0455 37.1841 5.43809C37.7915 4.82857 38.0952 4.07407 38.0952 3.1746C38.0952 2.27513 37.7915 1.52064 37.1841 0.911112C36.5746 0.303704 35.8201 0 34.9206 0H3.1746C2.27513 0 1.52169 0.303704 0.914288 0.911112C0.304764 1.52064 0 2.27513 0 3.1746V34.9206C0 35.8201 0.304764 36.5735 0.914288 37.181C1.52169 37.7905 2.27513 38.0952 3.1746 38.0952C4.07407 38.0952 4.82751 37.7905 5.43492 37.181C6.04445 36.5735 6.34921 35.8201 6.34921 34.9206V10.7936Z" fill="#FEA831" />
+          </svg>
+          <span class="label">
+            <span class="label-text">Back to the list</span>
+            <span class="label-text label-text--clone" aria-hidden="true">Back to the list</span>
+          </span>
+        </a>
+        <small class="p-single-copyright">&copy; {profileInfo.name}</small>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .highlight-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .highlight-list__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 16px;
+    line-height: 1.75;
+    font-weight: 600;
+  }
+
+  .highlight-list__item .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-orange);
+    margin-top: 9px;
+    flex-shrink: 0;
+  }
+
+  .repo-cta {
+    margin-top: 24px;
+  }
+
+  .repo-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--color-orange);
+    color: #fff;
+    padding: 16px 28px;
+    border-radius: 100vmax;
+    font-size: 16px;
+    transition: transform 0.25s var(--custom-ease), box-shadow 0.25s var(--custom-ease);
+  }
+
+  .repo-cta__btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(254, 168, 49, 0.35);
+  }
+</style>
