@@ -9,125 +9,125 @@ const { type } = Astro.props;
 <div class="c-case-visual" data-visual={type} aria-hidden="true">
   {type === 'about' && (
     <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="140" cy="140" r="116" fill="#EFECE6" stroke="#3C3728" stroke-width="3" />
-      <circle cx="140" cy="140" r="88" stroke="#FEA831" stroke-width="2" stroke-dasharray="6 6" />
+      <circle cx="140" cy="140" r="116" fill="#E5F2FC" stroke="#1E2E3E" stroke-width="3" />
+      <circle cx="140" cy="140" r="88" stroke="#5BB2F6" stroke-width="2" stroke-dasharray="6 6" />
       <!-- Whiteboard / Sensemaking & AI Pipelines -->
-      <rect x="64" y="72" width="152" height="104" rx="14" fill="#F7F5F1" stroke="#3C3728" stroke-width="3" />
-      <circle cx="82" cy="90" r="4" fill="#FEA831" />
-      <circle cx="96" cy="90" r="4" fill="#3C3728" />
-      <path d="M84 126C98 106 116 146 134 118C152 90 168 142 196 110" stroke="#FEA831" stroke-width="4" stroke-linecap="round" />
-      <circle cx="84" cy="126" r="6" fill="#3C3728" />
-      <circle cx="134" cy="118" r="6" fill="#FEA831" stroke="#3C3728" stroke-width="2.5" />
-      <circle cx="196" cy="110" r="6" fill="#3C3728" />
-      <rect x="82" y="148" width="52" height="10" rx="5" fill="#3C3728" opacity="0.15" />
-      <rect x="142" y="148" width="54" height="10" rx="5" fill="#FEA831" opacity="0.45" />
+      <rect x="64" y="72" width="152" height="104" rx="14" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="3" />
+      <circle cx="82" cy="90" r="4" fill="#7CC6FE" />
+      <circle cx="96" cy="90" r="4" fill="#1E2E3E" />
+      <path d="M84 126C98 106 116 146 134 118C152 90 168 142 196 110" stroke="#5BB2F6" stroke-width="4" stroke-linecap="round" />
+      <circle cx="84" cy="126" r="6" fill="#1E2E3E" />
+      <circle cx="134" cy="118" r="6" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
+      <circle cx="196" cy="110" r="6" fill="#1E2E3E" />
+      <rect x="82" y="148" width="52" height="10" rx="5" fill="#1E2E3E" opacity="0.15" />
+      <rect x="142" y="148" width="54" height="10" rx="5" fill="#7CC6FE" opacity="0.55" />
       <!-- Coffee mug & UIT badge -->
-      <rect x="108" y="190" width="64" height="34" rx="17" fill="#FEA831" stroke="#3C3728" stroke-width="3" />
-      <text x="140" y="212" text-anchor="middle" fill="#3C3728" font-family="Righteous, sans-serif" font-size="14">AI • UIT</text>
+      <rect x="108" y="190" width="64" height="34" rx="17" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="3" />
+      <text x="140" y="212" text-anchor="middle" fill="#1E2E3E" font-family="Righteous, sans-serif" font-size="14">AI • UIT</text>
     </svg>
   )}
 
   {type === 'tensor' && (
     <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="28" y="28" width="224" height="224" rx="44" fill="#EFECE6" stroke="#3C3728" stroke-width="3" />
+      <rect x="28" y="28" width="224" height="224" rx="44" fill="#E5F2FC" stroke="#1E2E3E" stroke-width="3" />
       <!-- 3D Tensor Cube & Autograd Graph -->
       <g transform="translate(55, 52)">
-        <rect x="38" y="12" width="110" height="110" rx="16" fill="#FEA831" stroke="#3C3728" stroke-width="3" />
-        <rect x="14" y="36" width="110" height="110" rx="16" fill="#F7F5F1" stroke="#3C3728" stroke-width="3" />
+        <rect x="38" y="12" width="110" height="110" rx="16" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="3" />
+        <rect x="14" y="36" width="110" height="110" rx="16" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="3" />
         <!-- Grid lines -->
-        <line x1="50" y1="36" x2="50" y2="146" stroke="#3C3728" stroke-width="2.5" />
-        <line x1="88" y1="36" x2="88" y2="146" stroke="#3C3728" stroke-width="2.5" />
-        <line x1="14" y1="72" x2="124" y2="72" stroke="#3C3728" stroke-width="2.5" />
-        <line x1="14" y1="110" x2="124" y2="110" stroke="#3C3728" stroke-width="2.5" />
+        <line x1="50" y1="36" x2="50" y2="146" stroke="#1E2E3E" stroke-width="2.5" />
+        <line x1="88" y1="36" x2="88" y2="146" stroke="#1E2E3E" stroke-width="2.5" />
+        <line x1="14" y1="72" x2="124" y2="72" stroke="#1E2E3E" stroke-width="2.5" />
+        <line x1="14" y1="110" x2="124" y2="110" stroke="#1E2E3E" stroke-width="2.5" />
         <!-- Active tensor cells -->
-        <rect x="52" y="74" width="34" height="34" fill="#FEA831" />
-        <rect x="16" y="38" width="32" height="32" fill="#3C3728" />
-        <circle cx="106" cy="128" r="9" fill="#FEA831" stroke="#3C3728" stroke-width="2.5" />
+        <rect x="52" y="74" width="34" height="34" fill="#7CC6FE" />
+        <rect x="16" y="38" width="32" height="32" fill="#1E2E3E" />
+        <circle cx="106" cy="128" r="9" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
       </g>
-      <rect x="66" y="212" width="148" height="26" rx="13" fill="#3C3728" />
-      <text x="140" y="229" text-anchor="middle" fill="#F7F5F1" font-family="Righteous, sans-serif" font-size="12">CUDA • AUTOGRAD</text>
+      <rect x="66" y="212" width="148" height="26" rx="13" fill="#1E2E3E" />
+      <text x="140" y="229" text-anchor="middle" fill="#F4F9FD" font-family="Righteous, sans-serif" font-size="12">CUDA • AUTOGRAD</text>
     </svg>
   )}
 
   {type === 'rag' && (
     <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="140" cy="140" r="116" fill="#EFECE6" stroke="#3C3728" stroke-width="3" />
+      <circle cx="140" cy="140" r="116" fill="#E5F2FC" stroke="#1E2E3E" stroke-width="3" />
       <!-- Film reel + Vector search nodes -->
-      <circle cx="106" cy="126" r="46" fill="#F7F5F1" stroke="#3C3728" stroke-width="3" />
-      <circle cx="106" cy="126" r="12" fill="#FEA831" stroke="#3C3728" stroke-width="2.5" />
-      <circle cx="106" cy="96" r="6" fill="#3C3728" />
-      <circle cx="106" cy="156" r="6" fill="#3C3728" />
-      <circle cx="76" cy="126" r="6" fill="#3C3728" />
-      <circle cx="136" cy="126" r="6" fill="#3C3728" />
+      <circle cx="106" cy="126" r="46" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="3" />
+      <circle cx="106" cy="126" r="12" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
+      <circle cx="106" cy="96" r="6" fill="#1E2E3E" />
+      <circle cx="106" cy="156" r="6" fill="#1E2E3E" />
+      <circle cx="76" cy="126" r="6" fill="#1E2E3E" />
+      <circle cx="136" cy="126" r="6" fill="#1E2E3E" />
       <!-- Retrieval arrow & Chat bubble -->
-      <path d="M154 118H198" stroke="#FEA831" stroke-width="4" stroke-linecap="round" />
-      <rect x="142" y="138" width="90" height="62" rx="18" fill="#FEA831" stroke="#3C3728" stroke-width="3" />
-      <line x1="160" y1="160" x2="212" y2="160" stroke="#3C3728" stroke-width="3" stroke-linecap="round" />
-      <line x1="160" y1="176" x2="196" y2="176" stroke="#3C3728" stroke-width="3" stroke-linecap="round" />
-      <text x="140" y="232" text-anchor="middle" fill="#3C3728" font-family="Righteous, sans-serif" font-size="13">VECTOR • RAG • LLM</text>
+      <path d="M154 118H198" stroke="#5BB2F6" stroke-width="4" stroke-linecap="round" />
+      <rect x="142" y="138" width="90" height="62" rx="18" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="3" />
+      <line x1="160" y1="160" x2="212" y2="160" stroke="#1E2E3E" stroke-width="3" stroke-linecap="round" />
+      <line x1="160" y1="176" x2="196" y2="176" stroke="#1E2E3E" stroke-width="3" stroke-linecap="round" />
+      <text x="140" y="232" text-anchor="middle" fill="#1E2E3E" font-family="Righteous, sans-serif" font-size="13">VECTOR • RAG • LLM</text>
     </svg>
   )}
 
   {type === 'traffic' && (
     <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="28" y="28" width="224" height="224" rx="44" fill="#EFECE6" stroke="#3C3728" stroke-width="3" />
+      <rect x="28" y="28" width="224" height="224" rx="44" fill="#E5F2FC" stroke="#1E2E3E" stroke-width="3" />
       <!-- YOLOv8 Bounding Box Frame -->
-      <rect x="56" y="64" width="168" height="116" rx="12" fill="#F7F5F1" stroke="#3C3728" stroke-width="3" />
+      <rect x="56" y="64" width="168" height="116" rx="12" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="3" />
       <!-- Bounding Box Target -->
-      <rect x="78" y="88" width="84" height="56" rx="6" fill="#FEA831" fill-opacity="0.22" stroke="#FEA831" stroke-width="3" stroke-dasharray="6 4" />
-      <rect x="78" y="72" width="58" height="18" rx="4" fill="#FEA831" />
-      <text x="107" y="84" text-anchor="middle" fill="#3C3728" font-family="Righteous, sans-serif" font-size="10">CAR 0.98</text>
+      <rect x="78" y="88" width="84" height="56" rx="6" fill="#7CC6FE" fill-opacity="0.25" stroke="#5BB2F6" stroke-width="3" stroke-dasharray="6 4" />
+      <rect x="78" y="72" width="58" height="18" rx="4" fill="#7CC6FE" />
+      <text x="107" y="84" text-anchor="middle" fill="#1E2E3E" font-family="Righteous, sans-serif" font-size="10">CAR 0.98</text>
       <!-- Stylized vehicle silhouette -->
-      <rect x="92" y="108" width="56" height="22" rx="8" fill="#3C3728" />
-      <circle cx="104" cy="132" r="7" fill="#FEA831" stroke="#3C3728" stroke-width="2.5" />
-      <circle cx="136" cy="132" r="7" fill="#FEA831" stroke="#3C3728" stroke-width="2.5" />
+      <rect x="92" y="108" width="56" height="22" rx="8" fill="#1E2E3E" />
+      <circle cx="104" cy="132" r="7" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
+      <circle cx="136" cy="132" r="7" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
       <!-- Live radar pulse -->
-      <circle cx="194" cy="96" r="14" fill="#FEA831" stroke="#3C3728" stroke-width="2.5" />
-      <circle cx="194" cy="96" r="5" fill="#3C3728" />
-      <text x="140" y="218" text-anchor="middle" fill="#3C3728" font-family="Righteous, sans-serif" font-size="13">YOLOv8 • REALTIME</text>
+      <circle cx="194" cy="96" r="14" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
+      <circle cx="194" cy="96" r="5" fill="#1E2E3E" />
+      <text x="140" y="218" text-anchor="middle" fill="#1E2E3E" font-family="Righteous, sans-serif" font-size="13">YOLOv8 • REALTIME</text>
     </svg>
   )}
 
   {type === 'finance' && (
     <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="140" cy="140" r="116" fill="#EFECE6" stroke="#3C3728" stroke-width="3" />
+      <circle cx="140" cy="140" r="116" fill="#E5F2FC" stroke="#1E2E3E" stroke-width="3" />
       <!-- Candlestick & Analytics Chart -->
-      <rect x="62" y="74" width="156" height="114" rx="16" fill="#F7F5F1" stroke="#3C3728" stroke-width="3" />
-      <line x1="92" y1="96" x2="92" y2="164" stroke="#3C3728" stroke-width="2.5" />
-      <rect x="84" y="112" width="16" height="34" rx="4" fill="#3C3728" />
-      <line x1="128" y1="90" x2="128" y2="156" stroke="#3C3728" stroke-width="2.5" />
-      <rect x="120" y="102" width="16" height="38" rx="4" fill="#FEA831" stroke="#3C3728" stroke-width="2" />
-      <line x1="164" y1="86" x2="164" y2="148" stroke="#3C3728" stroke-width="2.5" />
-      <rect x="156" y="94" width="16" height="32" rx="4" fill="#FEA831" stroke="#3C3728" stroke-width="2" />
-      <path d="M76 158L114 134L148 142L196 98" stroke="#FEA831" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-      <circle cx="196" cy="98" r="6" fill="#3C3728" />
-      <text x="140" y="222" text-anchor="middle" fill="#3C3728" font-family="Righteous, sans-serif" font-size="13">TRADING • ANALYTICS</text>
+      <rect x="62" y="74" width="156" height="114" rx="16" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="3" />
+      <line x1="92" y1="96" x2="92" y2="164" stroke="#1E2E3E" stroke-width="2.5" />
+      <rect x="84" y="112" width="16" height="34" rx="4" fill="#1E2E3E" />
+      <line x1="128" y1="90" x2="128" y2="156" stroke="#1E2E3E" stroke-width="2.5" />
+      <rect x="120" y="102" width="16" height="38" rx="4" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2" />
+      <line x1="164" y1="86" x2="164" y2="148" stroke="#1E2E3E" stroke-width="2.5" />
+      <rect x="156" y="94" width="16" height="32" rx="4" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2" />
+      <path d="M76 158L114 134L148 142L196 98" stroke="#5BB2F6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="196" cy="98" r="6" fill="#1E2E3E" />
+      <text x="140" y="222" text-anchor="middle" fill="#1E2E3E" font-family="Righteous, sans-serif" font-size="13">TRADING • ANALYTICS</text>
     </svg>
   )}
 
   {type === 'galaxy' && (
     <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="140" cy="140" r="116" fill="#3C3728" stroke="#3C3728" stroke-width="3" />
+      <circle cx="140" cy="140" r="116" fill="#1E2E3E" stroke="#1E2E3E" stroke-width="3" />
       <!-- Spiral Galaxy N-Body Orbitals -->
-      <ellipse cx="140" cy="140" rx="86" ry="38" transform="rotate(-28 140 140)" stroke="#FEA831" stroke-width="3" stroke-dasharray="8 6" />
-      <ellipse cx="140" cy="140" rx="86" ry="38" transform="rotate(32 140 140)" stroke="#F7F5F1" stroke-width="2" stroke-dasharray="5 5" opacity="0.7" />
-      <circle cx="140" cy="140" r="22" fill="#FEA831" />
-      <circle cx="140" cy="140" r="10" fill="#F7F5F1" />
-      <circle cx="78" cy="112" r="7" fill="#FEA831" />
-      <circle cx="202" cy="168" r="8" fill="#F7F5F1" />
-      <circle cx="176" cy="96" r="5" fill="#FEA831" />
-      <circle cx="102" cy="182" r="6" fill="#FEA831" />
-      <text x="140" y="234" text-anchor="middle" fill="#F7F5F1" font-family="Righteous, sans-serif" font-size="13">N-BODY • C / CUDA</text>
+      <ellipse cx="140" cy="140" rx="86" ry="38" transform="rotate(-28 140 140)" stroke="#7CC6FE" stroke-width="3" stroke-dasharray="8 6" />
+      <ellipse cx="140" cy="140" rx="86" ry="38" transform="rotate(32 140 140)" stroke="#F4F9FD" stroke-width="2" stroke-dasharray="5 5" opacity="0.7" />
+      <circle cx="140" cy="140" r="22" fill="#7CC6FE" />
+      <circle cx="140" cy="140" r="10" fill="#F4F9FD" />
+      <circle cx="78" cy="112" r="7" fill="#7CC6FE" />
+      <circle cx="202" cy="168" r="8" fill="#F4F9FD" />
+      <circle cx="176" cy="96" r="5" fill="#7CC6FE" />
+      <circle cx="102" cy="182" r="6" fill="#7CC6FE" />
+      <text x="140" y="234" text-anchor="middle" fill="#F4F9FD" font-family="Righteous, sans-serif" font-size="13">N-BODY • C / CUDA</text>
     </svg>
   )}
 
   {type === 'contact' && (
     <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="28" y="28" width="224" height="224" rx="112" fill="#EFECE6" stroke="#3C3728" stroke-width="3" />
-      <rect x="64" y="88" width="152" height="104" rx="20" fill="#FEA831" stroke="#3C3728" stroke-width="3" />
-      <path d="M74 100L140 148L206 100" stroke="#3C3728" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
-      <circle cx="198" cy="88" r="18" fill="#F7F5F1" stroke="#3C3728" stroke-width="3" />
-      <text x="198" y="93" text-anchor="middle" fill="#3C3728" font-family="Righteous, sans-serif" font-size="12">HI!</text>
+      <rect x="28" y="28" width="224" height="224" rx="112" fill="#E5F2FC" stroke="#1E2E3E" stroke-width="3" />
+      <rect x="64" y="88" width="152" height="104" rx="20" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="3" />
+      <path d="M74 100L140 148L206 100" stroke="#1E2E3E" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="198" cy="88" r="18" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="3" />
+      <text x="198" y="93" text-anchor="middle" fill="#1E2E3E" font-family="Righteous, sans-serif" font-size="12">HI!</text>
     </svg>
   )}
 </div>
@@ -146,6 +146,6 @@ const { type } = Astro.props;
     width: 100%;
     height: 100%;
     overflow: visible;
-    filter: drop-shadow(0 12px 24px rgba(60, 55, 40, 0.08));
+    filter: drop-shadow(0 12px 24px rgba(30, 46, 62, 0.08));
   }
 </style>

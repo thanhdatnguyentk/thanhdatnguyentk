@@ -1,19 +1,20 @@
 /* ============================================
-   Mild Sugar Design Style System (EN / VI / JA Synchronized)
+   Pastel Sky Blue Editorial Design System (EN / VI / JA Synchronized)
    Portfolio: Nguyễn Thành Đạt (thanhdatnguyentk)
-   Palette: Warm Cream (#F7F5F1), Deep Charcoal Brown (#3C3728), Citrus Orange (#FEA831)
+   Palette: Cloud Pastel Blue (#F4F9FD), Deep Slate Navy (#1E2E3E), Pastel Sky Blue (#5BB2F6 / #7CC6FE)
    Typography: Righteous (Display) + Plus Jakarta Sans (EN/VI) + Noto Sans JP (JA) + JetBrains Mono
    ============================================ */
 
 :root {
-  --color-black: #3c3728;
-  --color-white: #f7f5f1;
-  --color-orange: #fea831;
-  --color-orange-dark: #e58f1a;
-  --color-surface: #efece6;
+  --color-black: #1e2e3e;
+  --color-white: #f4f9fd;
+  --color-orange: #5bb2f6;
+  --color-orange-dark: #3d9be8;
+  --color-pastel-soft: #7cc6fe;
+  --color-surface: #e5f2fc;
   --color-surface-elevated: #ffffff;
-  --color-border: #ded8ce;
-  --color-muted: #78705e;
+  --color-border: #c9e0f2;
+  --color-muted: #567089;
   --custom-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --expo-ease: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -278,13 +279,13 @@ main:focus-visible {
 .c-lang-switcher {
   display: inline-flex;
   align-items: center;
-  background: rgba(247, 245, 241, 0.92);
+  background: rgba(244, 249, 253, 0.92);
   backdrop-filter: blur(8px);
   border: 2px solid var(--color-black);
   border-radius: 100vmax;
   padding: 4px;
   gap: 2px;
-  box-shadow: 0 4px 14px rgba(60, 55, 40, 0.08);
+  box-shadow: 0 4px 14px rgba(30, 46, 62, 0.08);
 }
 
 .c-lang-switcher__btn {
@@ -324,7 +325,7 @@ html[data-lang="ja"] .c-lang-switcher__btn[data-set-lang="ja"] {
   position: relative;
   z-index: 2;
   transition: transform 0.3s var(--custom-ease), background-color 0.3s ease;
-  box-shadow: 0 6px 20px rgba(254, 168, 49, 0.35);
+  box-shadow: 0 6px 20px rgba(91, 178, 246, 0.38);
 }
 
 @media (hover: hover) {
@@ -394,7 +395,7 @@ html[data-lang="ja"] .c-lang-switcher__btn[data-set-lang="ja"] {
   width: 268px;
   height: 460px;
   pointer-events: auto;
-  box-shadow: 0 20px 48px rgba(60, 55, 40, 0.22);
+  box-shadow: 0 20px 48px rgba(30, 46, 62, 0.22);
 }
 
 .l-header__menu-nav {
@@ -419,7 +420,7 @@ html[data-lang="ja"] .c-lang-switcher__btn[data-set-lang="ja"] {
 
 .l-header__li-title {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.72);
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -452,7 +453,7 @@ html[data-lang="ja"] .c-lang-switcher__btn[data-set-lang="ja"] {
   font-family: var(--font-body);
   font-size: 11px;
   font-weight: 600;
-  opacity: 0.82;
+  opacity: 0.85;
 }
 
 @media (hover: hover) {
@@ -506,7 +507,7 @@ html[data-lang="ja"] .c-lang-switcher__btn[data-set-lang="ja"] {
   width: 220px;
   height: 220px;
   background: var(--color-orange);
-  box-shadow: 0 12px 32px rgba(60, 55, 40, 0.18);
+  box-shadow: 0 12px 32px rgba(30, 46, 62, 0.18);
   border-radius: 100vmax;
   will-change: transform, opacity;
   opacity: 0;

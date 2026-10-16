@@ -9,13 +9,13 @@
 <br />
 
 <a href="https://thanhdatnguyentk.github.io/thanhdatnguyentk/">
-  <img src="https://img.shields.io/badge/🌐_Portfolio-Live_Site-FEA831?style=for-the-badge&labelColor=3C3728&logoColor=white" alt="Live Portfolio" />
+  <img src="https://img.shields.io/badge/🌐_Portfolio-Live_Site-5BB2F6?style=for-the-badge&labelColor=1E2E3E&logoColor=white" alt="Live Portfolio" />
 </a>
 <a href="mailto:ngthanhdat1303@gmail.com">
-  <img src="https://img.shields.io/badge/Email-ngthanhdat1303%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white&labelColor=3C3728" alt="Email" />
+  <img src="https://img.shields.io/badge/Email-ngthanhdat1303%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white&labelColor=1E2E3E" alt="Email" />
 </a>
 <a href="https://github.com/thanhdatnguyentk">
-  <img src="https://img.shields.io/badge/GitHub-@thanhdatnguyentk-3C3728?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+  <img src="https://img.shields.io/badge/GitHub-@thanhdatnguyentk-1E2E3E?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
 </a>
 
 <br />
