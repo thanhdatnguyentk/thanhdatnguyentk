@@ -11,11 +11,8 @@
 <a href="https://thanhdatnguyentk.github.io/thanhdatnguyentk/">
   <img src="https://img.shields.io/badge/🌐_Portfolio-Live_Site-FEA831?style=for-the-badge&labelColor=3C3728&logoColor=white" alt="Live Portfolio" />
 </a>
-<a href="https://github.com/thanhdatnguyentk/thanhdatnguyentk/actions/workflows/deploy.yml">
-  <img src="https://img.shields.io/github/actions/workflow/status/thanhdatnguyentk/thanhdatnguyentk/deploy.yml?branch=main&style=for-the-badge&label=Deploy&labelColor=3C3728&color=16A34A" alt="Deploy Status" />
-</a>
-<a href="mailto:23520261@gm.uit.edu.vn">
-  <img src="https://img.shields.io/badge/Email-23520261%40gm.uit.edu.vn-EA4335?style=for-the-badge&logo=gmail&logoColor=white&labelColor=3C3728" alt="Email" />
+<a href="mailto:ngthanhdat1303@gmail.com">
+  <img src="https://img.shields.io/badge/Email-ngthanhdat1303%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white&labelColor=3C3728" alt="Email" />
 </a>
 <a href="https://github.com/thanhdatnguyentk">
   <img src="https://img.shields.io/badge/GitHub-@thanhdatnguyentk-3C3728?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
@@ -88,76 +85,10 @@ Each project features a dedicated technical breakdown on my live portfolio along
 
 ---
 
-## 🏛 About This Portfolio Repository
-
-This repository (`thanhdatnguyentk/thanhdatnguyentk`) serves both as my **GitHub Profile** and the source code for my **interactive web portfolio** deployed at **[thanhdatnguyentk.github.io/thanhdatnguyentk](https://thanhdatnguyentk.github.io/thanhdatnguyentk/)**.
-
-### Key Architectural Features
-- **Warm Editorial Minimalist Design:** Crafted with a warm cream (`#F7F5F1`), deep charcoal-brown (`#3C3728`), and citrus orange (`#FEA831`) palette paired with `Righteous`, `Plus Jakarta Sans`, `Noto Sans JP`, and `JetBrains Mono` typography.
-- **Interactive Circular Showcase:** Custom rotating SVG orbit hero (`01/05` → `05/05`) with keyboard, wheel, touch-swipe, and auto-play navigation plus bespoke technical vector diagrams for every project.
-- **Instant Trilingual Support (`EN` / `VI` / `JA`):** Zero-FOUC client-side and URL-parameter (`?lang=en|vi|ja`) language switching across all 8 static routes with 100% synchronized English, Vietnamese, and Japanese content.
-- **Live GitHub Telemetry:** Build-time GitHub REST API integration in [`src/components/GithubStats.astro`](./src/components/GithubStats.astro) with graceful offline fallback.
-- **Zero External UI Runtime Dependencies:** Built purely with **Astro 4** and lightweight vanilla TypeScript (`~2 KB` gzipped client bundle).
-
-### Repository Structure
-
-```text
-thanhdatnguyentk/
-├── astro.config.mjs                 # Astro configuration (site + /thanhdatnguyentk base path)
-├── package.json                     # Scripts & Astro 4 dependency manifest
-├── public/
-│   ├── favicon.svg                  # Brand SVG icon
-│   └── images/projects/             # Custom technical architecture SVG illustrations
-├── src/
-│   ├── components/
-│   │   ├── Nav.astro                # Fixed header, EN/VI/JA language switcher & overlay menu
-│   │   ├── Hero.astro               # Interactive circular SVG showcase (01/05 - 05/05)
-│   │   ├── Projects.astro           # Filterable case-study index grid
-│   │   ├── About.astro              # Profile, technical arsenal, timeline & contact
-│   │   ├── GithubStats.astro        # Build-time GitHub REST API repository metrics
-│   │   ├── I18nText.astro           # Trilingual (EN/VI/JA) text rendering primitive
-│   │   └── PortfolioLink.astro      # Base-path-aware link component
-│   ├── data/
-│   │   └── projects.ts              # Centralized trilingual (EN/VI/JA) dataset & UI strings
-│   ├── layouts/
-│   │   └── Base.astro               # Pre-paint i18n script, SEO metadata & global layout
-│   ├── pages/
-│   │   ├── index.astro              # Home showcase route (/)
-│   │   └── cases/
-│   │       ├── index.astro          # All case studies route (/cases/)
-│   │       ├── about.astro          # About & skills route (/cases/about/)
-│   │       └── [slug].astro         # Dynamic project detail routes (/cases/[slug]/)
-│   ├── scripts/
-│   │   └── animations.ts            # Carousel physics, category filter, menu & i18n controller
-│   └── styles/
-│       └── global.css               # Editorial design tokens, layout & animations
-└── .github/workflows/
-    └── deploy.yml                   # Automated CI/CD deployment to GitHub Pages
-```
-
-### Local Development
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/thanhdatnguyentk/thanhdatnguyentk.git
-cd thanhdatnguyentk
-
-# 2. Install dependencies (Node.js >= 20 required)
-npm install
-
-# 3. Start local development server at http://localhost:4321/thanhdatnguyentk/
-npm run dev
-
-# 4. Build static production bundle into dist/
-npm run build
-```
-
----
-
 <div align="center">
 
-**📫 Let's Connect:** [23520261@gm.uit.edu.vn](mailto:23520261@gm.uit.edu.vn) · [Live Portfolio](https://thanhdatnguyentk.github.io/thanhdatnguyentk/) · [GitHub @thanhdatnguyentk](https://github.com/thanhdatnguyentk)
+**📫 Let's Connect:** [ngthanhdat1303@gmail.com](mailto:ngthanhdat1303@gmail.com) · [Live Portfolio](https://thanhdatnguyentk.github.io/thanhdatnguyentk/) · [GitHub @thanhdatnguyentk](https://github.com/thanhdatnguyentk)
 
-<sub>© 2026 Nguyễn Thành Đạt · Engineered with <a href="https://astro.build">Astro</a> · Deployed via GitHub Pages</sub>
+<sub>© 2026 Nguyễn Thành Đạt</sub>
 
 </div>

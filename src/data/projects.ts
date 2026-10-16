@@ -502,7 +502,7 @@ export const profileInfo = {
   name: 'Nguyễn Thành Đạt',
   shortBrand: 'thanh dat .ai',
   handle: 'thanhdatnguyentk',
-  email: '23520261@gm.uit.edu.vn',
+  email: 'ngthanhdat1303@gmail.com',
   github: 'https://github.com/thanhdatnguyentk',
   headerRoles: {
     en: ['Machine Learning', 'NLP & LLM Systems', 'Computer Vision', 'AI System Deployment'],
