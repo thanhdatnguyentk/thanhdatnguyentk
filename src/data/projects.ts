@@ -15,7 +15,7 @@ export interface Project {
   tech: string[];
   stars?: number;
   url: string;
-  visualType: 'tensor' | 'rag' | 'traffic' | 'finance' | 'galaxy';
+  visualType: 'video' | 'tensor' | 'rag' | 'traffic' | 'finance' | 'galaxy';
   marqueeText: string; // Kept in English Righteous display font like mildsugardesign.jp
   description: LocalizedText;
   longDescription: LocalizedText;
@@ -39,8 +39,82 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: 'javatorch',
+    slug: 'video-retrieval-system',
     caseLabel: 'Case1',
+    title: 'Video Retrieval System (AIC-26)',
+    category: 'AI / ML',
+    tech: ['EVA-02 CLIP', 'FAISS', 'YOLOv26x', 'BLIP', 'DINOv2', 'Flask'],
+    url: 'https://github.com/huudangg0204/Video-Retrieval-system',
+    visualType: 'video',
+    marqueeText:
+      'Leading a multimodal video retrieval engine for AI Challenge. Dual-stream EVA-02 & CLIP embeddings, FAISS vector search, and TRAKE temporal reasoning.',
+    description: {
+      en: 'Multimodal video search engine (Lead) powered by EVA-02 CLIP, FAISS, and TRAKE temporal reasoning.',
+      vi: 'Hệ thống truy xuất video đa phương thức (Team Lead) tích hợp EVA-02 CLIP, FAISS và suy luận chuỗi sự kiện TRAKE.',
+      ja: 'EVA-02 CLIP・FAISS・TRAKE時系列推論を統合したマルチモーダル映像検索システム（チームリーダー）。',
+    },
+    longDescription: {
+      en: 'Led the architecture and engineering of AIC-26 — an intelligent multimodal video retrieval platform for AI Challenge supporting bilingual text-to-video, image-to-video, OCR, object filtering, and TRAKE temporal sequence search.',
+      vi: 'Dẫn dắt thiết kế kiến trúc và phát triển AIC-26 — hệ thống truy xuất video thông minh đa phương thức phục vụ kỳ thi AI Challenge, hỗ trợ tìm kiếm bằng ngôn ngữ tự nhiên (Việt/Anh), hình ảnh, văn bản OCR, lọc đối tượng và chuỗi sự kiện theo thời gian (TRAKE).',
+      ja: 'AI Challenge向けに開発をリードしたインテリジェント映像検索基盤「AIC-26」。自然言語（日・英・越対応）、類似画像、OCRテキスト、物体フィルタリング、およびTRAKE時系列イベント検索を高速に実行します。',
+    },
+    headline: {
+      en: 'Video Retrieval System (AIC-26) — Leading a sub-second multimodal video search engine with EVA-02 CLIP, FAISS, and TRAKE temporal reasoning.',
+      vi: 'Video Retrieval System (AIC-26) — Dẫn dắt phát triển hệ thống truy xuất video đa phương thức tốc độ dưới 1 giây với EVA-02 CLIP, FAISS và TRAKE.',
+      ja: 'Video Retrieval System (AIC-26) — EVA-02 CLIP・FAISS・TRAKE時系列推論によるミリ秒級マルチモーダル映像検索システムの開発をリード。',
+    },
+    scope: {
+      role: {
+        en: 'Team Lead & Lead AI Architect',
+        vi: 'Trưởng nhóm (Team Lead) & Kiến trúc sư AI',
+        ja: 'チームリーダー・リードAIアーキテクト',
+      },
+      domain: {
+        en: 'Multimodal Video Retrieval / Vision-Language AI',
+        vi: 'Truy xuất Video Đa phương thức / Vision-Language AI',
+        ja: 'マルチモーダル映像検索 / 視覚言語AI（VLM）',
+      },
+      stack:
+        'Python 3.10+, PyTorch 2.0+, EVA-02 CLIP, CLIP ViT-B/32, FAISS, YOLOv26x, BLIP, DINOv2, EasyOCR, BM25, Flask, Fuse.js',
+    },
+    highlights: {
+      en: [
+        '3-Way Weighted Hybrid Retrieval blending EVA-02 CLIP (w=0.6), CLIP ViT-B/32 (w=0.4), and BM25 captions (w=0.2) over dual FAISS IndexFlatIP indices',
+        'TRAKE Temporal Event Search using custom Dynamic Programming (DP) and lazy-loaded BLIP ITM reranking to locate ordered event sequences',
+        'DINOv2 scene-change keyframe extraction enriched with YOLOv26x (3×3 spatial grid), Places365 scenes, EasyOCR bilingual text, and instant Fuse.js filtering',
+      ],
+      vi: [
+        'Truy xuất lai 3 luồng có trọng số: kết hợp EVA-02 CLIP (w=0.6), CLIP ViT-B/32 (w=0.4) và BM25 caption (w=0.2) trên cặp chỉ mục FAISS IndexFlatIP dưới 1 giây',
+        'Thuật toán TRAKE Temporal Search ứng dụng Quy hoạch động (Dynamic Programming) kết hợp BLIP ITM Reranking để định vị chính xác chuỗi sự kiện theo trình tự thời gian',
+        'Trích xuất keyframe đổi cảnh bằng DINOv2 kèm làm giàu Metadata Sidecar: nhận diện đối tượng YOLOv26x (lưới không gian 3×3), bối cảnh Places365, EasyOCR song ngữ và lọc tức thì bằng Fuse.js',
+      ],
+      ja: [
+        'EVA-02 CLIP (w=0.6)、CLIP ViT-B/32 (w=0.4)、BM25キャプション検索 (w=0.2) を融合した3ストリーム重み付けハイブリッドFAISS検索',
+        '動的計画法（DP）とBLIP ITMリランキングを組み合わせ、映像内の順序付きイベント系列を特定する「TRAKE」時系列検索アルゴリズム',
+        'DINOv2によるシーン変化キーフレーム抽出と、YOLOv26x（3×3空間グリッド）、Places365、EasyOCR、Fuse.js即時フィルタリングによるメタデータ拡張',
+      ],
+    },
+    story: {
+      motivation: {
+        en: 'Searching through hundreds of hours of unindexed video in competitive AI Challenge benchmarks requires locating exact frames within seconds from vague natural language descriptions or multi-step temporal clues. As Team Lead, I architected AIC-26 to unify dense vision-language representations, lexical OCR/caption matching, and temporal reasoning into a single cohesive retrieval engine.',
+        vi: 'Trong bài toán AI Challenge với hàng trăm giờ video phi cấu trúc, việc tìm ra chính xác khung hình mục tiêu chỉ trong vài giây từ mô tả ngôn ngữ tự nhiên hoặc chuỗi hành động liên tiếp là thách thức cốt lõi. Với vai trò Team Lead, mình đã định hình kiến trúc AIC-26 nhằm hợp nhất biểu diễn Vision-Language đa luồng, đối sánh từ khóa OCR/Caption và suy luận thời gian vào một hệ thống duy nhất.',
+        ja: '何百時間にも及ぶ非構造化映像から、自然言語の記述や連続するイベントの手がかりをもとに数秒以内で目的のフレームを特定することは大きな課題です。チームリーダーとして、視覚言語埋め込み、OCR・キャプション検索、時系列推論を一つに統合した「AIC-26」のアーキテクチャを設計・主導しました。',
+      },
+      architecture: {
+        en: 'Offline ingestion uses DINOv2 cosine similarity to detect shot boundaries and extract keyframes, generating rich metadata sidecars containing YOLOv26x bounding boxes mapped to a 3×3 spatial grid, Places365 scene categories, EasyOCR text, and BLIP captions. At query time, a threaded Flask server executes a 3-way weighted fusion across EVA-02 CLIP (768-dim), CLIP ViT-B/32 (512-dim), and BM25, while the custom TRAKE Dynamic Programming solver scores sequential event transitions and refines top candidates with BLIP ITM.',
+        vi: 'Ở pha tiền xử lý, hệ thống dùng DINOv2 tính độ tương đồng cosine để tách cảnh và trích xuất keyframe, đồng thời sinh Metadata Sidecar gồm tọa độ đối tượng YOLOv26x trên lưới 3×3, phân loại bối cảnh Places365, văn bản EasyOCR và mô tả BLIP. Khi truy vấn, máy chủ Flask đa luồng thực thi kết hợp 3 luồng (EVA-02 768 chiều, CLIP-32 512 chiều và BM25), trong khi bộ giải Quy hoạch động TRAKE tính điểm chuyển tiếp chuỗi sự kiện và tinh chỉnh thứ hạng bằng BLIP ITM.',
+        ja: 'オフライン処理ではDINOv2のコサイン類似度でカット変わりを検出してキーフレームを抽出し、YOLOv26xの3×3空間グリッド物体情報、Places365シーン分類、EasyOCRテキスト、BLIPキャプションを含むメタデータを生成。検索時にはマルチスレッドFlaskサーバーがEVA-02（768次元）、CLIP-32（512次元）、BM25の3系統スコアを統合し、TRAKE動的計画法ソルバーとBLIP ITMが時系列イベント検索を高精度に実行します。',
+      },
+      impact: {
+        en: 'Delivered sub-second retrieval latency across large-scale video corpora with both a responsive Web UI (instant Fuse.js metadata filtering) and a CustomTkinter desktop client, establishing clear engineering standards (Black, Ruff, modular specs) across the team.',
+        vi: 'Đạt tốc độ truy xuất dưới 1 giây trên tập dữ liệu video lớn cùng lúc hỗ trợ cả giao diện Web (lọc tức thì với Fuse.js) lẫn ứng dụng Desktop CustomTkinter, đồng thời thiết lập quy chuẩn kỹ thuật rõ ràng (Black, Ruff, tài liệu đặc tả module) cho toàn đội ngũ.',
+        ja: '大規模映像データセットに対してサブ秒の検索レスポンスを達成し、Fuse.js即時フィルタリング対応のWeb UIとCustomTkinterデスクトップアプリの双方を提供。チーム全体のコーディング規約とモジュール設計標準を確立しました。',
+      },
+    },
+  },
+  {
+    slug: 'javatorch',
+    caseLabel: 'Case2',
     title: 'JavaTorch',
     category: 'AI / ML',
     tech: ['Java 21', 'JCuda', 'cuDNN', 'Gradle', 'Vue 3'],
@@ -114,7 +188,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'rag-film-chatbot',
-    caseLabel: 'Case2',
+    caseLabel: 'Case3',
     title: 'RAG Film Chatbot',
     category: 'AI / ML',
     tech: ['Python', 'Hugging Face', 'Vector DB', 'Transformers'],
@@ -188,7 +262,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'traffic-monitoring',
-    caseLabel: 'Case3',
+    caseLabel: 'Case4',
     title: 'Traffic Monitoring System',
     category: 'AI / ML',
     tech: ['YOLOv8', 'FastAPI', 'React 18', 'Leaflet', 'SQLite'],
@@ -261,7 +335,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'uit-pinance',
-    caseLabel: 'Case4',
+    caseLabel: 'Case5',
     title: 'UIT_PINANCE',
     category: 'Web',
     tech: ['Flask', 'PostgreSQL', 'Chart.js', 'Jinja2'],
@@ -335,7 +409,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'milky-way-simulation',
-    caseLabel: 'Case5',
+    caseLabel: 'Case6',
     title: 'Milky Way Simulation',
     category: 'Systems',
     tech: ['C', 'CUDA', 'GPU Compute', 'Physics'],
@@ -439,13 +513,13 @@ export const skillGroups: {
     },
     items: [
       'PyTorch',
-      'TensorFlow',
-      'Hugging Face',
+      'EVA-02 CLIP / BLIP / DINOv2',
+      'FAISS / Vector Search',
       'BERT / T5 / LLMs',
       'RAG Pipelines',
-      'YOLOv8 / OpenCV',
+      'YOLOv8 / YOLOv26x / OpenCV',
       'BlazeFace / UltraFace',
-      'MLTK',
+      'MLTK / TensorFlow',
     ],
   },
   {
@@ -481,7 +555,7 @@ export const stats: { value: string; label: LocalizedText }[] = [
     },
   },
   {
-    value: '5',
+    value: '6',
     label: {
       en: 'Featured cases',
       vi: 'Dự án tiêu biểu',
@@ -520,7 +594,7 @@ export const uiStrings = {
   nav: {
     home: { en: 'Home', vi: 'Trang chủ', ja: 'ホーム' },
     about: { en: 'About & Skills', vi: 'Giới thiệu & Kỹ năng', ja: '私について・スキル' },
-    casesTitle: { en: 'Cases (All 5)', vi: 'Dự án (Tất cả 5)', ja: '制作実績 (全5件)' },
+    casesTitle: { en: 'Cases (All 6)', vi: 'Dự án (Tất cả 6)', ja: '制作実績 (全6件)' },
     contact: { en: 'Contact', vi: 'Liên hệ', ja: 'お問い合わせ' },
   },
   home: {
