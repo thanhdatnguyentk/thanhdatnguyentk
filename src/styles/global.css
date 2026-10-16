@@ -18,8 +18,8 @@
   --custom-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --expo-ease: cubic-bezier(0.16, 1, 0.3, 1);
 
-  --font-en: 'Righteous', 'Plus Jakarta Sans', 'Noto Sans JP', system-ui, sans-serif;
-  --font-body: 'Plus Jakarta Sans', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
+  --font-en: 'Mali', 'Baloo 2', 'Comic Sans MS', 'Plus Jakarta Sans', 'Noto Sans JP', cursive, sans-serif;
+  --font-body: 'Mali', 'Plus Jakarta Sans', 'Comic Sans MS', 'Noto Sans JP', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 }
 
