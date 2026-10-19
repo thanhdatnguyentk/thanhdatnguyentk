@@ -108,8 +108,24 @@ export const WorkspaceApp: React.FC<WorkspaceAppProps> = ({
     };
   }, [timeMode]);
 
-  // 5. Escape key closes Project Inspector & resets camera focus
+  // 5. Escape key closes Project Inspector & resets camera focus + URL deep-link support
+  const setTimeMode = useWorkspaceStore((s) => s.setTimeMode);
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const modeParam = params.get('mode');
+      if (modeParam === 'day' || modeParam === 'night') {
+        setTimeMode(modeParam);
+      }
+      const focusParam = params.get('focus');
+      if (focusParam) {
+        selectObject(focusParam as any);
+      }
+    } catch {
+      // ignore URL parse errors
+    }
+
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         selectObject(null);
@@ -117,7 +133,7 @@ export const WorkspaceApp: React.FC<WorkspaceAppProps> = ({
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [selectObject]);
+  }, [selectObject, setTimeMode]);
 
   // Helper to toggle/open the existing Astro Profile Drawer (#home-contents.is-drawer-open)
   const handleOpenProfileDrawer = () => {

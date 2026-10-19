@@ -21,84 +21,96 @@ export interface CameraPreset {
   zoomMultiplier: number;
 }
 
+/**
+ * Asymmetric desktop target offset: shifts the isometric camera target slightly
+ * toward world (-X, +Z) — which is screen-left — so the miniature 3D room sits
+ * prominently in the center-right (occupying 65–75% of the viewport) while
+ * leaving clean editorial space on the left for the Hero Identity typography.
+ */
+export const ATELIER_DESKTOP_OFFSET: [number, number, number] = [
+  -1.08,
+  0.04,
+  1.08,
+];
+
 export const DEFAULT_CAMERA_PRESET: CameraPreset = {
-  position: [9.2, 8.2, 9.2],
-  target: [0, 1.05, -0.25],
-  zoom: 112,
+  position: [9.0, 7.8, 9.0],
+  target: [0.0, 1.02, -0.18],
+  zoom: 160,
   zoomMultiplier: 1.0,
 };
 
 export const OBJECT_CAMERA_PRESETS: Record<InteractiveObjectId, CameraPreset> = {
   'main-monitor': {
-    position: [5.2, 4.6, 5.6],
-    target: [0.12, 1.28, -1.36],
-    zoom: 158,
-    zoomMultiplier: 1.42,
-  },
-  'video-monitor': {
-    position: [4.8, 4.5, 5.4],
-    target: [-0.78, 1.24, -1.14],
-    zoom: 164,
-    zoomMultiplier: 1.48,
-  },
-  'galaxy-hologram': {
-    position: [5.8, 4.6, 5.8],
-    target: [1.38, 0.72, 0.82],
-    zoom: 162,
-    zoomMultiplier: 1.45,
-  },
-  'gpu-server': {
-    position: [6.2, 4.8, 5.6],
-    target: [1.68, 0.65, -1.48],
-    zoom: 152,
+    position: [5.2, 4.5, 5.5],
+    target: [0.12, 1.32, -1.32],
+    zoom: 228,
     zoomMultiplier: 1.38,
   },
-  'cctv-display': {
-    position: [5.4, 5.2, 5.6],
-    target: [-0.78, 2.15, -2.06],
-    zoom: 158,
+  'video-monitor': {
+    position: [4.8, 4.4, 5.3],
+    target: [-0.78, 1.28, -1.12],
+    zoom: 236,
     zoomMultiplier: 1.42,
   },
-  'finance-display': {
-    position: [5.4, 4.5, 5.4],
-    target: [1.02, 1.24, -1.12],
-    zoom: 164,
-    zoomMultiplier: 1.48,
+  'galaxy-hologram': {
+    position: [5.6, 4.5, 5.6],
+    target: [1.32, 0.72, 0.78],
+    zoom: 232,
+    zoomMultiplier: 1.4,
   },
-  'ai-robot': {
-    position: [4.8, 4.2, 5.0],
-    target: [0.64, 0.96, -0.86],
-    zoom: 172,
-    zoomMultiplier: 1.54,
-  },
-  bookshelf: {
-    position: [5.8, 4.8, 5.8],
-    target: [-1.84, 0.95, -1.16],
-    zoom: 146,
+  'gpu-server': {
+    position: [6.0, 4.7, 5.5],
+    target: [1.65, 0.72, -1.42],
+    zoom: 218,
     zoomMultiplier: 1.32,
   },
-  whiteboard: {
-    position: [5.6, 5.2, 5.6],
-    target: [0.38, 2.1, -2.08],
-    zoom: 152,
+  'cctv-display': {
+    position: [5.3, 5.0, 5.5],
+    target: [-0.78, 2.18, -2.02],
+    zoom: 226,
     zoomMultiplier: 1.36,
   },
+  'finance-display': {
+    position: [5.3, 4.4, 5.3],
+    target: [1.02, 1.28, -1.1],
+    zoom: 236,
+    zoomMultiplier: 1.42,
+  },
+  'ai-robot': {
+    position: [4.7, 4.1, 4.9],
+    target: [0.64, 0.98, -0.86],
+    zoom: 248,
+    zoomMultiplier: 1.5,
+  },
+  bookshelf: {
+    position: [5.7, 4.7, 5.7],
+    target: [-1.82, 0.98, -1.14],
+    zoom: 212,
+    zoomMultiplier: 1.28,
+  },
+  whiteboard: {
+    position: [5.5, 5.0, 5.5],
+    target: [0.38, 2.12, -2.04],
+    zoom: 218,
+    zoomMultiplier: 1.32,
+  },
   'desk-calendar': {
-    position: [4.8, 4.1, 4.9],
-    target: [-0.46, 0.88, -0.92],
-    zoom: 172,
-    zoomMultiplier: 1.54,
+    position: [4.7, 4.0, 4.8],
+    target: [-0.46, 0.92, -0.92],
+    zoom: 246,
+    zoomMultiplier: 1.48,
   },
   'coffee-mug': {
-    position: [4.6, 4.0, 4.8],
-    target: [-0.24, 0.86, -0.82],
-    zoom: 176,
-    zoomMultiplier: 1.58,
+    position: [4.5, 3.9, 4.7],
+    target: [-0.24, 0.9, -0.82],
+    zoom: 252,
+    zoomMultiplier: 1.52,
   },
   'mail-dock': {
-    position: [5.0, 4.1, 5.0],
-    target: [1.16, 0.88, -0.82],
-    zoom: 170,
-    zoomMultiplier: 1.52,
+    position: [4.9, 4.0, 4.9],
+    target: [1.16, 0.92, -0.82],
+    zoom: 244,
+    zoomMultiplier: 1.47,
   },
 };

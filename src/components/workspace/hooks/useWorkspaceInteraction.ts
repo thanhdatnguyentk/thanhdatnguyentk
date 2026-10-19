@@ -4,6 +4,30 @@ import type { InteractiveObjectId } from '../data/cameraPresets';
 
 export type TimeMode = 'day' | 'night';
 
+function getInitialTimeMode(): TimeMode {
+  if (typeof window !== 'undefined') {
+    try {
+      const mode = new URLSearchParams(window.location.search).get('mode');
+      if (mode === 'day' || mode === 'night') return mode;
+    } catch {
+      // ignore
+    }
+  }
+  return 'night';
+}
+
+function getInitialFocus(): InteractiveObjectId | null {
+  if (typeof window !== 'undefined') {
+    try {
+      const focus = new URLSearchParams(window.location.search).get('focus');
+      if (focus) return focus as InteractiveObjectId;
+    } catch {
+      // ignore
+    }
+  }
+  return null;
+}
+
 interface WorkspaceStoreState {
   lang: Lang;
   timeMode: TimeMode;
@@ -23,8 +47,8 @@ interface WorkspaceStoreState {
 
 export const useWorkspaceStore = create<WorkspaceStoreState>((set) => ({
   lang: 'en',
-  timeMode: 'night',
-  selectedObject: null,
+  timeMode: getInitialTimeMode(),
+  selectedObject: getInitialFocus(),
   hoveredObject: null,
   introComplete: false,
   lite2DMode: false,

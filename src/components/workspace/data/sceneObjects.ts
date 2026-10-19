@@ -47,12 +47,12 @@ export const SCENE_OBJECTS: SceneObjectDefinition[] = [
       vi: 'Dự án Lead · CLIP + BLIP-2 + FAISS',
       ja: 'リード案件 · CLIP + BLIP-2 + FAISS',
     },
-    hotspotPosition: [-0.78, 1.76, -1.14],
+    hotspotPosition: [-0.78, 1.48, -1.08],
   },
   {
     id: 'galaxy-hologram',
     icon: '🌌',
-    accentColor: '#60a5fa',
+    accentColor: '#7ddcf7',
     inspectorKind: 'dual-galaxy',
     projectSlugs: ['milky-way-galaxy', 'milky-way-simulation'],
     label: {
@@ -70,12 +70,12 @@ export const SCENE_OBJECTS: SceneObjectDefinition[] = [
       vi: 'WebGL2 / WebGPU & CUDA Barnes-Hut',
       ja: 'WebGL2 / WebGPU & CUDA Barnes-Hut',
     },
-    hotspotPosition: [1.38, 1.24, 0.82],
+    hotspotPosition: [1.38, 0.96, 0.82],
   },
   {
     id: 'gpu-server',
     icon: '⚡',
-    accentColor: '#a855f7',
+    accentColor: '#ac98ff',
     inspectorKind: 'gpu-compute',
     projectSlugs: ['javatorch', 'milky-way-simulation'],
     label: {
@@ -93,7 +93,7 @@ export const SCENE_OBJECTS: SceneObjectDefinition[] = [
       vi: 'Framework Deep Learning & Nhân GPU',
       ja: '深層学習フレームワーク & GPUカーネル',
     },
-    hotspotPosition: [1.68, 1.62, -1.48],
+    hotspotPosition: [1.68, 1.38, -1.16],
   },
   {
     id: 'ai-robot',
@@ -116,12 +116,12 @@ export const SCENE_OBJECTS: SceneObjectDefinition[] = [
       vi: 'Hybrid RAG · FAISS + BM25 + LLM',
       ja: 'ハイブリッドRAG · FAISS + BM25 + LLM',
     },
-    hotspotPosition: [0.64, 1.38, -0.86],
+    hotspotPosition: [0.64, 1.18, -0.82],
   },
   {
     id: 'cctv-display',
     icon: '📹',
-    accentColor: '#f97316',
+    accentColor: '#ffc992',
     inspectorKind: 'single-project',
     projectSlugs: ['traffic-monitoring'],
     label: {
@@ -139,12 +139,12 @@ export const SCENE_OBJECTS: SceneObjectDefinition[] = [
       vi: 'YOLOv8 + ByteTrack Thời gian thực (30+ FPS)',
       ja: 'リアルタイム YOLOv8 + ByteTrack',
     },
-    hotspotPosition: [-0.78, 2.74, -2.02],
+    hotspotPosition: [-0.78, 2.48, -2.02],
   },
   {
     id: 'finance-display',
     icon: '📈',
-    accentColor: '#eab308',
+    accentColor: '#ffc992',
     inspectorKind: 'single-project',
     projectSlugs: ['uit-pinance'],
     label: {
@@ -162,12 +162,12 @@ export const SCENE_OBJECTS: SceneObjectDefinition[] = [
       vi: 'Giao dịch Thuật toán · Sharpe 1.8+',
       ja: 'アルゴリズム取引 · シャープレシオ 1.8+',
     },
-    hotspotPosition: [1.02, 1.76, -1.12],
+    hotspotPosition: [1.02, 1.48, -1.06],
   },
   {
     id: 'main-monitor',
     icon: '🖥️',
-    accentColor: '#38bdf8',
+    accentColor: '#7ddcf7',
     inspectorKind: 'all-projects',
     projectSlugs: [
       'video-retrieval-system',
@@ -180,7 +180,7 @@ export const SCENE_OBJECTS: SceneObjectDefinition[] = [
     ],
     label: {
       en: 'All 7 Projects Hub',
-      vi: ' Trung tâm 7 Dự án',
+      vi: 'Trung tâm 7 Dự án',
       ja: '全7プロジェクト一覧',
     },
     shortHint: {
@@ -193,12 +193,12 @@ export const SCENE_OBJECTS: SceneObjectDefinition[] = [
       vi: 'Trạm Chỉ huy · 7 Nghiên cứu Tình huống',
       ja: 'コマンドセンター · 7つのケーススタディ',
     },
-    hotspotPosition: [0.12, 1.84, -1.36],
+    hotspotPosition: [0.12, 1.56, -1.32],
   },
   {
     id: 'bookshelf',
     icon: '📚',
-    accentColor: '#fb923c',
+    accentColor: '#ffc992',
     inspectorKind: 'skills',
     label: {
       en: 'Technical Library & Skills',
@@ -215,12 +215,12 @@ export const SCENE_OBJECTS: SceneObjectDefinition[] = [
       vi: 'PyTorch · CUDA · Vision · RAG · Hệ thống',
       ja: 'PyTorch · CUDA · Vision · RAG · システム',
     },
-    hotspotPosition: [-1.84, 2.04, -1.16],
+    hotspotPosition: [-1.84, 1.86, -1.16],
   },
   {
     id: 'whiteboard',
     icon: '🧠',
-    accentColor: '#818cf8',
+    accentColor: '#ac98ff',
     inspectorKind: 'about',
     label: {
       en: 'Neural Architecture Board',
@@ -237,7 +237,7 @@ export const SCENE_OBJECTS: SceneObjectDefinition[] = [
       vi: 'Multimodal RAG · Attention · Vector Index',
       ja: 'マルチモーダルRAG · Attention · ベクトル検索',
     },
-    hotspotPosition: [0.38, 2.78, -2.04],
+    hotspotPosition: [0.38, 2.52, -2.04],
   },
   {
     id: 'desk-calendar',

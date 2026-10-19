@@ -31,8 +31,8 @@ export const WorkspaceScene: React.FC<WorkspaceSceneProps> = ({
   const selectObject = useWorkspaceStore((s) => s.selectObject);
   const hoverObject = useWorkspaceStore((s) => s.hoverObject);
 
-  // Primary featured stations that show compact floating 3D pins in overview mode
-  const pinnedStations = SCENE_OBJECTS.filter((s) =>
+  // Subtle interactive stations with clean beacon indicators (NO overlapping text labels by default)
+  const beaconStations = SCENE_OBJECTS.filter((s) =>
     [
       'video-monitor',
       'galaxy-hologram',
@@ -40,6 +40,8 @@ export const WorkspaceScene: React.FC<WorkspaceSceneProps> = ({
       'ai-robot',
       'cctv-display',
       'finance-display',
+      'main-monitor',
+      'whiteboard',
     ].includes(s.id)
   );
 
@@ -71,10 +73,11 @@ export const WorkspaceScene: React.FC<WorkspaceSceneProps> = ({
         <Whiteboard />
         <CoffeeCup />
 
-        {/* Diegetic 3D Floating Station Pins (HTML projected via @react-three/drei) */}
-        {pinnedStations.map((station) => {
+        {/* Subtle Diegetic 3D Beacon Indicators (Clean pulsing nodes, tooltip only on hover) */}
+        {beaconStations.map((station) => {
           const isSelected = selectedObject === station.id;
           const isHovered = hoveredObject === station.id;
+          const isDimmed = Boolean(selectedObject && !isSelected);
           return (
             <Html
               key={station.id}
@@ -84,10 +87,10 @@ export const WorkspaceScene: React.FC<WorkspaceSceneProps> = ({
             >
               <button
                 type="button"
-                className={`ws-hotspot-pin ${
+                className={`ws-beacon-node ${
                   isSelected || isHovered ? 'is-active' : ''
-                }`}
-                style={{ ['--pin-color' as string]: station.accentColor }}
+                } ${isDimmed ? 'is-dimmed' : ''}`}
+                style={{ ['--beacon-color' as string]: station.accentColor }}
                 onMouseEnter={() => hoverObject(station.id)}
                 onMouseLeave={() => hoverObject(null)}
                 onClick={(e) => {
@@ -96,8 +99,13 @@ export const WorkspaceScene: React.FC<WorkspaceSceneProps> = ({
                 }}
                 aria-label={station.label[lang]}
               >
-                <span className="ws-hotspot-dot" />
-                <span className="ws-hotspot-text">{station.label[lang]}</span>
+                <span className="ws-beacon-pulse" />
+                <span className="ws-beacon-core" />
+                {(isHovered || isSelected) && (
+                  <span className="ws-beacon-tooltip">
+                    {station.shortHint[lang]}
+                  </span>
+                )}
               </button>
             </Html>
           );

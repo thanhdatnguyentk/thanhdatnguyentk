@@ -2,9 +2,23 @@ import type { Lang, LocalizedText } from '../../../data/projects';
 
 export interface WorkspaceTranslations {
   heroEyebrow: LocalizedText;
+  heroGreeting: LocalizedText;
   heroTitle: LocalizedText;
   heroSubtitle: LocalizedText;
+  heroPrimaryCta: LocalizedText;
+  heroSecondaryCta: LocalizedText;
   instructionHint: LocalizedText;
+  dock: {
+    exploreLab: LocalizedText;
+    allProjects: LocalizedText;
+    aboutMe: LocalizedText;
+    skills: LocalizedText;
+    contact: LocalizedText;
+    resetCamera: LocalizedText;
+    projectsMenuTitle: LocalizedText;
+    inspectIn3D: LocalizedText;
+    openCaseStudy: LocalizedText;
+  };
   controls: {
     resetCamera: LocalizedText;
     allProjects: LocalizedText;
@@ -56,28 +70,90 @@ export interface WorkspaceTranslations {
 
 export const workspaceTranslations: WorkspaceTranslations = {
   heroEyebrow: {
-    en: '3D ISOMETRIC AI LABORATORY • UIT — VNU-HCM',
-    vi: 'PHÒNG LAB AI 3D ISOMETRIC • UIT — ĐHQG-HCM',
-    ja: '3DアイソメトリックAIラボ • UIT — VNU-HCM',
+    en: "THE AI ENGINEER'S ATELIER • UIT — VNU-HCM",
+    vi: 'ATELIER KỸ SƯ AI • UIT — ĐHQG-HCM',
+    ja: 'AIエンジニアのアトリエ • UIT — VNU-HCM',
+  },
+  heroGreeting: {
+    en: "Hello, I'm Đạt.",
+    vi: 'Xin chào, mình là Đạt.',
+    ja: 'こんにちは、ダットです。',
   },
   heroTitle: {
-    en: 'Building intelligence, one system at a time.',
-    vi: 'Kiến tạo trí tuệ nhân tạo từ từng hệ thống cốt lõi.',
-    ja: '知能を築く、一つのシステムから着実に。',
+    en: 'Building Intelligence Through Code.',
+    vi: 'Kiến Tạo Trí Tuệ Qua Từng Dòng Code.',
+    ja: 'コードで知能を形にする。',
   },
   heroSubtitle: {
-    en: 'Explore Nguyễn Thành Đạt’s miniature AI laboratory — click any monitor, hologram, GPU rack, or research board to inspect real engineering projects.',
-    vi: 'Khám phá phòng thí nghiệm AI thu nhỏ của Nguyễn Thành Đạt — nhấp vào màn hình, hologram thiên hà, dàn GPU hoặc bảng trắng để xem chi tiết từng dự án.',
-    ja: 'グエン・タン・ダットのミニチュアAIラボへようこそ。モニター、銀河ホログラム、GPUラック、ホワイトボードをクリックして実装プロジェクトを探索できます。',
+    en: 'AI Engineer specializing in Machine Learning, Computer Vision, NLP & Intelligent Systems. Explore this living 3D atelier — click any monitor, galaxy hologram, or GPU rack to inspect 7 engineering case studies.',
+    vi: 'Kỹ sư AI chuyên sâu về Học máy, Thị giác Máy tính, NLP & Hệ thống Thông minh. Khám phá phòng lab 3D tương tác — nhấp vào màn hình, hologram thiên hà hoặc trạm GPU để xem 7 dự án thực tế.',
+    ja: '機械学習・コンピュータビジョン・NLP・知的システムを専門とするAIエンジニア。3Dミニチュアラボ内のモニターや銀河ホログラム、GPUラックをクリックして7つの実装プロジェクトを探索できます。',
+  },
+  heroPrimaryCta: {
+    en: 'Explore 7 Projects',
+    vi: 'Khám phá 7 Dự án',
+    ja: '全7プロジェクトを見る',
+  },
+  heroSecondaryCta: {
+    en: 'Engineer Dossier',
+    vi: 'Hồ sơ Kỹ sư',
+    ja: 'プロフィール詳細',
   },
   instructionHint: {
-    en: 'Click objects to inspect • Drag gently to orbit • Scroll to zoom • Press ESC to reset view',
-    vi: 'Nhấp vào vật thể để khám phá • Kéo nhẹ để xoay góc nhìn • Cuộn để thu phóng • Nhấn ESC để đặt lại',
-    ja: 'オブジェクトをクリックして詳細表示 • ドラッグで視点微調整 • スクロールでズーム • ESCでリセット',
+    en: 'Click pulsing beacons to inspect • Drag to orbit • Scroll to zoom • ESC to reset',
+    vi: 'Nhấp vào điểm sáng để khám phá • Kéo nhẹ để xoay • Cuộn để thu phóng • ESC để đặt lại',
+    ja: 'ビーコンをクリックして詳細表示 • ドラッグで回転 • スクロールでズーム • ESCでリセット',
+  },
+  dock: {
+    exploreLab: {
+      en: 'Explore Lab',
+      vi: 'Toàn cảnh Lab',
+      ja: 'ラボ全体',
+    },
+    allProjects: {
+      en: 'All Projects',
+      vi: 'Dự án (7)',
+      ja: 'プロジェクト (7)',
+    },
+    aboutMe: {
+      en: 'About Me',
+      vi: 'Giới thiệu',
+      ja: '自己紹介',
+    },
+    skills: {
+      en: 'Skills',
+      vi: 'Kỹ năng',
+      ja: 'スキル',
+    },
+    contact: {
+      en: 'Contact',
+      vi: 'Liên hệ',
+      ja: '連絡先',
+    },
+    resetCamera: {
+      en: 'Reset Camera',
+      vi: 'Đặt lại Camera',
+      ja: '視点リセット',
+    },
+    projectsMenuTitle: {
+      en: '7 Interactive Engineering Case Studies',
+      vi: '7 Dự án Kỹ thuật & Nghiên cứu AI',
+      ja: '7つのエンジニアリング・ケーススタディ',
+    },
+    inspectIn3D: {
+      en: 'Focus in 3D',
+      vi: 'Xem trong 3D',
+      ja: '3Dでフォーカス',
+    },
+    openCaseStudy: {
+      en: 'Case Study ↗',
+      vi: 'Chi tiết ↗',
+      ja: '詳細ページ ↗',
+    },
   },
   controls: {
     resetCamera: {
-      en: 'Reset View',
+      en: 'Reset Camera',
       vi: 'Góc nhìn Chuẩn',
       ja: '視点をリセット',
     },
@@ -87,29 +163,29 @@ export const workspaceTranslations: WorkspaceTranslations = {
       ja: '全7プロジェクト',
     },
     dayMode: {
-      en: 'Daylight Lab ☀️',
-      vi: 'Ánh sáng Ngày ☀️',
+      en: 'Daylight ☀️',
+      vi: 'Ban ngày ☀️',
       ja: 'デイライト ☀️',
     },
     nightMode: {
-      en: 'Night Lab 🌙',
-      vi: 'Phòng Lab Đêm 🌙',
-      ja: 'ナイトラボ 🌙',
+      en: 'Night Mode 🌙',
+      vi: 'Ban đêm 🌙',
+      ja: 'ナイト 🌙',
     },
     openDrawer: {
-      en: 'Profile & Bio',
-      vi: 'Hồ sơ Cá nhân',
+      en: 'Dossier',
+      vi: 'Hồ sơ',
       ja: 'プロフィール',
     },
     switch2D: {
-      en: '2D Lite Mode',
-      vi: 'Chế độ 2D Nhẹ',
-      ja: '2D軽量モード',
+      en: '2D Lite',
+      vi: 'Bản 2D',
+      ja: '2D表示',
     },
     switch3D: {
-      en: '3D Lab Mode',
-      vi: 'Chế độ Phòng 3D',
-      ja: '3Dラボモード',
+      en: '3D Atelier',
+      vi: 'Bản 3D',
+      ja: '3D表示',
     },
     skipIntro: {
       en: 'Skip Intro ⏭',
@@ -117,9 +193,9 @@ export const workspaceTranslations: WorkspaceTranslations = {
       ja: 'スキップ ⏭',
     },
     quickJump: {
-      en: 'Lab Stations:',
-      vi: 'Trạm Tương tác:',
-      ja: 'ラボ設備:',
+      en: 'Atelier Navigation Dock',
+      vi: 'Thanh Điều hướng Atelier',
+      ja: 'アトリエ・ナビゲーションドック',
     },
   },
   inspector: {

@@ -4,6 +4,7 @@ import { OrbitControls } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import * as THREE from 'three';
 import {
+  ATELIER_DESKTOP_OFFSET,
   DEFAULT_CAMERA_PRESET,
   OBJECT_CAMERA_PRESETS,
 } from './data/cameraPresets';
@@ -20,11 +21,16 @@ export const CameraController: React.FC<CameraControllerProps> = ({
   const { camera, size } = useThree();
   const selectedObject = useWorkspaceStore((s) => s.selectedObject);
 
-  // Responsive zoom factor so the miniature room fits both desktop and mobile viewports
-  const responsiveScale = Math.min(
-    1.12,
-    Math.max(0.64, Math.min(size.width / 680, size.height / 560))
-  );
+  const isDesktop = size.width >= 1024;
+  const isTablet = size.width >= 768 && size.width < 1024;
+
+  // Responsive scale tuned so the miniature room occupies 65–75% of the composition on desktop
+  // and fits cleanly on tablet (768x1024) and mobile (390x844) without clipping.
+  const responsiveScale = isDesktop
+    ? Math.min(1.14, Math.max(0.92, Math.min(size.width / 1420, size.height / 860)))
+    : isTablet
+    ? Math.min(0.84, Math.max(0.68, size.width / 1020))
+    : Math.min(0.56, Math.max(0.42, size.width / 820));
 
   useFrame((state, delta) => {
     const preset = selectedObject
@@ -35,12 +41,24 @@ export const CameraController: React.FC<CameraControllerProps> = ({
 
     // Gentle pointer parallax when in default overview mode
     const parallaxX =
-      !selectedObject && !reducedMotion ? state.pointer.x * 0.22 : 0;
+      !selectedObject && !reducedMotion ? state.pointer.x * 0.16 : 0;
     const parallaxY =
-      !selectedObject && !reducedMotion ? state.pointer.y * 0.14 : 0;
+      !selectedObject && !reducedMotion ? state.pointer.y * 0.1 : 0;
+
+    // Apply asymmetric editorial offset on desktop when in overview mode so
+    // the 3D room sits toward the center-right and balances the left typography.
+    const offsetX =
+      !selectedObject && isDesktop ? ATELIER_DESKTOP_OFFSET[0] : 0;
+    const offsetY =
+      !selectedObject && isDesktop
+        ? ATELIER_DESKTOP_OFFSET[1]
+        : !selectedObject && !isDesktop
+        ? -0.15
+        : 0;
+    const offsetZ =
+      !selectedObject && isDesktop ? ATELIER_DESKTOP_OFFSET[2] : 0;
 
     if (selectedObject) {
-      // Smoothly move camera toward focused station preset
       camera.position.x = THREE.MathUtils.damp(
         camera.position.x,
         preset.position[0],
@@ -59,11 +77,12 @@ export const CameraController: React.FC<CameraControllerProps> = ({
         dampSpeed,
         delta
       );
-    } else if (controlsRef.current) {
-      // Subtle target parallax in overview
-      const targetX = preset.target[0] + parallaxX * 0.18;
-      const targetY = preset.target[1] + parallaxY * 0.12;
-      const targetZ = preset.target[2] - parallaxX * 0.18;
+    }
+
+    if (controlsRef.current) {
+      const targetX = preset.target[0] + offsetX + parallaxX * 0.14;
+      const targetY = preset.target[1] + offsetY + parallaxY * 0.1;
+      const targetZ = preset.target[2] + offsetZ - parallaxX * 0.14;
 
       controlsRef.current.target.x = THREE.MathUtils.damp(
         controlsRef.current.target.x,
@@ -85,28 +104,6 @@ export const CameraController: React.FC<CameraControllerProps> = ({
       );
     }
 
-    if (controlsRef.current && selectedObject) {
-      controlsRef.current.target.x = THREE.MathUtils.damp(
-        controlsRef.current.target.x,
-        preset.target[0],
-        dampSpeed,
-        delta
-      );
-      controlsRef.current.target.y = THREE.MathUtils.damp(
-        controlsRef.current.target.y,
-        preset.target[1],
-        dampSpeed,
-        delta
-      );
-      controlsRef.current.target.z = THREE.MathUtils.damp(
-        controlsRef.current.target.z,
-        preset.target[2],
-        dampSpeed,
-        delta
-      );
-    }
-
-    // Smoothly interpolate orthographic zoom
     const targetZoom = preset.zoom * responsiveScale;
     if (Math.abs(camera.zoom - targetZoom) > 0.05) {
       camera.zoom = THREE.MathUtils.damp(
@@ -128,12 +125,12 @@ export const CameraController: React.FC<CameraControllerProps> = ({
       dampingFactor={0.07}
       enablePan={false}
       enableZoom={true}
-      minZoom={52}
-      maxZoom={175}
-      minPolarAngle={Math.PI / 6.2}
-      maxPolarAngle={Math.PI / 2.28}
-      minAzimuthAngle={-Math.PI / 12}
-      maxAzimuthAngle={Math.PI / 2 + Math.PI / 12}
+      minZoom={56}
+      maxZoom={280}
+      minPolarAngle={Math.PI / 5.8}
+      maxPolarAngle={Math.PI / 2.32}
+      minAzimuthAngle={-Math.PI / 14}
+      maxAzimuthAngle={Math.PI / 2 + Math.PI / 14}
       target={DEFAULT_CAMERA_PRESET.target}
     />
   );

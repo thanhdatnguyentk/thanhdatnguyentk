@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import { RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 import { InteractiveObject } from '../InteractiveObject';
+import { useWorkspaceStore } from '../hooks/useWorkspaceInteraction';
+import { ATELIER_PALETTE } from './materials';
 
 function createScreenTexture(
   draw: (ctx: CanvasRenderingContext2D, w: number, h: number) => void,
@@ -23,28 +25,31 @@ function createScreenTexture(
 }
 
 export const MonitorsAndDisplays: React.FC = () => {
+  const timeMode = useWorkspaceStore((s) => s.timeMode);
+  const mat = ATELIER_PALETTE[timeMode];
+
   // 1. Main Ultrawide Monitor Screen Texture (All 7 Projects Command Center)
   const mainScreenTex = useMemo(
     () =>
       createScreenTexture((ctx, w, h) => {
-        ctx.fillStyle = '#070b14';
+        ctx.fillStyle = '#0d1422';
         ctx.fillRect(0, 0, w, h);
 
         // Top Bar
-        ctx.fillStyle = '#0f172a';
+        ctx.fillStyle = '#182338';
         ctx.fillRect(0, 0, w, 34);
-        ctx.fillStyle = '#38bdf8';
+        ctx.fillStyle = '#7ddcf7';
         ctx.font = 'bold 15px monospace';
-        ctx.fillText('DAT.AI // 7 ENGINEERING CASE STUDIESHUB', 16, 22);
+        ctx.fillText('ATELIER // 7 ENGINEERING CASE STUDIES HUB', 16, 22);
 
         // Project Grid Cards
         const labels = [
-          ['01 VIDEO RETRIEVAL', '#22d3ee', 'AIC-26 LEAD'],
+          ['01 VIDEO RETRIEVAL', '#7ddcf7', 'AIC-26 LEAD'],
           ['02 MILKY WAY 3D', '#60a5fa', 'WEBGL2 / GPU'],
-          ['03 JAVATORCH', '#a855f7', 'TENSOR ENGINE'],
+          ['03 JAVATORCH', '#ac98ff', 'TENSOR ENGINE'],
           ['04 HYBRID RAG BOT', '#34d399', 'FAISS + BM25'],
-          ['05 YOLOV8 TRAFFIC', '#f97316', '30+ FPS CV'],
-          ['06 UIT_PINANCE', '#eab308', 'SHARPE 1.8+'],
+          ['05 YOLOV8 TRAFFIC', '#ffc992', '30+ FPS CV'],
+          ['06 UIT_PINANCE', '#fde68a', 'SHARPE 1.8+'],
         ];
         labels.forEach(([title, color, metric], i) => {
           const col = i % 3;
@@ -52,7 +57,7 @@ export const MonitorsAndDisplays: React.FC = () => {
           const x = 16 + col * 162;
           const y = 48 + row * 124;
 
-          ctx.fillStyle = '#111c33';
+          ctx.fillStyle = '#182338';
           ctx.fillRect(x, y, 150, 110);
           ctx.strokeStyle = color;
           ctx.lineWidth = 2;
@@ -62,7 +67,7 @@ export const MonitorsAndDisplays: React.FC = () => {
           ctx.font = 'bold 12px monospace';
           ctx.fillText(title, x + 10, y + 26);
 
-          ctx.fillStyle = '#e2e8f0';
+          ctx.fillStyle = '#f4f7fb';
           ctx.font = '11px monospace';
           ctx.fillText(metric, x + 10, y + 48);
 
@@ -80,39 +85,39 @@ export const MonitorsAndDisplays: React.FC = () => {
   const videoScreenTex = useMemo(
     () =>
       createScreenTexture((ctx, w, h) => {
-        ctx.fillStyle = '#06101e';
+        ctx.fillStyle = '#0d1422';
         ctx.fillRect(0, 0, w, h);
 
-        ctx.fillStyle = '#0e7490';
+        ctx.fillStyle = '#182338';
         ctx.fillRect(0, 0, w, 36);
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = '#7ddcf7';
         ctx.font = 'bold 16px monospace';
         ctx.fillText('AIC-26 // MULTIMODAL VIDEO RETRIEVAL', 14, 24);
 
         // Search Query Box
-        ctx.fillStyle = '#0f172a';
+        ctx.fillStyle = '#131d31';
         ctx.fillRect(14, 48, w - 28, 34);
-        ctx.strokeStyle = '#22d3ee';
+        ctx.strokeStyle = '#7ddcf7';
         ctx.strokeRect(14, 48, w - 28, 34);
-        ctx.fillStyle = '#67e8f9';
+        ctx.fillStyle = '#f4f7fb';
         ctx.font = '13px monospace';
         ctx.fillText('QUERY: "cyclist crossing red light in rain" -> <50ms', 24, 70);
 
         // Keyframe Grid with Similarity Badges
         const frames = [
-          ['KF_0412', '0.94', '#22d3ee'],
+          ['KF_0412', '0.94', '#7ddcf7'],
           ['KF_0415', '0.91', '#38bdf8'],
-          ['KF_1089', '0.88', '#06b6d4'],
-          ['KF_2104', '0.86', '#0ea5e9'],
-          ['KF_3092', '0.84', '#0284c7'],
-          ['KF_4410', '0.82', '#0369a1'],
+          ['KF_1089', '0.88', '#ac98ff'],
+          ['KF_2104', '0.86', '#34d399'],
+          ['KF_3092', '0.84', '#ffc992'],
+          ['KF_4410', '0.82', '#60a5fa'],
         ];
         frames.forEach(([id, score, col], idx) => {
           const c = idx % 3;
           const r = Math.floor(idx / 3);
           const fx = 14 + c * 162;
           const fy = 96 + r * 102;
-          ctx.fillStyle = '#1e293b';
+          ctx.fillStyle = '#182338';
           ctx.fillRect(fx, fy, 150, 90);
           ctx.strokeStyle = col;
           ctx.lineWidth = 2;
@@ -120,11 +125,11 @@ export const MonitorsAndDisplays: React.FC = () => {
 
           ctx.fillStyle = col;
           ctx.fillRect(fx + 8, fy + 8, 56, 20);
-          ctx.fillStyle = '#020617';
+          ctx.fillStyle = '#0d1422';
           ctx.font = 'bold 12px monospace';
           ctx.fillText(score, fx + 16, fy + 22);
 
-          ctx.fillStyle = '#e2e8f0';
+          ctx.fillStyle = '#f4f7fb';
           ctx.font = '12px monospace';
           ctx.fillText(id, fx + 10, fy + 76);
         });
@@ -136,12 +141,12 @@ export const MonitorsAndDisplays: React.FC = () => {
   const financeScreenTex = useMemo(
     () =>
       createScreenTexture((ctx, w, h) => {
-        ctx.fillStyle = '#090d16';
+        ctx.fillStyle = '#0d1422';
         ctx.fillRect(0, 0, w, h);
 
-        ctx.fillStyle = '#1e293b';
+        ctx.fillStyle = '#182338';
         ctx.fillRect(0, 0, w, 34);
-        ctx.fillStyle = '#eab308';
+        ctx.fillStyle = '#ffc992';
         ctx.font = 'bold 16px monospace';
         ctx.fillText('UIT_PINANCE // QUANT ALGO TERMINAL', 14, 23);
 
@@ -158,7 +163,7 @@ export const MonitorsAndDisplays: React.FC = () => {
         ];
         candles.forEach(([high, low, open, close, bull], i) => {
           const cx = 38 + i * 56;
-          const color = bull ? '#22c55e' : '#ef4444';
+          const color = bull ? '#34d399' : '#fb7185';
           ctx.strokeStyle = color;
           ctx.lineWidth = 3;
           ctx.beginPath();
@@ -172,7 +177,7 @@ export const MonitorsAndDisplays: React.FC = () => {
           ctx.fillRect(cx - 14, top, 28, height);
         });
 
-        ctx.fillStyle = '#fef08a';
+        ctx.fillStyle = '#ffc992';
         ctx.font = 'bold 16px monospace';
         ctx.fillText('SHARPE: 1.84  |  WIN RATE: 62.4%  |  ACTIVE', 18, 282);
       }),
@@ -183,7 +188,7 @@ export const MonitorsAndDisplays: React.FC = () => {
   const cctvScreenTex = useMemo(
     () =>
       createScreenTexture((ctx, w, h) => {
-        ctx.fillStyle = '#0c1322';
+        ctx.fillStyle = '#0d1422';
         ctx.fillRect(0, 0, w, h);
 
         // Road lanes
@@ -198,9 +203,9 @@ export const MonitorsAndDisplays: React.FC = () => {
 
         // YOLOv8 Bounding Boxes
         const boxes: Array<[number, number, number, number, string, string]> = [
-          [130, 110, 95, 68, 'CAR 0.96', '#22c55e'],
-          [265, 145, 110, 78, 'TRUCK 0.92', '#f97316'],
-          [185, 210, 82, 62, 'MOTO 0.89', '#38bdf8'],
+          [130, 110, 95, 68, 'CAR 0.96', '#34d399'],
+          [265, 145, 110, 78, 'TRUCK 0.92', '#ffc992'],
+          [185, 210, 82, 62, 'MOTO 0.89', '#7ddcf7'],
         ];
         boxes.forEach(([bx, by, bw, bh, lbl, col]) => {
           ctx.strokeStyle = col;
@@ -208,12 +213,12 @@ export const MonitorsAndDisplays: React.FC = () => {
           ctx.strokeRect(bx, by, bw, bh);
           ctx.fillStyle = col;
           ctx.fillRect(bx, by - 20, 88, 20);
-          ctx.fillStyle = '#020617';
+          ctx.fillStyle = '#0d1422';
           ctx.font = 'bold 12px monospace';
           ctx.fillText(lbl, bx + 4, by - 6);
         });
 
-        ctx.fillStyle = '#f97316';
+        ctx.fillStyle = '#ffc992';
         ctx.font = 'bold 16px monospace';
         ctx.fillText('YOLOv8 + ByteTrack // 34.2 FPS LIVE', 16, 28);
       }),
@@ -231,45 +236,61 @@ export const MonitorsAndDisplays: React.FC = () => {
       >
         {/* VESA Articulated Stand Base & Post */}
         <RoundedBox
-          args={[0.26, 0.025, 0.2]}
+          args={[0.28, 0.026, 0.22]}
           radius={0.008}
           position={[0, -0.48, -0.05]}
           castShadow
         >
-          <meshStandardMaterial color="#1e293b" metalness={0.75} roughness={0.25} />
+          <meshStandardMaterial
+            color={mat.metalBrushed}
+            metalness={0.75}
+            roughness={0.25}
+          />
         </RoundedBox>
         <mesh position={[0, -0.25, -0.08]} castShadow>
-          <cylinderGeometry args={[0.025, 0.03, 0.45, 16]} />
-          <meshStandardMaterial color="#334155" metalness={0.8} roughness={0.2} />
+          <cylinderGeometry args={[0.026, 0.032, 0.45, 16]} />
+          <meshStandardMaterial
+            color={mat.metalSilver}
+            metalness={0.8}
+            roughness={0.2}
+          />
         </mesh>
 
         {/* Ultrawide Display Chassis */}
         <RoundedBox
-          args={[1.05, 0.54, 0.04]}
+          args={[1.06, 0.55, 0.042]}
           radius={0.018}
           castShadow
           receiveShadow
         >
-          <meshStandardMaterial color="#0f172a" metalness={0.6} roughness={0.35} />
+          <meshStandardMaterial
+            color={mat.metalDark}
+            metalness={0.62}
+            roughness={0.32}
+          />
         </RoundedBox>
 
         {/* Glowing Screen Surface */}
-        <mesh position={[0, 0.01, 0.022]}>
-          <planeGeometry args={[0.99, 0.48]} />
+        <mesh position={[0, 0.01, 0.023]}>
+          <planeGeometry args={[1.0, 0.49]} />
           <meshBasicMaterial map={mainScreenTex ?? undefined} color="#ffffff" />
         </mesh>
 
-        {/* Monitor Top Webcam / Lightbar */}
+        {/* Monitor Top Screenbar Light */}
         <RoundedBox
-          args={[0.42, 0.024, 0.035]}
+          args={[0.46, 0.026, 0.038]}
           radius={0.008}
-          position={[0, 0.285, 0.02]}
+          position={[0, 0.29, 0.02]}
         >
-          <meshStandardMaterial color="#1e293b" metalness={0.7} roughness={0.25} />
+          <meshStandardMaterial
+            color={mat.metalBrushed}
+            metalness={0.72}
+            roughness={0.25}
+          />
         </RoundedBox>
-        <mesh position={[0, 0.272, 0.032]}>
-          <boxGeometry args={[0.38, 0.008, 0.01]} />
-          <meshBasicMaterial color="#fde68a" />
+        <mesh position={[0, 0.276, 0.034]}>
+          <boxGeometry args={[0.42, 0.009, 0.01]} />
+          <meshBasicMaterial color={mat.accentAmber} />
         </mesh>
       </InteractiveObject>
 
@@ -284,32 +305,44 @@ export const MonitorsAndDisplays: React.FC = () => {
         {/* Stand */}
         <mesh position={[0, -0.24, -0.05]} castShadow>
           <cylinderGeometry args={[0.02, 0.024, 0.4, 14]} />
-          <meshStandardMaterial color="#334155" metalness={0.75} roughness={0.25} />
+          <meshStandardMaterial
+            color={mat.metalSilver}
+            metalness={0.75}
+            roughness={0.25}
+          />
         </mesh>
         <RoundedBox
-          args={[0.2, 0.02, 0.16]}
+          args={[0.21, 0.022, 0.17]}
           radius={0.006}
           position={[0, -0.43, -0.03]}
           castShadow
         >
-          <meshStandardMaterial color="#1e293b" metalness={0.7} roughness={0.3} />
+          <meshStandardMaterial
+            color={mat.metalBrushed}
+            metalness={0.7}
+            roughness={0.3}
+          />
         </RoundedBox>
 
         {/* Monitor Bezel */}
-        <RoundedBox args={[0.74, 0.46, 0.035]} radius={0.015} castShadow>
-          <meshStandardMaterial color="#0f172a" metalness={0.55} roughness={0.35} />
+        <RoundedBox args={[0.75, 0.47, 0.036]} radius={0.015} castShadow>
+          <meshStandardMaterial
+            color={mat.metalDark}
+            metalness={0.58}
+            roughness={0.32}
+          />
         </RoundedBox>
 
         {/* Screen */}
-        <mesh position={[0, 0, 0.019]}>
+        <mesh position={[0, 0, 0.02]}>
           <planeGeometry args={[0.69, 0.41]} />
           <meshBasicMaterial map={videoScreenTex ?? undefined} />
         </mesh>
 
         {/* Cyan Status LED */}
         <mesh position={[0.31, -0.21, 0.02]}>
-          <sphereGeometry args={[0.009, 10, 10]} />
-          <meshBasicMaterial color="#22d3ee" />
+          <sphereGeometry args={[0.01, 10, 10]} />
+          <meshBasicMaterial color={mat.accentCyan} />
         </mesh>
       </InteractiveObject>
 
@@ -324,24 +357,36 @@ export const MonitorsAndDisplays: React.FC = () => {
         {/* Stand */}
         <mesh position={[0, -0.24, -0.05]} castShadow>
           <cylinderGeometry args={[0.02, 0.024, 0.4, 14]} />
-          <meshStandardMaterial color="#334155" metalness={0.75} roughness={0.25} />
+          <meshStandardMaterial
+            color={mat.metalSilver}
+            metalness={0.75}
+            roughness={0.25}
+          />
         </mesh>
         <RoundedBox
-          args={[0.2, 0.02, 0.16]}
+          args={[0.21, 0.022, 0.17]}
           radius={0.006}
           position={[0, -0.43, -0.03]}
           castShadow
         >
-          <meshStandardMaterial color="#1e293b" metalness={0.7} roughness={0.3} />
+          <meshStandardMaterial
+            color={mat.metalBrushed}
+            metalness={0.7}
+            roughness={0.3}
+          />
         </RoundedBox>
 
         {/* Monitor Bezel */}
-        <RoundedBox args={[0.72, 0.45, 0.035]} radius={0.015} castShadow>
-          <meshStandardMaterial color="#0f172a" metalness={0.55} roughness={0.35} />
+        <RoundedBox args={[0.73, 0.46, 0.036]} radius={0.015} castShadow>
+          <meshStandardMaterial
+            color={mat.metalDark}
+            metalness={0.58}
+            roughness={0.32}
+          />
         </RoundedBox>
 
         {/* Screen */}
-        <mesh position={[0, 0, 0.019]}>
+        <mesh position={[0, 0, 0.02]}>
           <planeGeometry args={[0.67, 0.4]} />
           <meshBasicMaterial map={financeScreenTex ?? undefined} />
         </mesh>
@@ -355,11 +400,15 @@ export const MonitorsAndDisplays: React.FC = () => {
         ringRadius={0.34}
         ringOffset={[0, 0, 0.04]}
       >
-        <RoundedBox args={[0.82, 0.5, 0.045]} radius={0.016} castShadow>
-          <meshStandardMaterial color="#0f172a" metalness={0.6} roughness={0.3} />
+        <RoundedBox args={[0.84, 0.52, 0.046]} radius={0.016} castShadow>
+          <meshStandardMaterial
+            color={mat.metalBrushed}
+            metalness={0.62}
+            roughness={0.3}
+          />
         </RoundedBox>
-        <mesh position={[0, 0, 0.025]}>
-          <planeGeometry args={[0.76, 0.44]} />
+        <mesh position={[0, 0, 0.026]}>
+          <planeGeometry args={[0.77, 0.45]} />
           <meshBasicMaterial map={cctvScreenTex ?? undefined} />
         </mesh>
       </InteractiveObject>
@@ -378,11 +427,11 @@ export const MonitorsAndDisplays: React.FC = () => {
           position={[0, 0.01, 0]}
           castShadow
         >
-          <meshStandardMaterial color="#f8fafc" roughness={0.45} />
+          <meshStandardMaterial color={mat.ceramicWhite} roughness={0.38} />
         </RoundedBox>
-        <mesh position={[0, 0.055, 0.038]}>
-          <boxGeometry args={[0.16, 0.032, 0.01]} />
-          <meshBasicMaterial color="#10b981" />
+        <mesh position={[0, 0.055, 0.039]}>
+          <boxGeometry args={[0.16, 0.034, 0.01]} />
+          <meshBasicMaterial color={mat.accentEmerald} />
         </mesh>
       </InteractiveObject>
 
@@ -396,26 +445,34 @@ export const MonitorsAndDisplays: React.FC = () => {
       >
         {/* Dock Base */}
         <RoundedBox
-          args={[0.2, 0.035, 0.14]}
+          args={[0.21, 0.036, 0.15]}
           radius={0.01}
           position={[0, -0.02, 0]}
           castShadow
         >
-          <meshStandardMaterial color="#1e293b" metalness={0.6} roughness={0.3} />
+          <meshStandardMaterial
+            color={mat.metalBrushed}
+            metalness={0.62}
+            roughness={0.3}
+          />
         </RoundedBox>
         {/* Angled Smart Tablet */}
         <RoundedBox
-          args={[0.18, 0.14, 0.015]}
+          args={[0.185, 0.145, 0.016]}
           radius={0.008}
           position={[0, 0.05, 0.01]}
           rotation={[-0.35, 0, 0]}
           castShadow
         >
-          <meshStandardMaterial color="#0f172a" metalness={0.7} roughness={0.2} />
+          <meshStandardMaterial
+            color={mat.metalDark}
+            metalness={0.7}
+            roughness={0.22}
+          />
         </RoundedBox>
-        <mesh position={[0, 0.052, 0.019]} rotation={[-0.35, 0, 0]}>
-          <planeGeometry args={[0.155, 0.115]} />
-          <meshBasicMaterial color="#38bdf8" />
+        <mesh position={[0, 0.052, 0.02]} rotation={[-0.35, 0, 0]}>
+          <planeGeometry args={[0.16, 0.12]} />
+          <meshBasicMaterial color={mat.accentCyan} />
         </mesh>
       </InteractiveObject>
     </group>
