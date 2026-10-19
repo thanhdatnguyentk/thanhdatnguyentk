@@ -92,9 +92,10 @@ export const WorkspaceApp: React.FC<WorkspaceAppProps> = ({
     }
   }, [lite2DMode]);
 
-  // 4. Synchronize Day/Night mode with existing #room-wrap container attribute
+  // 4. Synchronize Day/Night mode with existing #room-wrap container attribute and html dataset
   useEffect(() => {
     if (typeof document === 'undefined') return;
+    document.documentElement.dataset.workspaceTheme = timeMode;
     const roomWrap = document.getElementById('room-wrap');
     if (roomWrap) {
       roomWrap.setAttribute(
@@ -102,6 +103,9 @@ export const WorkspaceApp: React.FC<WorkspaceAppProps> = ({
         timeMode === 'night' ? 'night' : 'afternoon'
       );
     }
+    return () => {
+      delete document.documentElement.dataset.workspaceTheme;
+    };
   }, [timeMode]);
 
   // 5. Escape key closes Project Inspector & resets camera focus

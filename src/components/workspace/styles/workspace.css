@@ -44,18 +44,30 @@
   outline: none;
 }
 
+/* Ensure top-left site brand is bright and legible when 3D Night Lab is active */
+html[data-workspace-theme="night"] .l-header__logo,
+html[data-workspace-theme="night"] .l-header__text {
+  color: #f1f5f9 !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+  transition: color 0.35s ease;
+}
+
 /* ── Top HUD Bar (Minimalist Scientific Controls below Nav) ── */
 .ws-hud-top {
   position: absolute;
-  top: 78px;
-  left: 28px;
-  right: 28px;
+  top: 92px;
+  left: 36px;
+  right: 36px;
   z-index: 10;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 10px;
   pointer-events: none;
+}
+
+.ws-hud-top > .ws-hud-group:first-child {
+  margin-top: 64px;
 }
 
 .ws-hud-group {

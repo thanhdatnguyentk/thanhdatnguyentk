@@ -22,12 +22,12 @@ export const RoomLighting: React.FC = () => {
     if (ambientRef.current) {
       ambientRef.current.intensity = THREE.MathUtils.damp(
         ambientRef.current.intensity,
-        isNight ? 0.52 : 1.05,
+        isNight ? 0.95 : 1.25,
         speed,
         delta
       );
       ambientRef.current.color.lerp(
-        new THREE.Color(isNight ? '#1e293b' : '#fff8ed'),
+        new THREE.Color(isNight ? '#334155' : '#fff8ed'),
         Math.min(1, delta * speed)
       );
     }
@@ -35,7 +35,7 @@ export const RoomLighting: React.FC = () => {
     if (hemiRef.current) {
       hemiRef.current.intensity = THREE.MathUtils.damp(
         hemiRef.current.intensity,
-        isNight ? 0.55 : 0.95,
+        isNight ? 0.92 : 1.15,
         speed,
         delta
       );
@@ -44,12 +44,12 @@ export const RoomLighting: React.FC = () => {
     if (dirLightRef.current) {
       dirLightRef.current.intensity = THREE.MathUtils.damp(
         dirLightRef.current.intensity,
-        isNight ? 0.78 : 2.1,
+        isNight ? 1.35 : 2.25,
         speed,
         delta
       );
       dirLightRef.current.color.lerp(
-        new THREE.Color(isNight ? '#818cf8' : '#fff1d6'),
+        new THREE.Color(isNight ? '#93c5fd' : '#fff1d6'),
         Math.min(1, delta * speed)
       );
     }

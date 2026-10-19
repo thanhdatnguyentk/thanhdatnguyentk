@@ -80,7 +80,6 @@ export const WorkspaceScene: React.FC<WorkspaceSceneProps> = ({
               key={station.id}
               position={station.hotspotPosition}
               center
-              distanceFactor={12}
               zIndexRange={[8, 0]}
             >
               <button
