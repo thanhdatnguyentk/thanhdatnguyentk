@@ -1,0 +1,703 @@
+/* ============================================================
+   3D ISOMETRIC AI LABORATORY WORKSPACE — OVERLAY & UI STYLES
+   ============================================================ */
+
+.workspace-3d-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 540px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 0;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    rgba(22, 32, 54, 0.92) 0%,
+    rgba(9, 13, 24, 0.98) 100%
+  );
+  transition: background 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  user-select: none;
+}
+
+.workspace-3d-shell[data-time-mode="day"] {
+  background: radial-gradient(
+    ellipse at 50% 42%,
+    rgba(244, 249, 253, 0.96) 0%,
+    rgba(222, 236, 249, 0.98) 100%
+  );
+}
+
+.workspace-3d-canvas-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.workspace-3d-canvas-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  outline: none;
+}
+
+/* ── Top HUD Bar (Minimalist Scientific Controls below Nav) ── */
+.ws-hud-top {
+  position: absolute;
+  top: 78px;
+  left: 28px;
+  right: 28px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.ws-hud-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+  flex-wrap: wrap;
+}
+
+.ws-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: rgba(13, 17, 28, 0.78);
+  color: #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-badge {
+  background: rgba(255, 252, 246, 0.85);
+  color: #1e293b;
+  border-color: rgba(100, 116, 139, 0.22);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07);
+}
+
+.ws-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 8px #22d3ee;
+  animation: wsPulseDot 2.2s infinite ease-in-out;
+}
+
+@keyframes wsPulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+.ws-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 500;
+  color: #e2e8f0;
+  background: rgba(15, 23, 42, 0.76);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.ws-btn:hover {
+  background: rgba(30, 41, 59, 0.92);
+  border-color: rgba(56, 189, 248, 0.55);
+  color: #38bdf8;
+  transform: translateY(-1px);
+}
+
+.ws-btn:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
+}
+
+.ws-btn.is-active {
+  background: rgba(14, 116, 144, 0.35);
+  border-color: rgba(34, 211, 238, 0.65);
+  color: #67e8f9;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-btn {
+  background: rgba(255, 252, 246, 0.86);
+  color: #334155;
+  border-color: rgba(100, 116, 139, 0.24);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-btn:hover {
+  background: #ffffff;
+  border-color: #d97706;
+  color: #b45309;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-btn.is-active {
+  background: rgba(251, 191, 36, 0.18);
+  border-color: rgba(217, 119, 6, 0.55);
+  color: #b45309;
+}
+
+/* ── Bottom HUD Bar (Interactive Quick-Select & Hint) ── */
+.ws-hud-bottom {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.ws-hint-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  color: rgba(226, 232, 240, 0.85);
+  background: rgba(13, 17, 28, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-hint-pill {
+  background: rgba(255, 252, 246, 0.84);
+  color: #475569;
+  border-color: rgba(100, 116, 139, 0.2);
+}
+
+.ws-quick-dock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  pointer-events: auto;
+  max-width: 68%;
+}
+
+.ws-dock-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-family: var(--font-mono, monospace);
+  font-size: 10.5px;
+  font-weight: 500;
+  background: rgba(15, 23, 42, 0.76);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.ws-dock-chip:hover,
+.ws-dock-chip.is-selected {
+  background: rgba(14, 116, 144, 0.42);
+  color: #ffffff;
+  border-color: var(--chip-accent, #38bdf8);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-dock-chip {
+  background: rgba(255, 252, 246, 0.85);
+  color: #334155;
+  border-color: rgba(100, 116, 139, 0.2);
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-dock-chip:hover,
+.workspace-3d-shell[data-time-mode="day"] .ws-dock-chip.is-selected {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: var(--chip-accent, #d97706);
+}
+
+.ws-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--chip-accent, #38bdf8);
+}
+
+/* ── Floating Hover Tooltip in 3D Viewport ── */
+.ws-hover-tooltip {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px;
+  border-radius: 10px;
+  background: rgba(10, 14, 24, 0.88);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  animation: wsTooltipFade 0.18s ease-out;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-hover-tooltip {
+  background: rgba(255, 253, 249, 0.94);
+  border-color: rgba(217, 119, 6, 0.45);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+}
+
+@keyframes wsTooltipFade {
+  from { opacity: 0; transform: translate(-50%, -4px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.ws-hover-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-hover-title {
+  color: #0f172a;
+}
+
+.ws-hover-sub {
+  font-family: var(--font-mono, monospace);
+  font-size: 10.5px;
+  color: #38bdf8;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-hover-sub {
+  color: #d97706;
+}
+
+/* ── 2D Projected Hotspot Pins on 3D Canvas ── */
+.ws-hotspot-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ws-hotspot-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px 3px 6px;
+  border-radius: 999px;
+  background: rgba(10, 15, 28, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.32);
+  color: #f1f5f9;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+}
+
+.ws-hotspot-pin:hover,
+.ws-hotspot-pin.is-active {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: rgba(15, 23, 42, 0.95);
+  border-color: var(--pin-color, #38bdf8);
+  z-index: 8;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-hotspot-pin {
+  background: rgba(255, 252, 245, 0.86);
+  color: #1e293b;
+  border-color: rgba(100, 116, 139, 0.3);
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.1);
+}
+
+.ws-hotspot-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--pin-color, #38bdf8);
+  box-shadow: 0 0 6px var(--pin-color, #38bdf8);
+}
+
+/* ── HTML Project & Station Inspector Overlay ── */
+.ws-inspector-panel {
+  position: absolute;
+  top: 124px;
+  right: 28px;
+  bottom: 64px;
+  width: min(390px, calc(100% - 56px));
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  background: rgba(12, 16, 28, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 14px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  color: #f1f5f9;
+  overflow: hidden;
+  animation: wsInspectorSlideIn 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-inspector-panel {
+  background: rgba(255, 252, 246, 0.95);
+  border-color: rgba(100, 116, 139, 0.26);
+  color: #0f172a;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
+}
+
+@keyframes wsInspectorSlideIn {
+  from { opacity: 0; transform: translateX(18px) scale(0.98); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.ws-inspector-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.ws-inspector-kicker {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #38bdf8;
+  margin-bottom: 3px;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-inspector-kicker {
+  color: #d97706;
+}
+
+.ws-inspector-title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.ws-inspector-close {
+  background: rgba(148, 163, 184, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: inherit;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.ws-inspector-close:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #f87171;
+}
+
+.ws-inspector-body {
+  padding: 14px 16px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.ws-inspector-summary {
+  margin: 0;
+  color: rgba(226, 232, 240, 0.88);
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-inspector-summary {
+  color: #334155;
+}
+
+.ws-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.ws-metric-box {
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: rgba(30, 41, 59, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-metric-box {
+  background: rgba(241, 245, 249, 0.85);
+  border-color: rgba(100, 116, 139, 0.18);
+}
+
+.ws-metric-val {
+  font-family: var(--font-mono, monospace);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-metric-val {
+  color: #b45309;
+}
+
+.ws-metric-lbl {
+  font-size: 10px;
+  opacity: 0.72;
+  margin-top: 2px;
+}
+
+.ws-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.ws-tag {
+  font-family: var(--font-mono, monospace);
+  font-size: 10.5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: #7dd3fc;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-tag {
+  background: rgba(217, 119, 6, 0.1);
+  border-color: rgba(217, 119, 6, 0.28);
+  color: #b45309;
+}
+
+.ws-inspector-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.ws-cta-primary,
+.ws-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 13px;
+  border-radius: 8px;
+  font-family: var(--font-mono, monospace);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.ws-cta-primary {
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  color: #ffffff;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  flex: 1;
+}
+
+.ws-cta-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.ws-cta-secondary {
+  background: rgba(30, 41, 59, 0.7);
+  color: #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-cta-secondary {
+  background: rgba(241, 245, 249, 0.9);
+  color: #1e293b;
+  border-color: rgba(100, 116, 139, 0.28);
+}
+
+.ws-cta-secondary:hover {
+  border-color: #38bdf8;
+}
+
+/* ── Mini Project Cards inside All-Projects / Dual-Project Inspector ── */
+.ws-mini-project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ws-mini-project-card {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(30, 41, 59, 0.48);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.18s ease;
+}
+
+.ws-mini-project-card:hover {
+  border-color: rgba(56, 189, 248, 0.45);
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-mini-project-card {
+  background: rgba(248, 250, 252, 0.9);
+  border-color: rgba(100, 116, 139, 0.2);
+}
+
+.ws-mini-project-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ws-mini-project-num {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.ws-mini-project-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* ── DatBot-01 Interactive RAG Prompt Chips ── */
+.ws-bot-chat {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-bot-chat {
+  background: rgba(241, 245, 249, 0.9);
+  border-color: rgba(14, 116, 144, 0.25);
+}
+
+.ws-bot-prompts {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ws-bot-prompt-btn {
+  text-align: left;
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-size: 11.5px;
+  background: rgba(30, 41, 59, 0.7);
+  color: #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.ws-bot-prompt-btn:hover,
+.ws-bot-prompt-btn.is-active {
+  background: rgba(14, 116, 144, 0.35);
+  border-color: #22d3ee;
+  color: #ffffff;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-bot-prompt-btn {
+  background: #ffffff;
+  color: #1e293b;
+}
+
+.ws-bot-answer {
+  font-family: var(--font-mono, monospace);
+  font-size: 11.5px;
+  line-height: 1.5;
+  padding: 8px 10px;
+  border-radius: 7px;
+  background: rgba(6, 182, 212, 0.1);
+  border-left: 3px solid #22d3ee;
+  color: #a5f3fc;
+}
+
+.workspace-3d-shell[data-time-mode="day"] .ws-bot-answer {
+  background: rgba(14, 116, 144, 0.08);
+  color: #0f172a;
+}
+
+@media (max-width: 768px) {
+  .workspace-3d-shell {
+    min-height: 460px;
+  }
+  .ws-quick-dock {
+    max-width: 100%;
+    justify-content: flex-start;
+  }
+  .ws-hud-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ws-inspector-panel {
+    top: auto;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: auto;
+    max-height: 72%;
+  }
+  .ws-hotspot-pin span.ws-hotspot-text {
+    display: none;
+  }
+}
