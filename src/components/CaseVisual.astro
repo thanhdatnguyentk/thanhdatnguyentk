@@ -1,6 +1,15 @@
 ---
 interface Props {
-  type: 'about' | 'video' | 'tensor' | 'rag' | 'traffic' | 'finance' | 'galaxy' | 'contact';
+  type:
+    | 'about'
+    | 'video'
+    | 'tensor'
+    | 'rag'
+    | 'traffic'
+    | 'finance'
+    | 'galaxy'
+    | 'observatory'
+    | 'contact';
 }
 
 const { type } = Astro.props;
@@ -10,14 +19,14 @@ const { type } = Astro.props;
   {type === 'about' && (
     <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="140" cy="140" r="116" fill="#E5F2FC" stroke="#1E2E3E" stroke-width="3" />
-      <circle cx="140" cy="140" r="88" stroke="#5BB2F6" stroke-width="2" stroke-dasharray="6 6" />
+      <circle cx="140" cy="140" r="88" stroke="#5BB2F6" stroke-width="2" stroke-dasharray="6 6" class="u-spin-slow" />
       <!-- Whiteboard / Sensemaking & AI Pipelines -->
       <rect x="64" y="72" width="152" height="104" rx="14" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="3" />
       <circle cx="82" cy="90" r="4" fill="#7CC6FE" />
       <circle cx="96" cy="90" r="4" fill="#1E2E3E" />
       <path d="M84 126C98 106 116 146 134 118C152 90 168 142 196 110" stroke="#5BB2F6" stroke-width="4" stroke-linecap="round" />
       <circle cx="84" cy="126" r="6" fill="#1E2E3E" />
-      <circle cx="134" cy="118" r="6" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
+      <circle cx="134" cy="118" r="6" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" class="u-pulse-node" />
       <circle cx="196" cy="110" r="6" fill="#1E2E3E" />
       <rect x="82" y="148" width="52" height="10" rx="5" fill="#1E2E3E" opacity="0.15" />
       <rect x="142" y="148" width="54" height="10" rx="5" fill="#7CC6FE" opacity="0.55" />
@@ -34,7 +43,7 @@ const { type } = Astro.props;
       <rect x="52" y="54" width="176" height="94" rx="14" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="3" />
       <!-- 3 Keyframe Cards (TRAKE Temporal Sequence) -->
       <rect x="64" y="68" width="44" height="50" rx="6" fill="#7CC6FE" fill-opacity="0.35" stroke="#1E2E3E" stroke-width="2.5" />
-      <rect x="118" y="68" width="44" height="50" rx="6" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
+      <rect x="118" y="68" width="44" height="50" rx="6" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" class="u-pulse-node" />
       <rect x="172" y="68" width="44" height="50" rx="6" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="2.5" />
       <!-- Play icon in center keyframe -->
       <path d="M136 85L149 93L136 101V85Z" fill="#1E2E3E" />
@@ -56,6 +65,67 @@ const { type } = Astro.props;
     </svg>
   )}
 
+  {type === 'observatory' && (
+    <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Deep Cosmic Observatory Sphere -->
+      <circle cx="140" cy="140" r="118" fill="#070C18" stroke="#1E2E3E" stroke-width="3" />
+      <circle cx="140" cy="140" r="106" stroke="#5BB2F6" stroke-opacity="0.22" stroke-width="1.2" stroke-dasharray="3 6" />
+
+      <!-- Background Twinkling Stars -->
+      <circle cx="64" cy="76" r="1.8" fill="#F4F9FD" class="u-twinkle-1" />
+      <circle cx="212" cy="70" r="2" fill="#7CC6FE" class="u-twinkle-2" />
+      <circle cx="58" cy="184" r="1.6" fill="#F8C98B" class="u-twinkle-2" />
+      <circle cx="222" cy="176" r="1.8" fill="#67E8F9" class="u-twinkle-1" />
+
+      <!-- Rotating 4-Arm Barred Spiral Galaxy Disk -->
+      <g transform="translate(140, 132) scale(1, 0.58) translate(-140, -132)">
+        <g class="u-galaxy-rotate">
+          <!-- Outer Spiral Arms -->
+          <path d="M140 132 C175 108, 218 128, 226 172 C232 204, 198 232, 152 232" stroke="#5BB2F6" stroke-width="10" stroke-linecap="round" opacity="0.32" />
+          <path d="M140 132 C105 156, 62 136, 54 92 C48 60, 82 32, 128 32" stroke="#5BB2F6" stroke-width="10" stroke-linecap="round" opacity="0.32" />
+          <path d="M140 132 C164 94, 212 84, 232 118 C246 144, 234 186, 204 208" stroke="#67E8F9" stroke-width="7" stroke-linecap="round" opacity="0.38" />
+          <path d="M140 132 C116 170, 68 180, 48 146 C34 120, 46 78, 76 56" stroke="#67E8F9" stroke-width="7" stroke-linecap="round" opacity="0.38" />
+
+          <!-- Star Streams -->
+          <ellipse cx="140" cy="132" rx="88" ry="84" stroke="#7CC6FE" stroke-width="2.2" stroke-dasharray="3 8" />
+          <ellipse cx="140" cy="132" rx="60" ry="56" stroke="#F8C98B" stroke-width="2.2" stroke-dasharray="4 7" />
+
+          <!-- Galactic Bar & Sgr A* Core -->
+          <ellipse cx="140" cy="132" rx="38" ry="16" transform="rotate(-25 140 132)" fill="#F8C98B" fill-opacity="0.55" />
+        </g>
+      </g>
+
+      <!-- Pulsing Sgr A* Core -->
+      <circle cx="140" cy="132" r="18" fill="#F8C98B" fill-opacity="0.35" class="u-pulse-node" />
+      <circle cx="140" cy="132" r="8.5" fill="#FFFBEB" />
+
+      <!-- Orbiting Solar System Node (Earth + Moon + Saturn Ring) -->
+      <g class="u-orbit-planet">
+        <!-- Earth & Moon -->
+        <circle cx="82" cy="162" r="11" stroke="#67E8F9" stroke-opacity="0.45" stroke-width="1" stroke-dasharray="2 2" />
+        <circle cx="82" cy="162" r="5.5" fill="#38BDF8" stroke="#F4F9FD" stroke-width="1.5" />
+        <circle cx="92" cy="156" r="2.2" fill="#E2E8F0" />
+      </g>
+
+      <!-- Saturn with Ring -->
+      <g transform="translate(198, 102)" class="u-float-planet">
+        <ellipse rx="13" ry="4.5" transform="rotate(-22)" stroke="#FDE68A" stroke-width="2.2" />
+        <circle r="5.5" fill="#FBBF24" />
+      </g>
+
+      <!-- Shooting Halley's Comet with Cyan Ion Tail -->
+      <g class="u-comet-streak">
+        <path d="M92 84 L52 62 L62 76 Z" fill="#67E8F9" fill-opacity="0.55" />
+        <circle cx="94" cy="85" r="3.5" fill="#FFFFFF" />
+        <circle cx="94" cy="85" r="6.5" stroke="#67E8F9" stroke-width="1.2" opacity="0.7" />
+      </g>
+
+      <!-- Bottom Observatory Badge -->
+      <rect x="46" y="212" width="188" height="28" rx="14" fill="#5BB2F6" stroke="#F4F9FD" stroke-width="2" />
+      <text x="140" y="230" text-anchor="middle" fill="#070C18" font-family="Righteous, sans-serif" font-size="11.5">3D GALAXY • SOLAR • WEBGL2</text>
+    </svg>
+  )}
+
   {type === 'tensor' && (
     <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="28" y="28" width="224" height="224" rx="44" fill="#E5F2FC" stroke="#1E2E3E" stroke-width="3" />
@@ -69,7 +139,7 @@ const { type } = Astro.props;
         <line x1="14" y1="72" x2="124" y2="72" stroke="#1E2E3E" stroke-width="2.5" />
         <line x1="14" y1="110" x2="124" y2="110" stroke="#1E2E3E" stroke-width="2.5" />
         <!-- Active tensor cells -->
-        <rect x="52" y="74" width="34" height="34" fill="#7CC6FE" />
+        <rect x="52" y="74" width="34" height="34" fill="#7CC6FE" class="u-pulse-node" />
         <rect x="16" y="38" width="32" height="32" fill="#1E2E3E" />
         <circle cx="106" cy="128" r="9" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
       </g>
@@ -111,7 +181,7 @@ const { type } = Astro.props;
       <circle cx="104" cy="132" r="7" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
       <circle cx="136" cy="132" r="7" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
       <!-- Live radar pulse -->
-      <circle cx="194" cy="96" r="14" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
+      <circle cx="194" cy="96" r="14" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" class="u-pulse-node" />
       <circle cx="194" cy="96" r="5" fill="#1E2E3E" />
       <text x="140" y="218" text-anchor="middle" fill="#1E2E3E" font-family="Righteous, sans-serif" font-size="13">YOLOv8 • REALTIME</text>
     </svg>
@@ -129,7 +199,7 @@ const { type } = Astro.props;
       <line x1="164" y1="86" x2="164" y2="148" stroke="#1E2E3E" stroke-width="2.5" />
       <rect x="156" y="94" width="16" height="32" rx="4" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2" />
       <path d="M76 158L114 134L148 142L196 98" stroke="#5BB2F6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-      <circle cx="196" cy="98" r="6" fill="#1E2E3E" />
+      <circle cx="196" cy="98" r="6" fill="#1E2E3E" class="u-pulse-node" />
       <text x="140" y="222" text-anchor="middle" fill="#1E2E3E" font-family="Righteous, sans-serif" font-size="13">TRADING • ANALYTICS</text>
     </svg>
   )}
@@ -140,7 +210,7 @@ const { type } = Astro.props;
       <!-- Spiral Galaxy N-Body Orbitals -->
       <ellipse cx="140" cy="140" rx="86" ry="38" transform="rotate(-28 140 140)" stroke="#7CC6FE" stroke-width="3" stroke-dasharray="8 6" />
       <ellipse cx="140" cy="140" rx="86" ry="38" transform="rotate(32 140 140)" stroke="#F4F9FD" stroke-width="2" stroke-dasharray="5 5" opacity="0.7" />
-      <circle cx="140" cy="140" r="22" fill="#7CC6FE" />
+      <circle cx="140" cy="140" r="22" fill="#7CC6FE" class="u-pulse-node" />
       <circle cx="140" cy="140" r="10" fill="#F4F9FD" />
       <circle cx="78" cy="112" r="7" fill="#7CC6FE" />
       <circle cx="202" cy="168" r="8" fill="#F4F9FD" />
@@ -177,4 +247,88 @@ const { type } = Astro.props;
     overflow: visible;
     filter: drop-shadow(0 12px 24px rgba(30, 46, 62, 0.08));
   }
+
+  .u-galaxy-rotate {
+    transform-origin: 140px 132px;
+    animation: case-galaxy-spin 26s linear infinite;
+  }
+
+  .u-spin-slow {
+    transform-origin: 140px 140px;
+    animation: case-galaxy-spin 42s linear infinite;
+  }
+
+  .u-pulse-node {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: case-node-pulse 2.8s ease-in-out infinite;
+  }
+
+  .u-float-planet {
+    animation: case-planet-bob 4s ease-in-out infinite;
+  }
+
+  .u-comet-streak {
+    animation: case-comet-fly 5.5s ease-in-out infinite;
+  }
+
+  .u-twinkle-1 {
+    animation: case-twinkle 2.4s ease-in-out infinite;
+  }
+
+  .u-twinkle-2 {
+    animation: case-twinkle 3.2s ease-in-out infinite 1.1s;
+  }
+
+  @keyframes case-galaxy-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes case-node-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: scale(1.22);
+      opacity: 0.55;
+    }
+  }
+
+  @keyframes case-planet-bob {
+    0%, 100% {
+      transform: translate(198px, 102px) translateY(0px);
+    }
+    50% {
+      transform: translate(198px, 102px) translateY(-5px);
+    }
+  }
+
+  @keyframes case-comet-fly {
+    0%, 100% {
+      transform: translate(0px, 0px);
+      opacity: 0.85;
+    }
+    50% {
+      transform: translate(14px, 8px);
+      opacity: 1;
+    }
+  }
+
+  @keyframes case-twinkle {
+    0%, 100% {
+      opacity: 0.25;
+      transform: scale(0.85);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.3);
+    }
+  }
 </style>
+

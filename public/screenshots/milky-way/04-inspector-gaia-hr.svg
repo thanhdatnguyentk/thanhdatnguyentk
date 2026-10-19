@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" fill="none">
+  <defs>
+    <radialGradient id="gaiaBg" cx="40%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#0E172A" />
+      <stop offset="60%" stop-color="#050811" />
+      <stop offset="100%" stop-color="#030509" />
+    </radialGradient>
+    <linearGradient id="hrSpectrum" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#60A5FA" />
+      <stop offset="28%" stop-color="#93C5FD" />
+      <stop offset="52%" stop-color="#FFFBEB" />
+      <stop offset="76%" stop-color="#FBBF24" />
+      <stop offset="100%" stop-color="#EF4444" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#gaiaBg)" />
+
+  <!-- Left Viewport: Gaia DR3 Star Neighborhood & Spectral Population -->
+  <g transform="translate(360, 360)">
+    <circle r="260" fill="#7AA8FF" fill-opacity="0.05" stroke="#7AA8FF" stroke-opacity="0.18" stroke-dasharray="4 8" />
+    <circle r="170" fill="#67E8F9" fill-opacity="0.05" stroke="#67E8F9" stroke-opacity="0.22" stroke-dasharray="3 6" />
+
+    <!-- Star Field Samples Colored by Blackbody Temperature -->
+    <circle cx="-120" cy="-85" r="8" fill="#93C5FD" />
+    <text x="-104" y="-81" fill="#93C5FD" font-family="monospace" font-size="11">Rigel (B8Iab • 12,100 K)</text>
+
+    <circle cx="95" cy="-110" r="9.5" fill="#F97316" />
+    <text x="112" y="-106" fill="#FDBA74" font-family="monospace" font-size="11">Betelgeuse (M1-2Ia • 3,500 K)</text>
+
+    <circle cx="-68" cy="104" r="7" fill="#BAE6FD" />
+    <text x="-52" y="108" fill="#BAE6FD" font-family="monospace" font-size="11">Vega (A0V • 9,602 K)</text>
+
+    <circle cx="110" cy="82" r="7.5" fill="#E0F2FE" />
+    <text x="126" y="86" fill="#E0F2FE" font-family="monospace" font-size="11">Sirius A (A1V • 9,940 K)</text>
+
+    <!-- Highlighted Exoplanet Host System TRAPPIST-1 -->
+    <g transform="translate(15, 8)">
+      <circle r="22" stroke="#A78BFA" stroke-width="1.8" stroke-dasharray="4 3" />
+      <circle r="9" fill="#38BDF8" stroke="#FFFFFF" stroke-width="2" />
+      <rect x="-95" y="28" width="210" height="26" rx="6" fill="#090D18" fill-opacity="0.92" stroke="#A78BFA" />
+      <text x="10" y="45" text-anchor="middle" fill="#C4B5FD" font-family="monospace" font-size="11" font-weight="700">🪐 Ngoại hành tinh TRAPPIST-1e</text>
+    </g>
+  </g>
+
+  <!-- RIGHT INSPECTOR & HERTZSPRUNG-RUSSELL DIAGRAM -->
+  <rect x="730" y="40" width="440" height="640" rx="18" fill="#090D18" fill-opacity="0.94" stroke="#F4F7FB" stroke-opacity="0.14" />
+  <rect x="758" y="68" width="164" height="24" rx="12" fill="#34D399" fill-opacity="0.18" stroke="#34D399" stroke-opacity="0.5" />
+  <text x="840" y="84" text-anchor="middle" fill="#6EE7B7" font-family="monospace" font-size="10.5" font-weight="700">DỮ LIỆU QUAN SÁT GAIA DR3</text>
+
+  <text x="758" y="124" fill="#F4F7FB" font-family="Inter, sans-serif" font-size="24" font-weight="700">Biểu Đồ Hertzsprung–Russell</text>
+  <text x="758" y="146" fill="#94A3B8" font-family="Inter, sans-serif" font-size="12.5">Phân loại quang phổ O–B–A–F–G–K–M &amp; Nhiệt độ bức xạ vật đen</text>
+
+  <!-- HR Diagram Plot Box -->
+  <rect x="758" y="170" width="384" height="280" rx="12" fill="#101725" stroke="#F4F7FB" stroke-opacity="0.1" />
+  <!-- Temperature Spectrum Bar -->
+  <rect x="786" y="424" width="336" height="6" rx="3" fill="url(#hrSpectrum)" />
+  <text x="786" y="444" fill="#60A5FA" font-family="monospace" font-size="9.5">30,000 K (O/B)</text>
+  <text x="954" y="444" text-anchor="middle" fill="#FFFBEB" font-family="monospace" font-size="9.5">10,000 K (A/F)</text>
+  <text x="1122" y="444" text-anchor="end" fill="#EF4444" font-family="monospace" font-size="9.5">3,000 K (K/M)</text>
+
+  <!-- Main Sequence Diagonal Curve -->
+  <path d="M805 202 C 875 245, 955 315, 1095 398" stroke="#94A3B8" stroke-width="18" stroke-opacity="0.15" stroke-linecap="round" />
+  <!-- Plotted Stars on HR Diagram -->
+  <circle cx="822" cy="204" r="6" fill="#93C5FD" /><text x="834" y="208" fill="#93C5FD" font-family="monospace" font-size="10">Rigel</text>
+  <circle cx="1078" cy="208" r="8" fill="#F97316" /><text x="1002" y="212" fill="#FDBA74" font-family="monospace" font-size="10">Betelgeuse</text>
+  <circle cx="892" cy="282" r="5.5" fill="#E0F2FE" /><text x="904" y="286" fill="#E0F2FE" font-family="monospace" font-size="10">Sirius A</text>
+  <circle cx="976" cy="336" r="6.5" fill="#FDE047" stroke="#FFFFFF" stroke-width="2" /><text x="988" y="340" fill="#FDE047" font-family="monospace" font-size="10" font-weight="700">☀ Mặt Trời (1 L☉)</text>
+  <circle cx="1092" cy="396" r="4.5" fill="#EF4444" /><text x="995" y="400" fill="#FCA5A5" font-family="monospace" font-size="10">Proxima Centauri</text>
+
+  <!-- Telemetry Cards -->
+  <g transform="translate(758, 472)" font-family="monospace">
+    <rect width="184" height="72" rx="10" fill="#101725" />
+    <text x="14" y="24" fill="#94A3B8" font-size="10">CẤU TRÚC BỘ ĐỆM GPU</text>
+    <text x="14" y="46" fill="#67E8F9" font-size="13" font-weight="700">Float32Array Typed</text>
+    <text x="14" y="62" fill="#64748B" font-size="9.5">Zero-GC Per-Frame Shader</text>
+
+    <rect x="200" width="184" height="72" rx="10" fill="#101725" />
+    <text x="214" y="24" fill="#94A3B8" font-size="10">HỆ TỌA ĐỘ THIÊN HÀ</text>
+    <text x="214" y="46" fill="#F8C98B" font-size="13" font-weight="700">(l, b, d) → (x, y, z)</text>
+    <text x="214" y="62" fill="#64748B" font-size="9.5">Chuẩn IAU R₀ = 8.178 kpc</text>
+
+    <rect y="86" width="384" height="68" rx="10" fill="#7AA8FF" fill-opacity="0.12" stroke="#7AA8FF" stroke-opacity="0.35" />
+    <text x="16" y="112" fill="#F4F7FB" font-family="Inter, sans-serif" font-size="12.5" font-weight="600">Chuyến Tham Quan Có Hướng Dẫn (5 Chặng Tự Động)</text>
+    <text x="16" y="134" fill="#94A3B8" font-family="Inter, sans-serif" font-size="11.5">Toàn cảnh Dải Ngân Hà → Sgr A* → Nhánh Orion → Trái Đất &amp; Sao Chổi → Quầng Sao</text>
+  </g>
+</svg>

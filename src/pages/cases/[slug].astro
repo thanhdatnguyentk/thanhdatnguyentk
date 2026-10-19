@@ -112,6 +112,88 @@ const labels = uiStrings.caseDetail;
           </div>
         </div>
 
+        <!-- Screenshots & Interactive Simulation Lab (if project has screenshots or interactive demo) -->
+        {(project.screenshots || project.hasInteractiveDemo) && (
+          <div class="body-group body-group--wide">
+            <h2 class="body-group__title">
+              <I18nText t={labels.screenshots} />
+            </h2>
+            <div class="body-group__contents body-group__contents--wide">
+              {project.hasInteractiveDemo && (
+                <div class="interactive-observatory" id="mini-galaxy-lab">
+                  <div class="interactive-observatory__header">
+                    <div class="interactive-observatory__title-group">
+                      <span class="live-dot" aria-hidden="true"></span>
+                      <span class="u-en interactive-observatory__badge">LIVE INTERACTIVE 3D PREVIEW</span>
+                    </div>
+                    <div class="interactive-observatory__modes" role="tablist">
+                      <button type="button" class="sim-mode-btn is-active" data-sim-mode="galaxy">
+                        🌌 28 kpc Galaxy
+                      </button>
+                      <button type="button" class="sim-mode-btn" data-sim-mode="solar">
+                        🪐 Solar System &amp; Comet
+                      </button>
+                      <button type="button" class="sim-mode-btn" data-sim-mode="supernova">
+                        💥 Supernova Lab
+                      </button>
+                    </div>
+                  </div>
+                  <div class="interactive-observatory__viewport">
+                    <canvas id="portfolio-galaxy-canvas" width="760" height="420"></canvas>
+                    <div class="interactive-observatory__hud">
+                      <span id="sim-scale-readout">SCALE: 5.0 kpc (~16,300 ly) • R₀ = 8.178 kpc</span>
+                      <span class="sim-hint">🖱 Kéo chuột để xoay 3D • Nhấn vào chế độ để chuyển cảnh</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {project.screenshots && project.screenshots.length > 0 && (
+                <div class="screenshot-showcase" id="screenshot-showcase">
+                  <div class="screenshot-tabs" role="tablist" aria-label="Project Screenshots">
+                    {project.screenshots.map((shot, idx) => (
+                      <button
+                        type="button"
+                        class={`screenshot-tab ${idx === 0 ? 'is-active' : ''}`}
+                        data-shot-idx={idx}
+                      >
+                        <span class="screenshot-tab__num u-en">0{idx + 1}</span>
+                        <span class="screenshot-tab__badge u-en">{shot.badge}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div class="screenshot-stage">
+                    {project.screenshots.map((shot, idx) => (
+                      <figure
+                        class={`screenshot-slide ${idx === 0 ? 'is-active' : ''}`}
+                        data-shot-slide={idx}
+                      >
+                        <div class="screenshot-frame" data-lightbox-src={`${baseUrl}${shot.src}`}>
+                          <img
+                            src={`${baseUrl}${shot.src}`}
+                            alt={shot.title.en}
+                            loading={idx === 0 ? 'eager' : 'lazy'}
+                          />
+                          <span class="screenshot-zoom-pill u-en">🔍 Click to Zoom</span>
+                        </div>
+                        <figcaption class="screenshot-caption">
+                          <h3 class="screenshot-caption__title">
+                            <I18nText t={shot.title} />
+                          </h3>
+                          <p class="screenshot-caption__desc">
+                            <I18nText t={shot.caption} />
+                          </p>
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         <!-- Architecture & Implementation -->
         <div class="body-group">
           <h2 class="body-group__title">
@@ -181,6 +263,14 @@ const labels = uiStrings.caseDetail;
         </div>
       </section>
 
+      <!-- Lightbox Modal for Screenshots -->
+      <div class="screenshot-lightbox" id="screenshot-lightbox" aria-hidden="true">
+        <button type="button" class="screenshot-lightbox__close u-en" id="lightbox-close-btn">
+          × Close
+        </button>
+        <img id="lightbox-img" src="" alt="Fullscreen project screenshot" />
+      </div>
+
       <!-- Next Case Preview -->
       <div class="p-single-next">
         <div class="p-single-next__background" aria-hidden="true">
@@ -233,7 +323,591 @@ const labels = uiStrings.caseDetail;
   </main>
 </Base>
 
+<script>
+  function initCaseInteractiveFeatures() {
+    // 1. Screenshot Gallery Tab Switching & Lightbox
+    const tabs = document.querySelectorAll<HTMLButtonElement>('[data-shot-idx]');
+    const slides = document.querySelectorAll<HTMLElement>('[data-shot-slide]');
+    const lightbox = document.getElementById('screenshot-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
+    const closeBtn = document.getElementById('lightbox-close-btn');
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const idx = tab.getAttribute('data-shot-idx');
+        tabs.forEach((t) => t.classList.toggle('is-active', t === tab));
+        slides.forEach((s) =>
+          s.classList.toggle('is-active', s.getAttribute('data-shot-slide') === idx)
+        );
+      });
+    });
+
+    // 3D Hover Tilt & Lightbox Click on Screenshot Frame
+    document.querySelectorAll<HTMLElement>('.screenshot-frame').forEach((frame) => {
+      frame.addEventListener('mousemove', (e) => {
+        const rect = frame.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        frame.style.transform = `perspective(900px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) scale(1.01)`;
+      });
+      frame.addEventListener('mouseleave', () => {
+        frame.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) scale(1)';
+      });
+      frame.addEventListener('click', () => {
+        const src = frame.getAttribute('data-lightbox-src');
+        if (src && lightbox && lightboxImg) {
+          lightboxImg.src = src;
+          lightbox.classList.add('is-open');
+          lightbox.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+
+    const closeLightbox = () => {
+      if (lightbox) {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+      }
+    };
+    closeBtn?.addEventListener('click', closeLightbox);
+    lightbox?.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // 2. Live Interactive 3D Galaxy & Solar System Canvas Simulator
+    const canvas = document.getElementById('portfolio-galaxy-canvas') as HTMLCanvasElement | null;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const readout = document.getElementById('sim-scale-readout');
+    const modeBtns = document.querySelectorAll<HTMLButtonElement>('[data-sim-mode]');
+    let currentMode: 'galaxy' | 'solar' | 'supernova' = 'galaxy';
+    let tiltX = 0.58;
+    let rotZ = 0;
+    let isDragging = false;
+    let lastX = 0;
+    let lastY = 0;
+    let shockwaveRadius = 10;
+
+    // Generate 950 spiral galaxy particles
+    const stars = Array.from({ length: 950 }, (_, i) => {
+      const arm = i % 4;
+      const r = 14 + Math.pow(Math.random(), 1.15) * 235;
+      const armOffset = (arm * Math.PI) / 2;
+      const spiralAngle = r * 0.022 + armOffset + (Math.random() - 0.5) * 0.48;
+      const isCore = r < 48;
+      const isHII = i % 29 === 0 && r > 60;
+      const color = isCore
+        ? '#F8C98B'
+        : isHII
+          ? '#F472B6'
+          : i % 3 === 0
+            ? '#67E8F9'
+            : '#7AA8FF';
+      return {
+        r,
+        theta: spiralAngle,
+        speed: (0.008 / Math.sqrt(r * 0.08 + 1)) * 1.4,
+        size: isCore ? 2.1 : isHII ? 2.8 : 1.3 + Math.random() * 1.2,
+        color,
+      };
+    });
+
+    const planets = [
+      { name: 'Sao Thủy', r: 36, speed: 0.032, size: 3.2, color: '#94A3B8', angle: 0.4 },
+      { name: 'Sao Kim', r: 58, speed: 0.022, size: 4.6, color: '#FDE68A', angle: 1.8 },
+      { name: 'Trái Đất', r: 88, speed: 0.015, size: 5.5, color: '#38BDF8', angle: 3.1, hasMoon: true },
+      { name: 'Sao Hỏa', r: 118, speed: 0.011, size: 4.2, color: '#FB923C', angle: 4.5 },
+      { name: 'Sao Mộc', r: 162, speed: 0.007, size: 9.2, color: '#FBBF24', angle: 0.9 },
+      { name: 'Sao Thổ', r: 212, speed: 0.005, size: 7.8, color: '#FDE047', angle: 2.4, hasRings: true },
+      { name: 'Sao Thiên Vương', r: 256, speed: 0.0035, size: 6.0, color: '#67E8F9', angle: 5.1 },
+    ];
+
+    modeBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const m = btn.getAttribute('data-sim-mode') as 'galaxy' | 'solar' | 'supernova';
+        if (!m) return;
+        currentMode = m;
+        if (m === 'supernova') shockwaveRadius = 8;
+        modeBtns.forEach((b) => b.classList.toggle('is-active', b === btn));
+        if (readout) {
+          readout.textContent =
+            m === 'galaxy'
+              ? 'SCALE: 5.0 kpc (~16,300 ly) • R₀ = 8.178 kpc'
+              : m === 'solar'
+                ? 'SCALE: 2.5 AU (0.000012 pc) • HỆ MẶT TRỜI & SAO CHỔI HALLEY'
+                : 'LAB VẬT LÝ: BỘ TÍCH PHÂN LEAPFROG & SÓNG XUNG KÍCH SIÊU TÂN TINH';
+        }
+      });
+    });
+
+    canvas.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if (currentMode === 'supernova') shockwaveRadius = 8;
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      rotZ += dx * 0.007;
+      tiltX = Math.max(0.28, Math.min(0.92, tiltX + dy * 0.004));
+      lastX = e.clientX;
+      lastY = e.clientY;
+    });
+    window.addEventListener('pointerup', () => {
+      isDragging = false;
+    });
+
+    let t = 0;
+    let animId = 0;
+    const render = () => {
+      t += 1;
+      const w = canvas.width;
+      const h = canvas.height;
+      const cx = w / 2;
+      const cy = h / 2;
+
+      ctx.fillStyle = '#040711';
+      ctx.fillRect(0, 0, w, h);
+
+      // Radial cosmic glow
+      const bgGrad = ctx.createRadialGradient(cx, cy, 10, cx, cy, 290);
+      bgGrad.addColorStop(0, currentMode === 'solar' ? 'rgba(245, 158, 11, 0.16)' : 'rgba(122, 168, 255, 0.18)');
+      bgGrad.addColorStop(1, 'rgba(3, 5, 9, 0)');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      if (currentMode === 'galaxy' || currentMode === 'supernova') {
+        // Draw rotating 4-arm spiral galaxy
+        for (const s of stars) {
+          s.theta += s.speed;
+          const a = s.theta + rotZ;
+          const x = cx + Math.cos(a) * s.r;
+          const y = cy + Math.sin(a) * s.r * tiltX;
+          ctx.fillStyle = s.color;
+          ctx.globalAlpha = 0.82;
+          ctx.beginPath();
+          ctx.arc(x, y, s.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+
+        // Sgr A* Core
+        const coreGrad = ctx.createRadialGradient(cx, cy, 2, cx, cy, 44);
+        coreGrad.addColorStop(0, '#FFFFFF');
+        coreGrad.addColorStop(0.35, '#F8C98B');
+        coreGrad.addColorStop(1, 'rgba(248, 201, 139, 0)');
+        ctx.fillStyle = coreGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 44, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Solar System Pin at Orion Spur
+        const sunAngle = t * 0.003 + rotZ + 1.1;
+        const sx = cx + Math.cos(sunAngle) * 135;
+        const sy = cy + Math.sin(sunAngle) * 135 * tiltX;
+        ctx.strokeStyle = '#67E8F9';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(sx, sy, 8 + Math.sin(t * 0.08) * 2, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.fillStyle = '#67E8F9';
+        ctx.font = '600 11px monospace';
+        ctx.fillText('☀ Hệ Mặt Trời (8.18 kpc)', sx + 12, sy + 4);
+
+        if (currentMode === 'supernova') {
+          shockwaveRadius = (shockwaveRadius + 2.4) % 240;
+          const snX = cx + Math.cos(rotZ - 0.7) * 95;
+          const snY = cy + Math.sin(rotZ - 0.7) * 95 * tiltX;
+          ctx.strokeStyle = '#F472B6';
+          ctx.lineWidth = 2.5;
+          ctx.globalAlpha = Math.max(0, 1 - shockwaveRadius / 240);
+          ctx.beginPath();
+          ctx.arc(snX, snY, shockwaveRadius, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.strokeStyle = '#67E8F9';
+          ctx.beginPath();
+          ctx.arc(snX, snY, shockwaveRadius * 0.72, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+        }
+      } else {
+        // SOLAR SYSTEM 3D ORRERY MODE
+        // Sun
+        const sunGrad = ctx.createRadialGradient(cx, cy, 4, cx, cy, 32);
+        sunGrad.addColorStop(0, '#FFFFFF');
+        sunGrad.addColorStop(0.4, '#FDE047');
+        sunGrad.addColorStop(1, 'rgba(245, 158, 11, 0)');
+        ctx.fillStyle = sunGrad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 32, 0, Math.PI * 2);
+        ctx.fill();
+
+        for (const p of planets) {
+          p.angle += p.speed;
+          // Orbit ellipse
+          ctx.strokeStyle = 'rgba(148, 163, 184, 0.22)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.ellipse(cx, cy, p.r, p.r * tiltX, 0, 0, Math.PI * 2);
+          ctx.stroke();
+
+          const px = cx + Math.cos(p.angle + rotZ) * p.r;
+          const py = cy + Math.sin(p.angle + rotZ) * p.r * tiltX;
+
+          if (p.hasRings) {
+            ctx.strokeStyle = '#FDE68A';
+            ctx.lineWidth = 2.2;
+            ctx.beginPath();
+            ctx.ellipse(px, py, 15, 5.5, -0.35, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(px, py, p.size, 0, Math.PI * 2);
+          ctx.fill();
+
+          if (p.hasMoon) {
+            const moonAngle = t * 0.09;
+            const mx = px + Math.cos(moonAngle) * 14;
+            const my = py + Math.sin(moonAngle) * 14 * tiltX;
+            ctx.fillStyle = '#E2E8F0';
+            ctx.beginPath();
+            ctx.arc(mx, my, 2.2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#67E8F9';
+            ctx.font = '600 10.5px monospace';
+            ctx.fillText('🌍 Trái Đất + Mặt Trăng', px + 10, py - 8);
+          }
+        }
+
+        // Halley's Comet with antisolar ion tail
+        const cometAngle = t * 0.012 + rotZ;
+        const cometX = cx + Math.cos(cometAngle) * 195 + 45;
+        const cometY = cy + Math.sin(cometAngle) * 85 * tiltX - 20;
+        const dx = cometX - cx;
+        const dy = cometY - cy;
+        const len = Math.hypot(dx, dy) || 1;
+        const ux = dx / len;
+        const uy = dy / len;
+
+        const tailGrad = ctx.createLinearGradient(cometX, cometY, cometX + ux * 68, cometY + uy * 68);
+        tailGrad.addColorStop(0, 'rgba(103, 232, 249, 0.9)');
+        tailGrad.addColorStop(1, 'rgba(103, 232, 249, 0)');
+        ctx.strokeStyle = tailGrad;
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(cometX, cometY);
+        ctx.lineTo(cometX + ux * 68, cometY + uy * 68);
+        ctx.stroke();
+
+        ctx.fillStyle = '#FFFFFF';
+        ctx.beginPath();
+        ctx.arc(cometX, cometY, 3.8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#67E8F9';
+        ctx.font = '600 10.5px monospace';
+        ctx.fillText('☄ Sao Chổi Halley', cometX + 8, cometY - 8);
+      }
+
+      animId = requestAnimationFrame(render);
+    };
+
+    render();
+    document.addEventListener(
+      'astro:before-preparation',
+      () => cancelAnimationFrame(animId),
+      { once: true }
+    );
+  }
+
+  initCaseInteractiveFeatures();
+  document.addEventListener('astro:page-load', initCaseInteractiveFeatures);
+</script>
+
 <style>
+  .body-group--wide {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .body-group__contents--wide {
+    max-width: 100% !important;
+    width: 100%;
+  }
+
+  /* Interactive 3D Canvas Mini-Observatory */
+  .interactive-observatory {
+    background: #060a14;
+    border-radius: 22px;
+    border: 1.5px solid rgba(91, 178, 246, 0.28);
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: 0 20px 44px rgba(7, 12, 24, 0.22);
+  }
+
+  .interactive-observatory__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 20px;
+    background: rgba(16, 23, 37, 0.92);
+    border-bottom: 1px solid rgba(244, 247, 251, 0.08);
+  }
+
+  .interactive-observatory__title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .live-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 10px #34d399;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  .interactive-observatory__badge {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: #f4f7fb;
+  }
+
+  .interactive-observatory__modes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sim-mode-btn {
+    padding: 7px 14px;
+    border-radius: 100vmax;
+    font-size: 12px;
+    font-weight: 600;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .sim-mode-btn:hover,
+  .sim-mode-btn.is-active {
+    color: #040711;
+    background: #67e8f9;
+    border-color: #67e8f9;
+  }
+
+  .interactive-observatory__viewport {
+    position: relative;
+    width: 100%;
+    cursor: grab;
+  }
+
+  .interactive-observatory__viewport:active {
+    cursor: grabbing;
+  }
+
+  #portfolio-galaxy-canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .interactive-observatory__hud {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    pointer-events: none;
+    font-family: monospace;
+    font-size: 11px;
+    color: #67e8f9;
+    background: rgba(9, 13, 24, 0.78);
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(103, 232, 249, 0.25);
+  }
+
+  .sim-hint {
+    color: #cbd5e1;
+  }
+
+  /* Screenshot Showcase & Tabs */
+  .screenshot-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .screenshot-tabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+    gap: 10px;
+  }
+
+  .screenshot-tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: var(--color-surface);
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.25s var(--custom-ease);
+  }
+
+  .screenshot-tab:hover {
+    border-color: rgba(91, 178, 246, 0.45);
+    transform: translateY(-2px);
+  }
+
+  .screenshot-tab.is-active {
+    background: #1e2e3e;
+    color: #ffffff;
+    border-color: var(--color-orange);
+    box-shadow: 0 10px 24px rgba(30, 46, 62, 0.16);
+  }
+
+  .screenshot-tab__num {
+    font-size: 15px;
+    color: var(--color-orange);
+  }
+
+  .screenshot-tab__badge {
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+
+  .screenshot-slide {
+    display: none;
+    margin: 0;
+    animation: fade-slide-up 0.4s ease forwards;
+  }
+
+  .screenshot-slide.is-active {
+    display: block;
+  }
+
+  @keyframes fade-slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .screenshot-frame {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid rgba(30, 46, 62, 0.12);
+    background: #030509;
+    cursor: zoom-in;
+    transition: transform 0.2s ease, box-shadow 0.25s ease;
+    box-shadow: 0 16px 36px rgba(30, 46, 62, 0.14);
+  }
+
+  .screenshot-frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .screenshot-zoom-pill {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    background: rgba(9, 13, 24, 0.85);
+    color: #67e8f9;
+    border: 1px solid rgba(103, 232, 249, 0.4);
+    padding: 6px 12px;
+    border-radius: 100vmax;
+    font-size: 11px;
+    pointer-events: none;
+  }
+
+  .screenshot-caption {
+    margin-top: 16px;
+    padding: 18px 22px;
+    background: var(--color-surface);
+    border-radius: 16px;
+  }
+
+  .screenshot-caption__title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--color-black);
+  }
+
+  .screenshot-caption__desc {
+    font-size: 14.5px !important;
+    line-height: 1.7 !important;
+    color: var(--color-muted) !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Fullscreen Lightbox */
+  .screenshot-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(3, 5, 9, 0.92);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .screenshot-lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .screenshot-lightbox img {
+    max-width: 94vw;
+    max-height: 88vh;
+    border-radius: 18px;
+    border: 1.5px solid rgba(103, 232, 249, 0.35);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
+  }
+
+  .screenshot-lightbox__close {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    background: #5bb2f6;
+    color: #040711;
+    padding: 10px 20px;
+    border-radius: 100vmax;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
   .highlight-list {
     display: flex;
     flex-direction: column;
@@ -279,3 +953,4 @@ const labels = uiStrings.caseDetail;
     box-shadow: 0 12px 24px rgba(91, 178, 246, 0.38);
   }
 </style>
+

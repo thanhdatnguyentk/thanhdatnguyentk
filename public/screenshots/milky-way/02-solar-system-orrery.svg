@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" fill="none">
+  <defs>
+    <radialGradient id="orreryBg" cx="50%" cy="50%" r="72%">
+      <stop offset="0%" stop-color="#111A30" />
+      <stop offset="55%" stop-color="#060A14" />
+      <stop offset="100%" stop-color="#030509" />
+    </radialGradient>
+    <radialGradient id="sunCorona" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="28%" stop-color="#FFF099" />
+      <stop offset="65%" stop-color="#F59E0B" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="cometIonTail" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E0F2FE" stop-opacity="0.95" />
+      <stop offset="35%" stop-color="#67E8F9" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0" />
+    </linearGradient>
+    <style>
+      @keyframes orbitEarth {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes orbitSaturn {
+        from { transform: rotate(360deg); }
+        to { transform: rotate(0deg); }
+      }
+      .earth-system {
+        transform-origin: 540px 360px;
+        animation: orbitEarth 28s linear infinite;
+      }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#orreryBg)" />
+
+  <!-- Subtle Milky Way Band in Background -->
+  <path d="M-80 580 Q 600 290, 1280 140" stroke="#7AA8FF" stroke-width="190" stroke-opacity="0.06" />
+
+  <!-- Centered Solar System Orrery at [0.0, 0.02, 8.178] kpc -->
+  <g transform="translate(540, 360)">
+    <!-- Tilted Keplerian Orbit Rings -->
+    <ellipse rx="78" ry="44" stroke="#94A3B8" stroke-opacity="0.28" stroke-width="1.2" />
+    <ellipse rx="126" ry="70" stroke="#FDE68A" stroke-opacity="0.32" stroke-width="1.2" />
+    <ellipse rx="184" ry="104" stroke="#38BDF8" stroke-opacity="0.55" stroke-width="1.6" stroke-dasharray="6 4" />
+    <ellipse rx="242" ry="136" stroke="#F97316" stroke-opacity="0.35" stroke-width="1.2" />
+    <ellipse rx="328" ry="184" stroke="#FBBF24" stroke-opacity="0.38" stroke-width="1.4" />
+    <ellipse rx="418" ry="232" stroke="#FDE68A" stroke-opacity="0.35" stroke-width="1.4" />
+    <ellipse rx="498" ry="276" stroke="#67E8F9" stroke-opacity="0.28" stroke-width="1.2" />
+
+    <!-- High-Eccentricity Comet Halley Orbit -->
+    <ellipse cx="140" cy="-35" rx="370" ry="118" transform="rotate(-22)" stroke="#67E8F9" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="4 6" />
+
+    <!-- Sun (G2V) -->
+    <circle r="48" fill="url(#sunCorona)" />
+    <circle r="16" fill="#FFFBEB" />
+    <text x="0" y="34" text-anchor="middle" fill="#FDE68A" font-family="monospace" font-size="11" font-weight="700">☀ Mặt Trời (G2V)</text>
+
+    <!-- Venus -->
+    <circle cx="-112" cy="-32" r="7" fill="#FDE68A" />
+    <text x="-112" y="-45" text-anchor="middle" fill="#FDE68A" font-family="Inter, sans-serif" font-size="10.5">Sao Kim</text>
+
+    <!-- Earth + Moon Hierarchical Subsystem -->
+    <g transform="translate(-142, 66)">
+      <!-- Moon Orbit around Earth -->
+      <ellipse rx="26" ry="16" stroke="#E2E8F0" stroke-opacity="0.55" stroke-width="1.2" stroke-dasharray="2 3" />
+      <!-- Earth -->
+      <circle r="10.5" fill="#2563EB" stroke="#67E8F9" stroke-width="2" />
+      <path d="M-5 -3 Q0 -7 5 -1 Q3 5 -4 4 Z" fill="#34D399" opacity="0.85" />
+      <!-- Moon -->
+      <circle cx="23" cy="-8" r="3.8" fill="#E2E8F0" />
+      <text x="48" y="-5" fill="#E2E8F0" font-family="monospace" font-size="10">Mặt Trăng</text>
+      <!-- Selection Label -->
+      <rect x="-54" y="16" width="128" height="24" rx="6" fill="#090D18" fill-opacity="0.92" stroke="#38BDF8" stroke-width="1.2" />
+      <text x="10" y="32" text-anchor="middle" fill="#67E8F9" font-family="monospace" font-size="11" font-weight="700">🌍 Trái Đất (1.0 AU)</text>
+    </g>
+
+    <!-- Mars -->
+    <circle cx="215" cy="62" r="6.5" fill="#EA580C" />
+    <text x="215" y="80" text-anchor="middle" fill="#FB923C" font-family="Inter, sans-serif" font-size="10.5">Sao Hỏa</text>
+
+    <!-- Jupiter -->
+    <g transform="translate(-285, -92)">
+      <circle r="16" fill="#D97706" />
+      <path d="M-15 -4 H15 M-14 3 H14" stroke="#FDE68A" stroke-width="2.5" opacity="0.75" />
+      <text x="0" y="28" text-anchor="middle" fill="#FBBF24" font-family="Inter, sans-serif" font-size="11" font-weight="600">Sao Mộc (5.2 AU)</text>
+    </g>
+
+    <!-- Saturn + Ring System -->
+    <g transform="translate(358, -116)">
+      <ellipse rx="34" ry="12" transform="rotate(-18)" stroke="#FDE68A" stroke-width="5" stroke-opacity="0.75" fill="none" />
+      <ellipse rx="26" ry="9" transform="rotate(-18)" stroke="#F59E0B" stroke-width="2" stroke-opacity="0.55" fill="none" />
+      <circle r="12.5" fill="#FBBF24" />
+      <text x="0" y="28" text-anchor="middle" fill="#FDE68A" font-family="Inter, sans-serif" font-size="11" font-weight="600">🪐 Sao Thổ (9.58 AU)</text>
+    </g>
+
+    <!-- Halley's Comet (1P/Halley) with Dual Ion & Dust Tail -->
+    <g transform="translate(155, -152)">
+      <polygon points="0,0 135,-65 118,-22" fill="url(#cometIonTail)" />
+      <polygon points="0,0 115,-20 96,8" fill="#FDE68A" fill-opacity="0.28" />
+      <circle r="8" fill="#67E8F9" fill-opacity="0.4" />
+      <circle r="4" fill="#FFFFFF" />
+      <rect x="-65" y="-34" width="168" height="24" rx="6" fill="#090D18" fill-opacity="0.9" stroke="#67E8F9" stroke-opacity="0.7" />
+      <text x="19" y="-18" text-anchor="middle" fill="#67E8F9" font-family="monospace" font-size="10.5" font-weight="600">☄ Sao Chổi Halley (75.3y)</text>
+    </g>
+  </g>
+
+  <!-- TOP HUD HEADER -->
+  <rect x="24" y="20" width="1152" height="52" rx="14" fill="#090D18" fill-opacity="0.86" stroke="#F4F7FB" stroke-opacity="0.1" />
+  <text x="48" y="51" fill="#67E8F9" font-family="monospace" font-size="12" font-weight="700">CHẾ ĐỘ CẬN CẢNH HỆ MẶT TRỜI • TỈ LỆ ĐA CẤP (kpc → pc → AU)</text>
+  <rect x="920" y="31" width="238" height="30" rx="8" fill="#67E8F9" fill-opacity="0.15" stroke="#67E8F9" stroke-opacity="0.5" />
+  <text x="1039" y="50" text-anchor="middle" fill="#67E8F9" font-family="monospace" font-size="11" font-weight="600">THƯỚC ĐO ĐỘNG: 2.5 AU</text>
+
+  <!-- RIGHT INSPECTOR PANEL (Trái Đất - Earth) -->
+  <rect x="896" y="92" width="280" height="520" rx="16" fill="#090D18" fill-opacity="0.9" stroke="#F4F7FB" stroke-opacity="0.12" />
+  <rect x="916" y="114" width="128" height="22" rx="11" fill="#38BDF8" fill-opacity="0.2" stroke="#38BDF8" stroke-opacity="0.5" />
+  <text x="980" y="129" text-anchor="middle" fill="#67E8F9" font-family="monospace" font-size="10" font-weight="600">HÀNH TINH ĐẤT ĐÁ</text>
+  <text x="916" y="164" fill="#F4F7FB" font-family="Inter, sans-serif" font-size="22" font-weight="700">Trái Đất (Earth)</text>
+  <text x="916" y="184" fill="#94A3B8" font-family="Inter, sans-serif" font-size="12">Hành tinh thứ 3 • Hệ Mặt Trời</text>
+
+  <g transform="translate(916, 206)" font-family="monospace" font-size="11">
+    <rect width="114" height="54" rx="8" fill="#101725" />
+    <text x="12" y="20" fill="#94A3B8" font-size="9.5">BÁN TRỤC LỚN</text>
+    <text x="12" y="40" fill="#67E8F9" font-size="13" font-weight="700">1.000 AU</text>
+
+    <rect x="126" width="114" height="54" rx="8" fill="#101725" />
+    <text x="138" y="20" fill="#94A3B8" font-size="9.5">CHU KỲ QUỸ ĐẠO</text>
+    <text x="138" y="40" fill="#F8C98B" font-size="13" font-weight="700">365.25 ngày</text>
+
+    <rect y="66" width="114" height="54" rx="8" fill="#101725" />
+    <text x="12" y="86" fill="#94A3B8" font-size="9.5">NHIỆT ĐỘ BỀ MẶT</text>
+    <text x="12" y="106" fill="#34D399" font-size="13" font-weight="700">288 K (15°C)</text>
+
+    <rect x="126" y="66" width="114" height="54" rx="8" fill="#101725" />
+    <text x="138" y="86" fill="#94A3B8" font-size="9.5">VỆ TINH TỰ NHIÊN</text>
+    <text x="138" y="106" fill="#F4F7FB" font-size="13" font-weight="700">1 (Mặt Trăng)</text>
+  </g>
+
+  <text x="916" y="362" fill="#CBD5E1" font-family="Inter, sans-serif" font-size="11.5">
+    <tspan x="916" dy="0">Hành tinh duy nhất được biết đến có</tspan>
+    <tspan x="916" dy="18">đại dương nước lỏng và sự sống, cùng</tspan>
+    <tspan x="916" dy="18">Mặt Trăng quay quanh ở khoảng cách</tspan>
+    <tspan x="916" dy="18">384.400 km (0.00257 AU).</tspan>
+  </text>
+
+  <!-- Quick Planet Selector Pills inside Inspector -->
+  <text x="916" y="446" fill="#94A3B8" font-family="monospace" font-size="10" letter-spacing="1">DI CHUYỂN NHANH TRONG HỆ</text>
+  <g transform="translate(916, 458)" font-family="Inter, sans-serif" font-size="11">
+    <rect width="74" height="28" rx="6" fill="#38BDF8" fill-opacity="0.22" stroke="#38BDF8" />
+    <text x="37" y="18" text-anchor="middle" fill="#F4F7FB">Trái Đất</text>
+    <rect x="82" width="76" height="28" rx="6" fill="#101725" stroke="#F4F7FB" stroke-opacity="0.15" />
+    <text x="120" y="18" text-anchor="middle" fill="#CBD5E1">Mặt Trăng</text>
+    <rect x="166" width="74" height="28" rx="6" fill="#101725" stroke="#F4F7FB" stroke-opacity="0.15" />
+    <text x="203" y="18" text-anchor="middle" fill="#CBD5E1">Sao Thổ</text>
+    <rect y="36" width="116" height="28" rx="6" fill="#101725" stroke="#67E8F9" stroke-opacity="0.35" />
+    <text x="58" y="54" text-anchor="middle" fill="#67E8F9">☄ Sao Chổi Halley</text>
+    <rect x="124" y="36" width="116" height="28" rx="6" fill="#101725" stroke="#A78BFA" stroke-opacity="0.35" />
+    <text x="182" y="54" text-anchor="middle" fill="#C4B5FD">TRAPPIST-1e</text>
+  </g>
+</svg>

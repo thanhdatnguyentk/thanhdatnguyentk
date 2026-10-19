@@ -7,6 +7,13 @@ export interface LocalizedText {
   ja: string;
 }
 
+export interface ProjectScreenshot {
+  src: string;
+  badge: string;
+  title: LocalizedText;
+  caption: LocalizedText;
+}
+
 export interface Project {
   slug: string;
   caseLabel: string;
@@ -15,11 +22,13 @@ export interface Project {
   tech: string[];
   stars?: number;
   url: string;
-  visualType: 'video' | 'tensor' | 'rag' | 'traffic' | 'finance' | 'galaxy';
+  visualType: 'video' | 'tensor' | 'rag' | 'traffic' | 'finance' | 'galaxy' | 'observatory';
   marqueeText: string; // Kept in English Righteous display font like mildsugardesign.jp
   description: LocalizedText;
   longDescription: LocalizedText;
   headline: LocalizedText;
+  hasInteractiveDemo?: boolean;
+  screenshots?: ProjectScreenshot[];
   scope: {
     role: LocalizedText;
     domain: LocalizedText;
@@ -113,8 +122,141 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: 'javatorch',
+    slug: 'milky-way-galaxy',
     caseLabel: 'Case2',
+    title: 'Milky Way — A Living Galaxy',
+    category: 'Web',
+    tech: ['React 19', 'Three.js', 'WebGL2', 'GLSL Shaders', 'TypeScript', 'Zustand'],
+    url: 'https://github.com/thanhdatnguyentk/milky-way-galaxy',
+    visualType: 'observatory',
+    hasInteractiveDemo: true,
+    marqueeText:
+      'Explore the architecture of the cosmos. 500,000+ GPU star particles, multi-scale 3D Solar System orrery, comets, and symplectic N-body physics in WebGL2.',
+    description: {
+      en: 'Interactive 3D WebGL2 galactic & planetary observatory with 500k+ GPU stars, Solar System planets, comets, and N-body physics.',
+      vi: 'Đài quan sát Dải Ngân Hà & Hệ Mặt Trời 3D tương tác bằng WebGL2 với hơn 500.000 hạt sao GPU, hành tinh, sao chổi và vật lý N-body.',
+      ja: '50万以上のGPU恒星粒子、3D太陽系・彗星、N体物理ラボを備えたインタラクティブ3D WebGL2銀河観測プラットフォーム。',
+    },
+    longDescription: {
+      en: 'An interactive 3D scientific visualization and digital observatory of the Milky Way and Solar System — combining custom GLSL differential-rotation shaders, Gaia DR3 stellar neighborhoods, a multi-scale Keplerian Solar System orrery (Earth, Moon, Saturn rings, Halley’s Comet, exoplanets), and a live symplectic Leapfrog N-body gravity lab.',
+      vi: 'Đài quan sát vũ trụ kỹ thuật số 3D tái hiện sống động Dải Ngân Hà và Hệ Mặt Trời ngay trên trình duyệt — kết hợp GLSL shader vi sai thiên hà, dữ liệu sao Gaia DR3, mô hình Hệ Mặt Trời 3D đa tỉ lệ (Trái Đất, Mặt Trăng, vành đai Sao Thổ, sao chổi Halley, ngoại hành tinh) cùng phòng thí nghiệm hấp dẫn N-body và sóng xung kích siêu tân tinh.',
+      ja: 'カスタムGLSLシェーダーによる銀河差動回転、Gaia DR3恒星データ、マルチスケール3D太陽系モデル（地球・月・土星の環・ハレー彗星・系外惑星）、シンプレクティックN体重力ラボを統合した3Dデジタル宇宙展望台。',
+    },
+    headline: {
+      en: 'Milky Way — A Living Galaxy: Real-time 3D WebGL2 galactic observatory with 500,000+ GPU stars, multi-scale Solar System orrery, and symplectic N-body physics.',
+      vi: 'Milky Way — A Living Galaxy: Đài quan sát Dải Ngân Hà & Hệ Mặt Trời 3D thời gian thực với 500.000+ hạt sao GPU, quỹ đạo sao chổi và phòng thí nghiệm vật lý N-body.',
+      ja: 'Milky Way — A Living Galaxy: 50万超のGPU粒子、マルチスケール太陽系儀、N体物理シミュレーションを備えたリアルタイム3D銀河観測システム。',
+    },
+    screenshots: [
+      {
+        src: '/screenshots/milky-way/01-galactic-overview.svg',
+        badge: 'GALACTIC SCALE • 28 KPC',
+        title: {
+          en: '1. 3D Barred Spiral Galaxy & Sgr A* Core Overview',
+          vi: '1. Toàn cảnh Dải Ngân Hà Xoắn Ốc Có Thanh & Lõi Sgr A*',
+          ja: '1. 3D棒渦巻銀河といて座A*（Sgr A*）コア全景',
+        },
+        caption: {
+          en: 'Logarithmic 4-arm spiral density waves (Scutum–Centaurus, Perseus, Norma, Sagittarius), dust lanes, HII star-forming nebulae, and glassmorphic observatory HUD.',
+          vi: 'Mô phỏng 4 nhánh xoắn ốc logarit, dải bụi hấp thụ, tinh vân hình thành sao HII, siêu hố đen Sgr A* và giao diện kính mờ chuẩn đài quan sát.',
+          ja: '4本の対数渦状腕、暗黒星雲ダストレーン、HII星形成領域、いて座A*コアをカスタムGLSLシェーダーで描画。',
+        },
+      },
+      {
+        src: '/screenshots/milky-way/02-solar-system-orrery.svg',
+        badge: 'MICRO-SCALE • 8.178 KPC (AU)',
+        title: {
+          en: '2. Multi-Scale 3D Solar System Orrery, Moon & Halley’s Comet',
+          vi: '2. Mô hình Hệ Mặt Trời 3D Đa Tỉ Lệ, Mặt Trăng & Sao Chổi Halley',
+          ja: '2. マルチスケール3D太陽系儀・月軌道・ハレー彗星',
+        },
+        caption: {
+          en: 'Seamless zoom from kiloparsecs (kpc) down to Astronomical Units (AU) at R₀ = 8.178 kpc, revealing 8 planets, the Moon orbiting Earth, Saturn’s rings, and Halley’s Comet dual ion/dust tail.',
+          vi: 'Thu phóng mượt mà từ cấp độ kiloparsec (kpc) xuống Đơn vị Thiên văn (AU) tại R₀ = 8.178 kpc: quan sát 8 hành tinh, Mặt Trăng quay quanh Trái Đất, vành đai Sao Thổ và đuôi ion sao chổi Halley.',
+          ja: '銀河スケール（kpc）から天文単位（AU）へのシームレスなLOD遷移。地球を公転する月、土星の環、ハレー彗星のイオン尾をリアルタイム再現。',
+        },
+      },
+      {
+        src: '/screenshots/milky-way/03-nbody-supernova-lab.svg',
+        badge: 'INTERACTIVE PHYSICS • LEAPFROG',
+        title: {
+          en: '3. Symplectic Leapfrog Gravity Lab, Supernova Shockwave & 13.8 Gyr Timeline',
+          vi: '3. Phòng Thí Nghiệm Hấp Dẫn Leapfrog, Siêu Tân Tinh & Tiến Hóa 13.8 Tỷ Năm',
+          ja: '3. シンプレクティック重力ラボ・超新星衝撃波・138億年進化タイムライン',
+        },
+        caption: {
+          en: 'Browser-computed test-particle orbital dynamics in a Miyamoto–Nagai + NFW dark matter halo potential with interactive supernova feedback shockwaves and 5-epoch cosmic timeline.',
+          vi: 'Tích phân quỹ đạo hạt thử Symplectic Leapfrog trong thế hấp dẫn Miyamoto–Nagai + quầng vật chất tối NFW, kết hợp kích hoạt sóng xung kích siêu tân tinh và thanh trượt lịch sử 13.8 tỷ năm.',
+          ja: 'Miyamoto-Nagai＋NFWダークマターハローポテンシャル内のテスト粒子軌道計算、超新星フィードバック衝撃波、138億年の銀河進化タイムライン。',
+        },
+      },
+      {
+        src: '/screenshots/milky-way/04-inspector-gaia-hr.svg',
+        badge: 'GAIA DR3 • HR DIAGRAM',
+        title: {
+          en: '4. Gaia DR3 Stellar Neighborhood & Hertzsprung–Russell Diagram',
+          vi: '4. Danh Mục Sao Gaia DR3, Ngoại Hành Tinh & Biểu Đồ Hertzsprung–Russell',
+          ja: '4. Gaia DR3恒星カタログ・系外惑星・ヘルツシュプルング・ラッセル図',
+        },
+        caption: {
+          en: 'Galactic (l, b, d) to Galactocentric Cartesian (x, y, z) coordinate transformation, blackbody spectral colors (O–B–A–F–G–K–M), and exoplanet host inspection (TRAPPIST-1e, Proxima Centauri b).',
+          vi: 'Chuyển đổi tọa độ thiên hà (l, b, d) sang tâm thiên hà (x, y, z), phổ bức xạ vật đen O–B–A–F–G–K–M, biểu đồ HR tương tác và tra cứu ngoại hành tinh (TRAPPIST-1e, Proxima Centauri b).',
+          ja: '銀河座標(l, b, d)から銀河中心直交座標(x, y, z)への変換、黒体放射スペクトル色分類、HR図プロット、系外惑星（TRAPPIST-1e等）のインスペクタ。',
+        },
+      },
+    ],
+    scope: {
+      role: {
+        en: 'Principal Creative Developer & Graphics Engineer',
+        vi: 'Kỹ sư Đồ họa 3D WebGL2 & Kiến trúc sư Hệ thống',
+        ja: 'リードクリエイティブデベロッパー・WebGL2グラフィックスエンジニア',
+      },
+      domain: {
+        en: '3D Scientific Visualization / Computational Astrophysics',
+        vi: 'Trực quan hóa Khoa học 3D / Vật lý Thiên văn Tính toán',
+        ja: '3D科学技術ビジュアライゼーション / 計算天体物理学',
+      },
+      stack:
+        'React 19, TypeScript 5.8, Three.js, React Three Fiber v9, Custom GLSL Shaders, Tailwind CSS, Zustand, Vite',
+    },
+    highlights: {
+      en: [
+        'Custom GPU BufferGeometry & GLSL differential-rotation shaders rendering up to 550,000+ star particles with zero per-frame JS garbage collection',
+        'True multi-scale LOD architecture bridging 28 kpc galactic structures and sub-parsec Solar System Keplerian orbits (8 planets, Moon, comets, exoplanets) with dynamic kpc → pc → AU scale bar',
+        'Interactive 13.8 Gyr Galactic Evolution timeline, 5-stop automated cinematic camera tour, and symplectic Leapfrog N-body gravity + supernova shockwave sandbox',
+      ],
+      vi: [
+        'Hệ thống hạt GPU BufferGeometry & GLSL Vertex/Fragment Shader tùy chỉnh kết xuất hơn 550.000 ngôi sao với vi sai tốc độ góc thiên hà mà không gây cấp phát bộ nhớ JS mỗi khung hình',
+        'Kiến trúc tỉ lệ đa cấp (Multi-scale LOD) nối liền toàn cảnh thiên hà 28 kpc với vi mô Hệ Mặt Trời (8 hành tinh, Mặt Trăng, sao chổi Halley/Hale-Bopp, ngoại hành tinh) kèm thước đo tự động kpc → pc → AU',
+        'Thanh trượt Tiến hóa Thiên hà 13.8 tỷ năm, Chuyến tham quan 5 chặng tự động và Phòng thí nghiệm hấp dẫn N-body Symplectic Leapfrog kèm hiệu ứng sóng xung kích Siêu tân tinh',
+      ],
+      ja: [
+        'カスタムBufferGeometryとGLSL差動回転シェーダーにより、フレーム毎のGC負荷ゼロで最大55万以上の恒星粒子をGPU描画',
+        '28 kpcの銀河全体構造からサブパーセクの太陽系ケプラー軌道（8惑星・月・ハレー彗星・系外惑星）までをシームレスに繋ぐマルチスケールLODと動的スケールバー（kpc → pc → AU）',
+        '138億年の銀河進化タイムライン、全5ステージの自動カメラツアー、シンプレクティックLeapfrog N体重力＋超新星衝撃波ラボを搭載',
+      ],
+    },
+    story: {
+      motivation: {
+        en: 'Modern astrophysical simulations combine high-performance computing with interactive visualization to study galaxy structure, stellar kinematics, and planetary systems. I built Milky Way — A Living Galaxy so anyone can operate a digital observatory directly in their browser — flying seamlessly from the 28-kiloparsec spiral disk right down into Earth, the Moon, and Halley’s Comet.',
+        vi: 'Các mô phỏng vật lý thiên văn hiện đại kết hợp tính toán hiệu năng cao với đồ họa tương tác để giải mã cấu trúc xoắn ốc, động học sao và các hệ hành tinh. Mình xây dựng Milky Way — A Living Galaxy với mong muốn biến trình duyệt web thành một đài quan sát vũ trụ số sống động — nơi người dùng có thể bay xuyên qua đĩa thiên hà rộng 28 kiloparsec rồi phóng cận cảnh vào Trái Đất, Mặt Trăng và sao chổi Halley.',
+        ja: '現代の計算天体物理学の知見をブラウザ上で直感的に体験できるデジタル宇宙展望台を目指して開発しました。28 kpc規模の天の川銀河の渦状腕から、オリオン腕内部の太陽系・地球・月・ハレー彗星までをシームレスに探索できます。',
+      },
+      architecture: {
+        en: 'To sustain 60 FPS with hundreds of thousands of stars, all particle attributes (Galactocentric position, orbital angular velocity, blackbody temperature color, and population ID) are packed into contiguous Float32Array buffers. Differential galactic rotation v_c(R) is computed entirely inside the GLSL vertex shader. A multi-scale LOD controller fades the sub-parsec Solar System orrery in/out based on camera distance from R₀ = 8.178 kpc while dynamically switching telemetry units between kpc, pc, and AU.',
+        vi: 'Để duy trì 60 FPS với hàng trăm ngàn ngôi sao, toàn bộ thuộc tính hạt (tọa độ tâm thiên hà, vận tốc góc quỹ đạo, màu nhiệt độ bức xạ vật đen và quần thể sao) được đóng gói vào các vùng nhớ Float32Array liên tục. Chuyển động quay vi sai v_c(R) được tính toán hoàn toàn trong GLSL Vertex Shader. Bộ điều khiển tỉ lệ đa cấp (Multi-scale LOD) tự động ẩn/hiện Hệ Mặt Trời dựa trên khoảng cách camera tới R₀ = 8.178 kpc và chuyển đổi đơn vị thước đo giữa kpc, pc và AU.',
+        ja: '数十万の恒星で60 FPSを維持するため、粒子属性を連続したFloat32Arrayバッファに格納し、銀河の差動回転 v_c(R) をすべてGLSL頂点シェーダー内で計算。また、R₀ = 8.178 kpcからのカメラ距離に応じて太陽系モデルをフェード制御するマルチスケールLODと、kpc・pc・AUの自動単位切替を実装しました。',
+      },
+      impact: {
+        en: 'Delivers a bilingual (Vietnamese / English) scientific exhibition experience uniting observational Gaia DR3 catalogs, procedural spiral structure, interactive planetary/comet orbits, and browser N-body physics with zero backend dependencies.',
+        vi: 'Mang lại trải nghiệm triển lãm khoa học song ngữ (Tiếng Việt / Tiếng Anh) kết hợp chặt chẽ dữ liệu quan sát Gaia DR3, mô hình xoắn ốc vật lý, quỹ đạo hành tinh/sao chổi và mô phỏng hấp dẫn N-body chạy độc lập 100% trên trình duyệt.',
+        ja: 'Gaia DR3観測データ、物理に基づく渦状腕モデル、惑星・彗星軌道、N体重力計算をバックエンド不要のスタンドアロンWebアプリとして統合し、科学的な正確さと没入感を両立しました。',
+      },
+    },
+  },
+  {
+    slug: 'javatorch',
+    caseLabel: 'Case3',
     title: 'JavaTorch',
     category: 'AI / ML',
     tech: ['Java 21', 'JCuda', 'cuDNN', 'Gradle', 'Vue 3'],
@@ -188,7 +330,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'rag-film-chatbot',
-    caseLabel: 'Case3',
+    caseLabel: 'Case4',
     title: 'RAG Film Chatbot',
     category: 'AI / ML',
     tech: ['Python', 'Hugging Face', 'Vector DB', 'Transformers'],
@@ -262,7 +404,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'traffic-monitoring',
-    caseLabel: 'Case4',
+    caseLabel: 'Case5',
     title: 'Traffic Monitoring System',
     category: 'AI / ML',
     tech: ['YOLOv8', 'FastAPI', 'React 18', 'Leaflet', 'SQLite'],
@@ -335,7 +477,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'uit-pinance',
-    caseLabel: 'Case5',
+    caseLabel: 'Case6',
     title: 'UIT_PINANCE',
     category: 'Web',
     tech: ['Flask', 'PostgreSQL', 'Chart.js', 'Jinja2'],
@@ -409,8 +551,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'milky-way-simulation',
-    caseLabel: 'Case6',
-    title: 'Milky Way Simulation',
+    caseLabel: 'Case7',
+    title: 'Milky Way Simulation (CUDA)',
     category: 'Systems',
     tech: ['C', 'CUDA', 'GPU Compute', 'Physics'],
     url: 'https://github.com/thanhdatnguyentk/Milky-Way-Simulation-C-CUDA-',
@@ -533,13 +675,23 @@ export const skillGroups: {
       vi: 'Công cụ đóng gói mô hình, xây dựng dashboard trực quan và triển khai hệ thống',
       ja: 'モデル配信、可視化ダッシュボード構築、再現性の高いデプロイを支えるツール群',
     },
-    items: ['FastAPI', 'Flask', 'React 18', 'Vue 3', 'Astro', 'Docker', 'PostgreSQL', 'Git / Linux'],
+    items: [
+      'FastAPI',
+      'Flask',
+      'React 19',
+      'Three.js / WebGL2 / GLSL',
+      'Vue 3',
+      'Astro',
+      'Docker',
+      'PostgreSQL',
+      'Git / Linux',
+    ],
   },
 ];
 
 export const stats: { value: string; label: LocalizedText }[] = [
   {
-    value: '44+',
+    value: '45+',
     label: {
       en: 'Public repos',
       vi: 'Repo công khai',
@@ -555,7 +707,7 @@ export const stats: { value: string; label: LocalizedText }[] = [
     },
   },
   {
-    value: '6',
+    value: '7',
     label: {
       en: 'Featured cases',
       vi: 'Dự án tiêu biểu',
@@ -594,7 +746,7 @@ export const uiStrings = {
   nav: {
     home: { en: 'Home', vi: 'Trang chủ', ja: 'ホーム' },
     about: { en: 'About & Skills', vi: 'Giới thiệu & Kỹ năng', ja: '私について・スキル' },
-    casesTitle: { en: 'Cases (All 6)', vi: 'Dự án (Tất cả 6)', ja: '制作実績 (全6件)' },
+    casesTitle: { en: 'Cases (All 7)', vi: 'Dự án (Tất cả 7)', ja: '制作実績 (全7件)' },
     contact: { en: 'Contact', vi: 'Liên hệ', ja: 'お問い合わせ' },
   },
   home: {
@@ -760,6 +912,7 @@ export const uiStrings = {
     domain: { en: 'Domain', vi: 'Lĩnh vực', ja: '領域' },
     stack: { en: 'Core Stack', vi: 'Công nghệ chính', ja: '使用技術' },
     overview: { en: 'Overview', vi: 'Tổng quan', ja: '概要' },
+    screenshots: { en: 'Screenshots & Interactive Lab', vi: 'Hình ảnh & Mô phỏng Tương tác', ja: 'スクリーンショット & ライブデモ' },
     architecture: { en: 'Architecture', vi: 'Kiến trúc Hệ thống', ja: 'アーキテクチャ' },
     highlights: { en: 'Highlights', vi: 'Điểm nhấn Kỹ thuật', ja: 'ハイライト' },
     impact: { en: 'Impact & Code', vi: 'Kết quả & Mã nguồn', ja: '成果とソースコード' },

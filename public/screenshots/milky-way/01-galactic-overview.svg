@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" fill="none">
+  <defs>
+    <radialGradient id="spaceBg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#0D1528" />
+      <stop offset="55%" stop-color="#050811" />
+      <stop offset="100%" stop-color="#030509" />
+    </radialGradient>
+    <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFF7E6" stop-opacity="1" />
+      <stop offset="22%" stop-color="#F8C98B" stop-opacity="0.92" />
+      <stop offset="52%" stop-color="#E08E45" stop-opacity="0.42" />
+      <stop offset="100%" stop-color="#7AA8FF" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="armGlowBlue" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7AA8FF" stop-opacity="0.38" />
+      <stop offset="60%" stop-color="#67E8F9" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#030509" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="nebulaPink" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F472B6" stop-opacity="0.65" />
+      <stop offset="50%" stop-color="#A78BFA" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#030509" stop-opacity="0" />
+    </radialGradient>
+    <filter id="blurSoft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="14" />
+    </filter>
+    <filter id="glowPin" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <style>
+      @keyframes slowSpin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes pulseRing {
+        0%, 100% { transform: scale(1); opacity: 0.85; }
+        50% { transform: scale(1.18); opacity: 0.35; }
+      }
+      .galaxy-spin {
+        transform-origin: 600px 360px;
+        animation: slowSpin 90s linear infinite;
+      }
+      .pin-pulse {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: pulseRing 3s ease-in-out infinite;
+      }
+    </style>
+  </defs>
+
+  <!-- Deep Space Viewport -->
+  <rect width="1200" height="720" fill="url(#spaceBg)" />
+
+  <!-- Background Halo Stars -->
+  <g opacity="0.55" fill="#F4F7FB">
+    <circle cx="120" cy="96" r="1.2" /><circle cx="240" cy="140" r="1.5" /><circle cx="980" cy="88" r="1.3" />
+    <circle cx="1060" cy="180" r="1.1" /><circle cx="88" cy="480" r="1.4" /><circle cx="184" cy="590" r="1.2" />
+    <circle cx="1040" cy="540" r="1.6" /><circle cx="920" cy="610" r="1.1" /><circle cx="420" cy="72" r="1.2" />
+    <circle cx="770" cy="68" r="1.5" /><circle cx="310" cy="630" r="1.3" /><circle cx="830" cy="645" r="1.4" />
+  </g>
+
+  <!-- Tilted 3D Galaxy Plane -->
+  <g transform="translate(600, 360) scale(1, 0.56) translate(-600, -360)">
+    <g class="galaxy-spin">
+      <!-- Outer Spiral Density Glow -->
+      <ellipse cx="600" cy="360" rx="430" ry="410" fill="url(#armGlowBlue)" />
+
+      <!-- 4 Logarithmic Spiral Arms (Scutum-Centaurus, Perseus, Norma, Sagittarius) -->
+      <path d="M600 360 C690 320, 810 380, 860 500 C890 590, 810 690, 660 700" stroke="#7AA8FF" stroke-width="34" stroke-linecap="round" opacity="0.24" filter="url(#blurSoft)" />
+      <path d="M600 360 C510 400, 390 340, 340 220 C310 130, 390 30, 540 20" stroke="#7AA8FF" stroke-width="34" stroke-linecap="round" opacity="0.24" filter="url(#blurSoft)" />
+      <path d="M600 360 C650 260, 790 210, 910 270 C990 320, 1020 450, 950 560" stroke="#67E8F9" stroke-width="26" stroke-linecap="round" opacity="0.2" filter="url(#blurSoft)" />
+      <path d="M600 360 C550 460, 410 510, 290 450 C210 400, 180 270, 250 160" stroke="#67E8F9" stroke-width="26" stroke-linecap="round" opacity="0.2" filter="url(#blurSoft)" />
+
+      <!-- Crisp Spiral Star Streams -->
+      <path d="M530 335 C620 280, 770 320, 845 455 C895 545, 835 650, 710 680" stroke="#93C5FD" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round" opacity="0.85" />
+      <path d="M670 385 C580 440, 430 400, 355 265 C305 175, 365 70, 490 40" stroke="#93C5FD" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round" opacity="0.85" />
+      <path d="M575 295 C665 220, 820 225, 920 315 C980 375, 995 480, 935 565" stroke="#67E8F9" stroke-width="3.5" stroke-dasharray="1 10" stroke-linecap="round" opacity="0.78" />
+      <path d="M625 425 C535 500, 380 495, 280 405 C220 345, 205 240, 265 155" stroke="#67E8F9" stroke-width="3.5" stroke-dasharray="1 10" stroke-linecap="round" opacity="0.78" />
+
+      <!-- HII Star-Forming Nebulae -->
+      <circle cx="780" cy="430" r="36" fill="url(#nebulaPink)" />
+      <circle cx="420" cy="290" r="32" fill="url(#nebulaPink)" />
+      <circle cx="730" cy="255" r="28" fill="url(#nebulaPink)" />
+      <circle cx="465" cy="475" r="30" fill="url(#nebulaPink)" />
+
+      <!-- Central Galactic Bar & Sgr A* Bulge -->
+      <ellipse cx="600" cy="360" rx="165" ry="68" transform="rotate(-24 600 360)" fill="url(#coreGlow)" />
+      <circle cx="600" cy="360" r="92" fill="url(#coreGlow)" />
+      <circle cx="600" cy="360" r="18" fill="#FFFDF9" filter="url(#glowPin)" />
+    </g>
+  </g>
+
+  <!-- 3D Landmark Pins Projected in Screen Space -->
+  <!-- Sgr A* Pin -->
+  <g transform="translate(600, 360)">
+    <circle r="16" stroke="#F8C98B" stroke-width="1.5" class="pin-pulse" />
+    <circle r="5" fill="#F8C98B" />
+    <rect x="14" y="-14" width="158" height="26" rx="6" fill="#090D18" fill-opacity="0.88" stroke="#F8C98B" stroke-opacity="0.5" />
+    <text x="24" y="3" fill="#F8C98B" font-family="monospace" font-size="11" font-weight="600">Sgr A* • 4.15×10⁶ M☉</text>
+  </g>
+
+  <!-- Solar System / Orion Spur Pin -->
+  <g transform="translate(455, 452)">
+    <circle r="14" stroke="#67E8F9" stroke-width="1.5" class="pin-pulse" />
+    <circle r="4.5" fill="#67E8F9" />
+    <rect x="-195" y="-14" width="182" height="26" rx="6" fill="#090D18" fill-opacity="0.9" stroke="#67E8F9" stroke-opacity="0.6" />
+    <text x="-184" y="3" fill="#67E8F9" font-family="monospace" font-size="11" font-weight="600">☀ Hệ Mặt Trời (8.18 kpc)</text>
+  </g>
+
+  <!-- Carina Nebula Pin -->
+  <g transform="translate(768, 412)">
+    <circle r="11" stroke="#F472B6" stroke-width="1.5" />
+    <circle r="4" fill="#F472B6" />
+    <rect x="14" y="-12" width="136" height="24" rx="6" fill="#090D18" fill-opacity="0.85" stroke="#F472B6" stroke-opacity="0.45" />
+    <text x="22" y="4" fill="#F4F7FB" font-family="monospace" font-size="10.5">Tinh vân Carina</text>
+  </g>
+
+  <!-- TOP NAVIGATION BAR (Glassmorphic Observatory UI) -->
+  <rect x="24" y="20" width="1152" height="54" rx="14" fill="#090D18" fill-opacity="0.82" stroke="#F4F7FB" stroke-opacity="0.1" />
+  <circle cx="52" cy="47" r="10" fill="#7AA8FF" fill-opacity="0.2" stroke="#7AA8FF" stroke-width="1.5" />
+  <circle cx="52" cy="47" r="3.5" fill="#67E8F9" />
+  <text x="74" y="44" fill="#F4F7FB" font-family="Inter, sans-serif" font-size="13" font-weight="700" letter-spacing="2">DẢI NGÂN HÀ</text>
+  <text x="74" y="59" fill="#94A3B8" font-family="monospace" font-size="9.5" letter-spacing="1">ĐÀI QUAN SÁT VŨ TRỤ TƯƠNG TÁC 3D</text>
+
+  <!-- Search Input Pill -->
+  <rect x="330" y="31" width="260" height="32" rx="8" fill="#101725" stroke="#F4F7FB" stroke-opacity="0.12" />
+  <text x="348" y="51" fill="#94A3B8" font-family="Inter, sans-serif" font-size="11.5">🔍 Tìm ngôi sao, hành tinh, sao chổi...</text>
+
+  <!-- Quality Preset & Provenance Badge -->
+  <rect x="815" y="33" width="175" height="28" rx="14" fill="#7AA8FF" fill-opacity="0.14" stroke="#7AA8FF" stroke-opacity="0.4" />
+  <circle cx="832" cy="47" r="4" fill="#67E8F9" />
+  <text x="844" y="51" fill="#F4F7FB" font-family="monospace" font-size="10.5">Dữ liệu Gaia DR3 + Mô hình</text>
+
+  <rect x="1004" y="33" width="154" height="28" rx="8" fill="#101725" stroke="#F4F7FB" stroke-opacity="0.12" />
+  <text x="1081" y="51" text-anchor="middle" fill="#67E8F9" font-family="monospace" font-size="11" font-weight="600">GPU HIGH • 320K HẠT</text>
+
+  <!-- LEFT LAYER & TOUR PANEL -->
+  <rect x="24" y="92" width="250" height="268" rx="14" fill="#090D18" fill-opacity="0.82" stroke="#F4F7FB" stroke-opacity="0.1" />
+  <text x="42" y="118" fill="#94A3B8" font-family="monospace" font-size="10" letter-spacing="1.5">LỚP CẤU TRÚC THIÊN HÀ</text>
+  <g transform="translate(42, 132)" font-family="Inter, sans-serif" font-size="12" fill="#F4F7FB">
+    <rect width="214" height="28" rx="6" fill="#7AA8FF" fill-opacity="0.16" stroke="#7AA8FF" stroke-opacity="0.4" />
+    <circle cx="14" cy="14" r="4" fill="#F8C98B" /><text x="28" y="18">Nhân Phình &amp; Thanh Trung Tâm</text>
+    <g transform="translate(0, 36)">
+      <rect width="214" height="28" rx="6" fill="#7AA8FF" fill-opacity="0.16" stroke="#7AA8FF" stroke-opacity="0.4" />
+      <circle cx="14" cy="14" r="4" fill="#7AA8FF" /><text x="28" y="18">4 Nhánh Xoắn Ốc Chính</text>
+    </g>
+    <g transform="translate(0, 72)">
+      <rect width="214" height="28" rx="6" fill="#67E8F9" fill-opacity="0.16" stroke="#67E8F9" stroke-opacity="0.4" />
+      <circle cx="14" cy="14" r="4" fill="#67E8F9" /><text x="28" y="18">Hệ Mặt Trời &amp; Sao Chổi 3D</text>
+    </g>
+    <g transform="translate(0, 108)">
+      <rect width="214" height="28" rx="6" fill="#F472B6" fill-opacity="0.14" stroke="#F472B6" stroke-opacity="0.35" />
+      <circle cx="14" cy="14" r="4" fill="#F472B6" /><text x="28" y="18">Vùng Hình Thành Sao (HII)</text>
+    </g>
+    <g transform="translate(0, 144)">
+      <rect width="214" height="28" rx="6" fill="#101725" stroke="#F4F7FB" stroke-opacity="0.1" />
+      <circle cx="14" cy="14" r="4" fill="#A78BFA" /><text x="28" y="18">Quầng Sao &amp; Điểm Đánh Dấu</text>
+    </g>
+  </g>
+
+  <!-- BOTTOM TELEMETRY & 5-MODE DOCK -->
+  <rect x="24" y="636" width="290" height="60" rx="12" fill="#090D18" fill-opacity="0.84" stroke="#F4F7FB" stroke-opacity="0.1" />
+  <text x="42" y="658" fill="#94A3B8" font-family="monospace" font-size="10">R_G = 8.18 kpc  |  V_c = 232.4 km/s</text>
+  <line x1="42" y1="674" x2="142" y2="674" stroke="#67E8F9" stroke-width="2" />
+  <line x1="42" y1="670" x2="42" y2="678" stroke="#67E8F9" stroke-width="2" />
+  <line x1="142" y1="670" x2="142" y2="678" stroke="#67E8F9" stroke-width="2" />
+  <text x="154" y="678" fill="#67E8F9" font-family="monospace" font-size="11" font-weight="600">5.0 kpc (~16,300 ly)</text>
+
+  <!-- Mode Switcher Dock -->
+  <rect x="350" y="636" width="530" height="60" rx="16" fill="#090D18" fill-opacity="0.88" stroke="#F4F7FB" stroke-opacity="0.12" />
+  <rect x="360" y="644" width="108" height="44" rx="10" fill="#7AA8FF" fill-opacity="0.22" stroke="#7AA8FF" stroke-opacity="0.6" />
+  <text x="414" y="670" text-anchor="middle" fill="#F4F7FB" font-family="Inter, sans-serif" font-size="11.5" font-weight="600">Toàn Cảnh</text>
+  <text x="520" y="670" text-anchor="middle" fill="#94A3B8" font-family="Inter, sans-serif" font-size="11.5">Cấu Trúc</text>
+  <text x="615" y="670" text-anchor="middle" fill="#94A3B8" font-family="Inter, sans-serif" font-size="11.5">Du Hành Sao</text>
+  <text x="720" y="670" text-anchor="middle" fill="#94A3B8" font-family="Inter, sans-serif" font-size="11.5">Tiến Hóa 13.8 Tỷ</text>
+  <text x="825" y="670" text-anchor="middle" fill="#94A3B8" font-family="Inter, sans-serif" font-size="11.5">Lab Vật Lý</text>
+</svg>

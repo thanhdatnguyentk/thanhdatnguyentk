@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" fill="none">
+  <defs>
+    <radialGradient id="labBg" cx="45%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#15132B" />
+      <stop offset="55%" stop-color="#070A14" />
+      <stop offset="100%" stop-color="#030509" />
+    </radialGradient>
+    <radialGradient id="shockwaveGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95" />
+      <stop offset="35%" stop-color="#67E8F9" stop-opacity="0.6" />
+      <stop offset="68%" stop-color="#F472B6" stop-opacity="0.45" />
+      <stop offset="100%" stop-color="#A78BFA" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#labBg)" />
+
+  <!-- N-Body Symplectic Leapfrog Particle Trajectories & Supernova Shockwave -->
+  <g transform="translate(490, 330)">
+    <!-- Gravitational Potential Contours -->
+    <ellipse rx="360" ry="200" stroke="#7AA8FF" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="4 6" />
+    <ellipse rx="270" ry="150" stroke="#7AA8FF" stroke-opacity="0.25" stroke-width="1.2" stroke-dasharray="6 6" />
+    <ellipse rx="180" ry="100" stroke="#F8C98B" stroke-opacity="0.32" stroke-width="1.4" />
+
+    <!-- Test Particle Velocity Vectors -->
+    <g stroke="#67E8F9" stroke-width="2" stroke-linecap="round">
+      <line x1="-210" y1="-65" x2="-165" y2="-92" /><circle cx="-210" cy="-65" r="3.5" fill="#67E8F9" />
+      <line x1="-140" y1="88" x2="-88" y2="105" /><circle cx="-140" cy="88" r="3.5" fill="#67E8F9" />
+      <line x1="190" y1="74" x2="142" y2="98" /><circle cx="190" cy="74" r="3.5" fill="#67E8F9" />
+      <line x1="155" y1="-84" x2="205" y2="-52" /><circle cx="155" cy="-84" r="3.5" fill="#67E8F9" />
+      <line x1="-75" y1="-115" x2="-20" y2="-122" /><circle cx="-75" cy="-115" r="3.5" fill="#F8C98B" />
+      <line x1="65" y1="118" x2="12" y2="125" /><circle cx="65" cy="118" r="3.5" fill="#F8C98B" />
+    </g>
+
+    <!-- Supernova Feedback Expanding Shell -->
+    <g transform="translate(115, -35)">
+      <circle r="92" fill="url(#shockwaveGrad)" />
+      <circle r="76" stroke="#67E8F9" stroke-width="2.5" stroke-dasharray="8 5" fill="none" />
+      <circle r="52" stroke="#F472B6" stroke-width="2" fill="none" />
+      <circle r="8" fill="#FFFFFF" />
+      <rect x="-88" y="-118" width="196" height="24" rx="6" fill="#090D18" fill-opacity="0.92" stroke="#F472B6" />
+      <text x="10" y="-102" text-anchor="middle" fill="#F472B6" font-family="monospace" font-size="10.5" font-weight="700">💥 Sóng xung kích Siêu tân tinh</text>
+    </g>
+
+    <!-- Central SMBH Gravity Well -->
+    <circle r="24" fill="#F8C98B" fill-opacity="0.35" />
+    <circle r="9" fill="#FFF7E6" />
+  </g>
+
+  <!-- LEFT PHYSICS LAB DRAWER -->
+  <rect x="24" y="86" width="320" height="440" rx="16" fill="#090D18" fill-opacity="0.9" stroke="#F4F7FB" stroke-opacity="0.12" />
+  <rect x="44" y="108" width="186" height="22" rx="11" fill="#A78BFA" fill-opacity="0.2" stroke="#A78BFA" stroke-opacity="0.5" />
+  <text x="137" y="123" text-anchor="middle" fill="#C4B5FD" font-family="monospace" font-size="10" font-weight="600">MÔ PHỎNG VẬT LÝ TRÌNH DUYỆT</text>
+  <text x="44" y="156" fill="#F4F7FB" font-family="Inter, sans-serif" font-size="18" font-weight="700">Phòng Thí Nghiệm Hấp Dẫn</text>
+  <text x="44" y="176" fill="#94A3B8" font-family="monospace" font-size="11">Bộ tích phân Symplectic Leapfrog (640 hạt)</text>
+
+  <!-- Sliders -->
+  <g transform="translate(44, 204)" font-family="Inter, sans-serif" font-size="12" fill="#F4F7FB">
+    <text x="0" y="0">Khối lượng Lõi Trung tâm</text>
+    <text x="240" y="0" text-anchor="end" fill="#67E8F9" font-family="monospace">1.45× M₀</text>
+    <rect y="10" width="280" height="6" rx="3" fill="#1E293B" />
+    <rect y="10" width="182" height="6" rx="3" fill="#67E8F9" />
+    <circle cx="182" cy="13" r="7" fill="#F4F7FB" />
+
+    <g transform="translate(0, 52)">
+      <text x="0" y="0">Hệ số Làm mềm Hấp dẫn (ε)</text>
+      <text x="240" y="0" text-anchor="end" fill="#7AA8FF" font-family="monospace">0.35 kpc</text>
+      <rect y="10" width="280" height="6" rx="3" fill="#1E293B" />
+      <rect y="10" width="98" height="6" rx="3" fill="#7AA8FF" />
+      <circle cx="98" cy="13" r="7" fill="#F4F7FB" />
+    </g>
+
+    <g transform="translate(0, 104)">
+      <text x="0" y="0">Cường độ Nhánh Xoắn Ốc</text>
+      <text x="240" y="0" text-anchor="end" fill="#F8C98B" font-family="monospace">1.20×</text>
+      <rect y="10" width="280" height="6" rx="3" fill="#1E293B" />
+      <rect y="10" width="165" height="6" rx="3" fill="#F8C98B" />
+      <circle cx="165" cy="13" r="7" fill="#F4F7FB" />
+    </g>
+
+    <!-- Trigger Supernova CTA -->
+    <g transform="translate(0, 160)">
+      <rect width="280" height="40" rx="10" fill="#F472B6" fill-opacity="0.22" stroke="#F472B6" stroke-width="1.5" />
+      <text x="140" y="25" text-anchor="middle" fill="#F4F7FB" font-weight="700">💥 Kích Hoạt Siêu Tân Tinh (Supernova)</text>
+    </g>
+  </g>
+
+  <!-- BOTTOM 13.8 GYR EVOLUTION TIMELINE SCRUBBER -->
+  <rect x="24" y="552" width="1152" height="144" rx="16" fill="#090D18" fill-opacity="0.92" stroke="#F4F7FB" stroke-opacity="0.12" />
+  <text x="48" y="582" fill="#F8C98B" font-family="monospace" font-size="11" font-weight="700">DÒNG THỜI GIAN TIẾN HÓA THIÊN HÀ (0.8 → 13.8 TỶ NĂM)</text>
+  <text x="1148" y="582" text-anchor="end" fill="#67E8F9" font-family="monospace" font-size="14" font-weight="700">Kỷ nguyên: 10.2 Gyr • Tốc độ tạo sao: 4.8 M☉/năm</text>
+
+  <!-- Timeline Track -->
+  <line x1="64" y1="622" x2="1136" y2="622" stroke="#1E293B" stroke-width="8" stroke-linecap="round" />
+  <line x1="64" y1="622" x2="840" y2="622" stroke="#7AA8FF" stroke-width="8" stroke-linecap="round" />
+
+  <!-- 5 Epoch Nodes -->
+  <g font-family="Inter, sans-serif" font-size="11" fill="#94A3B8">
+    <circle cx="80" cy="622" r="7" fill="#7AA8FF" /><text x="80" y="652" text-anchor="middle">1. Sụp Đổ Tiền Thiên Hà</text>
+    <circle cx="330" cy="622" r="7" fill="#7AA8FF" /><text x="330" y="652" text-anchor="middle">2. Hình Thành Đĩa Dày</text>
+    <circle cx="585" cy="622" r="7" fill="#7AA8FF" /><text x="585" y="652" text-anchor="middle">3. Bùng Nổ Tạo Sao &amp; Siêu Tân Tinh</text>
+    <circle cx="840" cy="622" r="10" fill="#67E8F9" stroke="#FFFFFF" stroke-width="2.5" /><text x="840" y="652" text-anchor="middle" fill="#F4F7FB" font-weight="700">4. Mở Rộng Đĩa Xoắn Ốc</text>
+    <circle cx="1110" cy="622" r="7" fill="#334155" /><text x="1110" y="652" text-anchor="middle">5. Dải Ngân Hà Hiện Đại (13.8 Gyr)</text>
+  </g>
+</svg>
