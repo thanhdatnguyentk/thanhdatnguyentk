@@ -29,69 +29,107 @@ export const ProjectInspector: React.FC<ProjectInspectorProps> = ({
     .filter((p): p is Project => Boolean(p));
 
   const renderProjectDetails = (proj: Project, compact = false) => {
-    const localized = proj[lang] ?? proj.en;
+    const summaryText = compact
+      ? proj.description[lang] ?? proj.description.en
+      : proj.longDescription[lang] ?? proj.longDescription.en;
+    const roleText = proj.scope?.role?.[lang] ?? proj.scope?.role?.en ?? '';
+    const domainText =
+      proj.scope?.domain?.[lang] ?? proj.scope?.domain?.en ?? '';
+    const highlightsList =
+      proj.highlights?.[lang] ?? proj.highlights?.en ?? [];
+    const techList = Array.isArray(proj.tech) ? proj.tech : [];
     const caseHref = `${cleanBase}/cases/${proj.slug}/`;
 
     return (
       <div key={proj.slug} className={compact ? 'ws-mini-project-card' : ''}>
         <div className="ws-mini-project-top">
-          <span className="ws-mini-project-num">
-            {proj.num} · {proj.year}
-          </span>
-          <span className="ws-tag">{localized.category}</span>
+          <span className="ws-mini-project-num">{proj.caseLabel}</span>
+          <span className="ws-tag">{proj.category}</span>
         </div>
 
         <h4 className="ws-mini-project-title" style={{ marginTop: 4 }}>
-          {localized.title}
+          {proj.title}
         </h4>
 
         <p className="ws-inspector-summary" style={{ marginTop: 6 }}>
-          {localized.summary}
+          {summaryText}
         </p>
 
-        {!compact && localized.metrics && localized.metrics.length > 0 && (
-          <div className="ws-metrics-grid" style={{ marginTop: 10 }}>
-            {localized.metrics.slice(0, 3).map((m, idx) => (
-              <div key={idx} className="ws-metric-box">
-                <div className="ws-metric-val">{m.value}</div>
-                <div className="ws-metric-lbl">{m.label}</div>
+        {!compact && (roleText || domainText) && (
+          <div
+            className="ws-metrics-grid"
+            style={{
+              marginTop: 10,
+              gridTemplateColumns: 'repeat(2, 1fr)',
+            }}
+          >
+            {roleText && (
+              <div className="ws-metric-box">
+                <div className="ws-metric-lbl">Role</div>
+                <div
+                  className="ws-metric-val"
+                  style={{ fontSize: '11.5px', marginTop: 2 }}
+                >
+                  {roleText}
+                </div>
               </div>
-            ))}
+            )}
+            {domainText && (
+              <div className="ws-metric-box">
+                <div className="ws-metric-lbl">Domain</div>
+                <div
+                  className="ws-metric-val"
+                  style={{ fontSize: '11.5px', marginTop: 2 }}
+                >
+                  {domainText}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
+        {!compact && highlightsList.length > 0 && (
+          <ul
+            style={{
+              margin: '10px 0 0',
+              paddingLeft: 18,
+              fontSize: '12px',
+              lineHeight: 1.55,
+              opacity: 0.9,
+            }}
+          >
+            {highlightsList.slice(0, 3).map((item, idx) => (
+              <li key={idx} style={{ marginBottom: 4 }}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
+
         <div className="ws-tag-list" style={{ marginTop: 8 }}>
-          {proj.tags.slice(0, compact ? 5 : 8).map((tag) => (
+          {techList.slice(0, compact ? 5 : 8).map((tag) => (
             <span key={tag} className="ws-tag">
               {tag}
             </span>
           ))}
         </div>
 
-        <div className="ws-inspector-actions" style={{ marginTop: 10 }}>
+        <div className="ws-inspector-actions" style={{ marginTop: 12 }}>
           <a href={caseHref} className="ws-cta-primary">
             <span>{t.inspector.viewCaseStudy[lang]}</span>
             <span>→</span>
           </a>
-          {proj.liveUrl && (
+          {proj.url && (
             <a
-              href={proj.liveUrl}
+              href={proj.url}
               target="_blank"
               rel="noopener noreferrer"
               className="ws-cta-secondary"
             >
-              <span>Live Demo ↗</span>
+              <span>{t.inspector.viewGithub[lang]}</span>
+              <span>↗</span>
             </a>
           )}
-          <a
-            href={proj.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ws-cta-secondary"
-          >
-            <span>{t.inspector.viewGithub[lang]}</span>
-            <span>↗</span>
-          </a>
         </div>
       </div>
     );
