@@ -1,8 +1,6 @@
 ---
 import { stats, profileInfo, uiStrings } from '../data/projects';
 import I18nText from './I18nText.astro';
-import SceneFallback from './workspace/SceneFallback.astro';
-import WorkspaceApp from './workspace/WorkspaceApp';
 
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
@@ -40,8 +38,8 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
   <!-- Interactive Room & Slide-Out Drawer -->
   <div class="p-index-contents" id="home-contents">
     <div class="p-index-contents__room-wrap" id="room-wrap" data-time-mode="afternoon">
-      <!-- Time of Day / Ambience Switcher + Quick Hint (Preserved for global animations.ts) -->
-      <div class="p-index-controls" style="display: none;" aria-hidden="true">
+      <!-- Time of Day / Ambience Switcher + Quick Hint -->
+      <div class="p-index-controls">
         <button
           type="button"
           class="p-index-control-pill u-en"
@@ -71,12 +69,143 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
         </button>
       </div>
 
-      <!-- Preserved Original 2D SVG AI Engineer's Room Fallback -->
-      <SceneFallback />
+      <!-- Illustrated Interactive AI Engineer Room (Afternoon & Night Responsive) -->
+      <div
+        class="p-index-room-Trigger"
+        id="character-trigger"
+        role="button"
+        tabindex="0"
+        data-stalker="hey"
+        aria-label="Click to say Hey and open Nguyễn Thành Đạt's profile drawer"
+        aria-expanded="false"
+      >
+        <svg
+          class="room-svg"
+          viewBox="0 0 1440 900"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="xMidYMid slice"
+        >
+          <!-- Room Background Wall -->
+          <rect class="wall-bg" width="1440" height="900" fill="#E5F2FC" />
 
-      <!-- Real-Time WebGL 3D Isometric AI Laboratory Island -->
-      <div class="p-index-3d-stage">
-        <WorkspaceApp client:only="react" baseUrl={baseUrl} />
+          <!-- Subtle Architectural Grid -->
+          <g class="room-grid" stroke="#1E2E3E" stroke-opacity="0.06" stroke-width="1.5">
+            <line x1="0" y1="680" x2="1440" y2="680" />
+            <line x1="280" y1="0" x2="280" y2="680" />
+            <line x1="1160" y1="0" x2="1160" y2="680" />
+          </g>
+
+          <!-- Large Studio Window (Left-Center) showing HCMC / UIT Sky -->
+          <g transform="translate(170, 130)">
+            <rect x="0" y="0" width="280" height="360" rx="24" class="window-sky" fill="#F8FCFF" stroke="#1E2E3E" stroke-width="4" />
+            <circle cx="200" cy="88" r="36" class="sky-orb" fill="#7CC6FE" />
+            <g class="night-stars" opacity="0">
+              <circle cx="70" cy="70" r="3" fill="#FFF" />
+              <circle cx="120" cy="110" r="2.5" fill="#7CC6FE" />
+              <circle cx="85" cy="160" r="2" fill="#FFF" />
+              <circle cx="220" cy="180" r="3" fill="#FFF" />
+            </g>
+            <path d="M20 290 C80 260, 140 275, 260 280 L260 340 L20 340 Z" fill="#7CC6FE" fill-opacity="0.28" />
+            <line x1="140" y1="0" x2="140" y2="360" stroke="#1E2E3E" stroke-width="4" />
+            <line x1="0" y1="180" x2="280" y2="180" stroke="#1E2E3E" stroke-width="4" />
+          </g>
+
+          <!-- Wall Whiteboard: Neural Network & Transformer Architecture -->
+          <g transform="translate(520, 120)">
+            <rect x="0" y="0" width="420" height="230" rx="18" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="4" />
+            <rect x="18" y="18" width="110" height="26" rx="13" fill="#7CC6FE" />
+            <text x="73" y="35" text-anchor="middle" fill="#1E2E3E" font-family="Righteous, sans-serif" font-size="12">BERT • RAG • T5</text>
+
+            <g stroke="#1E2E3E" stroke-width="2.5">
+              <line x1="65" y1="95" x2="145" y2="75" />
+              <line x1="65" y1="95" x2="145" y2="125" />
+              <line x1="65" y1="145" x2="145" y2="75" />
+              <line x1="65" y1="145" x2="145" y2="125" />
+              <line x1="145" y1="75" x2="225" y2="105" />
+              <line x1="145" y1="125" x2="225" y2="105" />
+            </g>
+            <circle cx="65" cy="95" r="11" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="3" />
+            <circle cx="65" cy="145" r="11" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="3" />
+            <circle cx="145" cy="75" r="11" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="3" />
+            <circle cx="145" cy="125" r="11" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="3" />
+            <circle cx="225" cy="105" r="13" fill="#1E2E3E" />
+
+            <rect x="268" y="56" width="126" height="92" rx="12" fill="#E5F2FC" stroke="#1E2E3E" stroke-width="2.5" />
+            <path d="M284 78 Q305 128 378 132" stroke="#5BB2F6" stroke-width="3.5" stroke-linecap="round" fill="none" />
+            <text x="331" y="74" text-anchor="middle" fill="#1E2E3E" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">loss ↓ 0.012</text>
+
+            <text x="24" y="198" fill="#1E2E3E" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700">
+              “AI is math, code &amp; coffee.” — UIT-VNUHCM
+            </text>
+          </g>
+
+          <!-- Bookshelf & GPU Server Rack (Right) -->
+          <g transform="translate(1010, 170)">
+            <rect x="0" y="0" width="210" height="320" rx="18" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="4" />
+            <line x1="0" y1="105" x2="210" y2="105" stroke="#1E2E3E" stroke-width="4" />
+            <line x1="0" y1="210" x2="210" y2="210" stroke="#1E2E3E" stroke-width="4" />
+            <rect x="24" y="35" width="22" height="68" rx="4" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="2.5" />
+            <rect x="50" y="43" width="26" height="60" rx="4" fill="#1E2E3E" />
+            <rect x="82" y="38" width="22" height="65" rx="4" fill="#E5F2FC" stroke="#1E2E3E" stroke-width="2.5" transform="rotate(-8 82 38)" />
+            <rect x="24" y="130" width="162" height="58" rx="10" fill="#1E2E3E" />
+            <circle cx="46" cy="159" r="6" fill="#7CC6FE" class="gpu-pulse" />
+            <circle cx="68" cy="159" r="6" fill="#10B981" />
+            <text x="132" y="164" text-anchor="middle" fill="#F4F9FD" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">CUDA • GPU</text>
+            <rect x="80" y="256" width="50" height="50" rx="10" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="3" />
+            <path d="M105 256 C85 230, 75 240, 72 222 C95 220, 102 238, 105 256 Z" fill="#1E2E3E" />
+            <path d="M105 256 C125 226, 138 236, 140 218 C115 218, 108 236, 105 256 Z" fill="#1E2E3E" />
+          </g>
+
+          <!-- Main Desk & Dual Monitors + Character Centerpiece -->
+          <g transform="translate(0, 20)">
+            <g class="character-group" transform="translate(610, 320)">
+              <g class="speech-bubble" transform="translate(155, -35)">
+                <rect x="0" y="0" width="136" height="48" rx="24" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="3.5" />
+                <text x="68" y="30" text-anchor="middle" fill="#1E2E3E" font-family="Righteous, sans-serif" font-size="20">Click “Hey!”</text>
+              </g>
+
+              <rect x="58" y="88" width="104" height="90" rx="38" fill="#1E2E3E" />
+              <circle cx="110" cy="62" r="42" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="4" />
+              <path d="M68 58 C68 26, 152 26, 152 58 C140 42, 85 42, 68 58 Z" fill="#1E2E3E" />
+              <rect x="82" y="52" width="24" height="16" rx="5" fill="#7CC6FE" fill-opacity="0.3" stroke="#1E2E3E" stroke-width="3" />
+              <rect x="114" y="52" width="24" height="16" rx="5" fill="#7CC6FE" fill-opacity="0.3" stroke="#1E2E3E" stroke-width="3" />
+              <line x1="106" y1="60" x2="114" y2="60" stroke="#1E2E3E" stroke-width="3" />
+              <path d="M101 78 Q110 85 119 78" stroke="#1E2E3E" stroke-width="3" stroke-linecap="round" fill="none" />
+              <path d="M84 90 L110 120 L136 90" stroke="#7CC6FE" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <rect x="220" y="500" width="1000" height="28" rx="14" fill="#1E2E3E" />
+            <rect x="280" y="528" width="24" height="220" rx="8" fill="#1E2E3E" />
+            <rect x="1136" y="528" width="24" height="220" rx="8" fill="#1E2E3E" />
+
+            <g transform="translate(360, 360)">
+              <rect x="0" y="0" width="210" height="124" rx="14" fill="#1E2E3E" />
+              <rect x="10" y="10" width="190" height="104" rx="8" fill="#131F2B" />
+              <rect x="24" y="26" width="76" height="8" rx="4" fill="#7CC6FE" />
+              <rect x="24" y="44" width="130" height="7" rx="3.5" fill="#F4F9FD" opacity="0.7" />
+              <rect x="38" y="60" width="110" height="7" rx="3.5" fill="#10B981" opacity="0.85" />
+              <rect x="38" y="76" width="94" height="7" rx="3.5" fill="#7CC6FE" opacity="0.85" />
+              <rect x="24" y="92" width="60" height="7" rx="3.5" fill="#F4F9FD" opacity="0.5" />
+              <rect x="92" y="124" width="26" height="16" fill="#1E2E3E" />
+              <rect x="70" y="136" width="70" height="6" rx="3" fill="#1E2E3E" />
+            </g>
+
+            <g transform="translate(650, 420)">
+              <rect x="0" y="0" width="140" height="76" rx="10" fill="#7CC6FE" stroke="#1E2E3E" stroke-width="4" />
+              <circle cx="70" cy="38" r="14" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="3" />
+              <rect x="-12" y="74" width="164" height="8" rx="4" fill="#1E2E3E" />
+            </g>
+
+            <g transform="translate(855, 444)">
+              <path class="coffee-steam" d="M18 -8 Q24 -18 18 -28" stroke="#5BB2F6" stroke-width="3" stroke-linecap="round" fill="none" />
+              <path class="coffee-steam" style="animation-delay: 0.9s" d="M32 -6 Q38 -16 32 -26" stroke="#1E2E3E" stroke-width="2.5" stroke-linecap="round" fill="none" />
+              <rect x="6" y="0" width="38" height="48" rx="8" fill="#F4F9FD" stroke="#1E2E3E" stroke-width="3.5" />
+              <path d="M44 10 H52 C57 10 57 34 52 34 H44" stroke="#1E2E3E" stroke-width="3.5" fill="none" />
+              <rect x="12" y="16" width="26" height="12" rx="4" fill="#7CC6FE" />
+            </g>
+          </g>
+        </svg>
       </div>
     </div>
 
@@ -240,7 +369,7 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   @media (max-width: 767px) {
     .p-index-contents__room-wrap {
-      height: 100svh;
+      height: 76svh;
     }
   }
 
@@ -260,15 +389,6 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
     opacity: 1;
   }
 
-  .p-index-3d-stage {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    transition: transform 0.6s var(--expo-ease);
-  }
-
   .p-index-room-Trigger {
     width: 100%;
     height: 100%;
@@ -283,14 +403,12 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
     transition: transform 0.6s var(--expo-ease);
   }
 
-  .p-index-contents.is-drawer-open .room-svg,
-  .p-index-contents.is-drawer-open .p-index-3d-stage {
+  .p-index-contents.is-drawer-open .room-svg {
     transform: translateX(-14%) scale(0.96);
   }
 
   @media (max-width: 767px) {
-    .p-index-contents.is-drawer-open .room-svg,
-    .p-index-contents.is-drawer-open .p-index-3d-stage {
+    .p-index-contents.is-drawer-open .room-svg {
       transform: none;
     }
   }
@@ -398,8 +516,8 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
       width: 100%;
       max-width: 100%;
       height: auto;
-      margin-top: 0;
-      border-radius: 32px 32px 0 0;
+      margin-top: -12svh;
+      border-radius: 40px 40px 0 0;
       padding: 36px 24px 36px;
       transform: none;
       opacity: 1;
