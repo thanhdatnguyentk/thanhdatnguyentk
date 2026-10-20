@@ -133,7 +133,103 @@ console.log('=== Superpowers TDD Suite: THE AI ENGINEER’S ATELIER ===');
       `Project ${slug} must be preserved in src/data/projects.ts`
     );
   }
-  console.log('✓ [7/7] All 7 portfolio projects preserved');
+  console.log('✓ [7/10] All 7 portfolio projects preserved');
+}
+
+// 8. Real 3D Asset Research Plan, Manifest & Credits Documentation Spec
+{
+  for (const docPath of [
+    'docs/3d-asset-plan.md',
+    'docs/3d-asset-credits.md',
+    'docs/3d-asset-manifest.json',
+  ]) {
+    assert.equal(
+      fs.existsSync(path.join(root, docPath)),
+      true,
+      `Required 3D asset documentation file ${docPath} must exist`
+    );
+  }
+  const manifest = JSON.parse(read('docs/3d-asset-manifest.json'));
+  assert.equal(
+    manifest.totalAssets >= 19,
+    true,
+    'Manifest must contain at least 19 normalized GLB assets'
+  );
+  assert.equal(
+    manifest.totalSizeBytes < 5_000_000,
+    true,
+    'Total 3D asset payload must stay well under the 5 MB target budget'
+  );
+  console.log(
+    `✓ [8/10] 3D asset documentation & manifest verified (${manifest.totalAssets} assets, ${(manifest.totalSizeBytes / 1024).toFixed(1)} KB, ${manifest.totalTriangles} tris)`
+  );
+}
+
+// 9. Binary glTF 2.0 (.glb) Asset Integrity & Normalization Spec
+{
+  const requiredGlbs = [
+    'public/assets/3d/workstation/desk.glb',
+    'public/assets/3d/workstation/desk_drawer.glb',
+    'public/assets/3d/workstation/monitor.glb',
+    'public/assets/3d/workstation/monitor_ultrawide.glb',
+    'public/assets/3d/workstation/keyboard.glb',
+    'public/assets/3d/workstation/mouse.glb',
+    'public/assets/3d/workstation/desk_lamp.glb',
+    'public/assets/3d/workstation/speaker.glb',
+    'public/assets/3d/workstation/laptop.glb',
+    'public/assets/3d/electronics/gpu_workstation.glb',
+    'public/assets/3d/electronics/gpu_fan_unit.glb',
+    'public/assets/3d/electronics/hologram_pedestal.glb',
+    'public/assets/3d/furniture/office_chair.glb',
+    'public/assets/3d/furniture/bookshelf.glb',
+    'public/assets/3d/props/book_stack.glb',
+    'public/assets/3d/props/houseplant_large.glb',
+    'public/assets/3d/props/houseplant_small.glb',
+    'public/assets/3d/props/coffee_mug.glb',
+    'public/assets/3d/robot/datbot.glb',
+  ];
+  for (const relPath of requiredGlbs) {
+    const full = path.join(root, relPath);
+    assert.equal(fs.existsSync(full), true, `GLB file ${relPath} must exist`);
+    const buf = fs.readFileSync(full);
+    assert.equal(
+      buf.subarray(0, 4).toString('ascii'),
+      'glTF',
+      `${relPath} must have valid binary glTF 2.0 header`
+    );
+    assert.equal(
+      buf.includes('__AtelierNormalizedRoot'),
+      true,
+      `${relPath} must contain normalized transform root node __AtelierNormalizedRoot`
+    );
+  }
+  console.log('✓ [9/10] All 19 normalized GLB binary assets verified');
+}
+
+// 10. R3F Scene Object Components Use Real GLB Assets Spec
+{
+  const componentChecks = [
+    ['src/components/workspace/objects/Desk.tsx', 'workstation/desk.glb'],
+    ['src/components/workspace/objects/Desk.tsx', 'furniture/office_chair.glb'],
+    ['src/components/workspace/objects/Monitor.tsx', 'workstation/monitor_ultrawide.glb'],
+    ['src/components/workspace/objects/Monitor.tsx', 'workstation/monitor.glb'],
+    ['src/components/workspace/objects/GPUStation.tsx', 'electronics/gpu_workstation.glb'],
+    ['src/components/workspace/objects/GPUStation.tsx', 'electronics/gpu_fan_unit.glb'],
+    ['src/components/workspace/objects/Bookshelf.tsx', 'furniture/bookshelf.glb'],
+    ['src/components/workspace/objects/CoffeeCup.tsx', 'props/coffee_mug.glb'],
+    ['src/components/workspace/objects/Robot.tsx', 'robot/datbot.glb'],
+    ['src/components/workspace/objects/GalaxyHologram.tsx', 'electronics/hologram_pedestal.glb'],
+    ['src/components/workspace/objects/RoomShell.tsx', 'props/houseplant_large.glb'],
+  ];
+  for (const [compFile, assetRef] of componentChecks) {
+    const src = read(compFile);
+    assert.equal(
+      src.includes(assetRef),
+      true,
+      `${compFile} must load real 3D asset ${assetRef}`
+    );
+  }
+  console.log('✓ [10/10] All R3F object components verified to use real 3D GLB assets');
 }
 
 console.log('ALL TESTS PASSED!');

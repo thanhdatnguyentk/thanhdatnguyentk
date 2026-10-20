@@ -1,64 +1,167 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 import { InteractiveObject } from '../InteractiveObject';
 import { useWorkspaceStore } from '../hooks/useWorkspaceInteraction';
 import { ATELIER_PALETTE } from './materials';
+import {
+  AtelierGLBModel,
+  type MaterialCustomization,
+} from './AtelierGLBModel';
 
 export const GPUStation: React.FC = () => {
   const timeMode = useWorkspaceStore((s) => s.timeMode);
+  const isNight = timeMode === 'night';
   const mat = ATELIER_PALETTE[timeMode];
 
   const fan1Ref = useRef<THREE.Group>(null);
   const fan2Ref = useRef<THREE.Group>(null);
   const fan3Ref = useRef<THREE.Group>(null);
-  const pulseRef = useRef<THREE.MeshBasicMaterial>(null);
+  const glbFanMeshesRef = useRef<THREE.Object3D[]>([]);
 
-  useFrame(({ clock }, delta) => {
+  // Center the local geometry pivot of Fan_1 and Fan_2 inside gpu_fan_unit.glb so they spin in place
+  const handleGpuFanUnitReady = useCallback((root: THREE.Object3D) => {
+    const fans: THREE.Object3D[] = [];
+    root.traverse((obj) => {
+      if (
+        (obj as THREE.Mesh).isMesh &&
+        (obj.name.includes('Fan_1') || obj.name.includes('Fan_2'))
+      ) {
+        const mesh = obj as THREE.Mesh;
+        mesh.geometry = mesh.geometry.clone();
+        mesh.geometry.computeBoundingBox();
+        const bbox = mesh.geometry.boundingBox;
+        if (bbox) {
+          const center = new THREE.Vector3();
+          bbox.getCenter(center);
+          mesh.geometry.translate(-center.x, -center.y, -center.z);
+          mesh.position.add(center);
+        }
+        fans.push(mesh);
+      }
+    });
+    glbFanMeshesRef.current = fans;
+  }, []);
+
+  useFrame((_, delta) => {
     const spinSpeed = delta * 9.5;
     if (fan1Ref.current) fan1Ref.current.rotation.z += spinSpeed;
     if (fan2Ref.current) fan2Ref.current.rotation.z += spinSpeed * 1.1;
     if (fan3Ref.current) fan3Ref.current.rotation.z += spinSpeed * 0.95;
 
-    if (pulseRef.current) {
-      const t = clock.getElapsedTime();
-      pulseRef.current.opacity = 0.6 + Math.sin(t * 4.0) * 0.35;
+    for (const fanMesh of glbFanMeshesRef.current) {
+      fanMesh.rotation.y += spinSpeed;
     }
   });
+
+  const towerOverrides = useMemo<Record<string, MaterialCustomization>>(
+    () => ({
+      mat23: { color: mat.metalBrushed, roughness: 0.3, metalness: 0.74 },
+      mat24: {
+        color: mat.accentLavender,
+        opacity: 0.24,
+        transparent: true,
+        roughness: 0.1,
+        metalness: 0.2,
+      },
+      mat17: { color: mat.metalDark, roughness: 0.34, metalness: 0.68 },
+      mat16: { color: mat.fabricSlate, roughness: 0.42, metalness: 0.35 },
+      mat21: { color: mat.ceramicWhite, roughness: 0.3, metalness: 0.15 },
+      mat3: {
+        color: mat.accentCyan,
+        emissive: mat.accentCyan,
+        emissiveIntensity: isNight ? 0.65 : 0.25,
+        roughness: 0.22,
+      },
+      mat8: {
+        color: mat.accentLavender,
+        emissive: mat.accentLavender,
+        emissiveIntensity: isNight ? 0.55 : 0.2,
+        roughness: 0.25,
+      },
+      mat9: {
+        color: mat.accentLavender,
+        emissive: mat.accentLavender,
+        emissiveIntensity: isNight ? 0.45 : 0.15,
+      },
+      mat10: { color: mat.accentEmerald, roughness: 0.35 },
+      mat12: {
+        color: mat.accentCyan,
+        emissive: mat.accentCyan,
+        emissiveIntensity: isNight ? 0.5 : 0.2,
+      },
+      mat5: { color: mat.accentAmber, roughness: 0.28 },
+    }),
+    [mat, isNight]
+  );
+
+  const gpuCardOverrides = useMemo<Record<string, MaterialCustomization>>(
+    () => ({
+      'Material.003': {
+        color: mat.metalBrushed,
+        roughness: 0.28,
+        metalness: 0.75,
+      },
+      'Material.002': {
+        color: mat.metalDark,
+        roughness: 0.32,
+        metalness: 0.68,
+      },
+      'Material.001': {
+        color: mat.accentCyan,
+        emissive: mat.accentCyan,
+        emissiveIntensity: isNight ? 0.55 : 0.2,
+      },
+      'Material.005': { color: mat.accentAmber, metalness: 0.7, roughness: 0.25 },
+      'Material.004': { color: mat.metalSilver, metalness: 0.8, roughness: 0.22 },
+    }),
+    [mat, isNight]
+  );
 
   const renderCoolingFan = (
     ref: React.RefObject<THREE.Group | null>,
     yPos: number,
     ringColor: string
   ) => (
-    <group position={[0, yPos, 0.365]}>
+    <group position={[0.02, yPos, 0.415]}>
       {/* Recessed Fan Shroud Bezel */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.13, 0.13, 0.015, 24, 1, true]} />
-        <meshStandardMaterial color={mat.metalBrushed} metalness={0.75} roughness={0.28} />
+        <cylinderGeometry args={[0.112, 0.112, 0.015, 24, 1, true]} />
+        <meshStandardMaterial
+          color={mat.metalBrushed}
+          metalness={0.35}
+          roughness={0.28}
+        />
       </mesh>
-      {/* Glowing Fan Halo Ring */}
+      {/* Restrained Emissive Fan Halo Ring */}
       <mesh>
-        <torusGeometry args={[0.118, 0.013, 12, 28]} />
+        <torusGeometry args={[0.102, 0.01, 12, 28]} />
         <meshBasicMaterial color={ringColor} />
       </mesh>
       {/* Spinning Fan Rotor & Blades */}
       <group ref={ref}>
         <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <cylinderGeometry args={[0.032, 0.032, 0.022, 14]} />
-          <meshStandardMaterial color={mat.metalDark} metalness={0.7} roughness={0.3} />
+          <cylinderGeometry args={[0.028, 0.028, 0.02, 14]} />
+          <meshStandardMaterial
+            color={mat.metalDark}
+            metalness={0.35}
+            roughness={0.3}
+          />
         </mesh>
         {[0, 1, 2, 3, 4, 5].map((bIdx) => {
           const angle = (bIdx * Math.PI * 2) / 6;
           return (
             <mesh
               key={`blade-${bIdx}`}
-              position={[Math.cos(angle) * 0.062, Math.sin(angle) * 0.062, 0]}
+              position={[Math.cos(angle) * 0.052, Math.sin(angle) * 0.052, 0]}
               rotation={[0.35, 0, angle]}
             >
-              <boxGeometry args={[0.066, 0.022, 0.006]} />
-              <meshStandardMaterial color={mat.metalSilver} metalness={0.55} roughness={0.25} />
+              <boxGeometry args={[0.056, 0.018, 0.006]} />
+              <meshStandardMaterial
+                color={mat.metalSilver}
+                metalness={0.35}
+                roughness={0.25}
+              />
             </mesh>
           );
         })}
@@ -74,103 +177,28 @@ export const GPUStation: React.FC = () => {
       ringRadius={0.5}
       ringOffset={[0, -0.73, 0]}
     >
-      {/* ── Outer Brushed Aluminum Server Chassis (Readable Gunmetal, never crushed black) ── */}
-      <RoundedBox
-        args={[0.7, 1.48, 0.74]}
-        radius={0.035}
-        smoothness={4}
-        castShadow
-        receiveShadow
-      >
-        <meshStandardMaterial
-          color={mat.metalBrushed}
-          roughness={0.3}
-          metalness={0.74}
-        />
-      </RoundedBox>
+      {/* ── 1. Real 3D Glass-Panel Gaming PC / GPU Workstation Tower GLB (Alex Safayan, CC-BY 3.0) ── */}
+      <AtelierGLBModel
+        assetPath="electronics/gpu_workstation.glb"
+        position={[0, -0.74, 0]}
+        scale={[1.04, 1.02, 0.54]}
+        materialOverrides={towerOverrides}
+      />
 
-      {/* Top Wood-Inlay Handle & Perforated Vent Grill */}
-      <RoundedBox
-        args={[0.58, 0.035, 0.58]}
-        radius={0.01}
-        position={[0, 0.75, 0]}
-        castShadow
-      >
-        <meshStandardMaterial color={mat.woodWarm} roughness={0.42} />
-      </RoundedBox>
+      {/* ── 2. Real 3D Dual-Fan CUDA GPU Module GLB with Spinning Fan_1 & Fan_2 Rotors (pgonarg, CC0) ── */}
+      <AtelierGLBModel
+        assetPath="electronics/gpu_fan_unit.glb"
+        position={[-0.08, -0.12, 0]}
+        rotation={[0, Math.PI / 2, 0]}
+        scale={0.88}
+        materialOverrides={gpuCardOverrides}
+        onSceneReady={handleGpuFanUnitReady}
+      />
 
-      {/* Interior Dark Backplane Cavern (Visible through side glass) */}
-      <mesh position={[-0.04, 0, 0]}>
-        <boxGeometry args={[0.62, 1.34, 0.62]} />
-        <meshStandardMaterial color="#101829" roughness={0.48} />
-      </mesh>
-
-      {/* Vertical Liquid-Cooling Manifold Tubes Inside Chassis */}
-      {[-0.18, 0.18].map((zTube, tIdx) => (
-        <mesh key={`tube-${tIdx}`} position={[-0.24, 0, zTube]}>
-          <cylinderGeometry args={[0.014, 0.014, 1.24, 12]} />
-          <meshBasicMaterial
-            color={tIdx === 0 ? mat.accentCyan : mat.accentLavender}
-            transparent
-            opacity={0.85}
-          />
-        </mesh>
-      ))}
-
-      {/* 4 Horizontal CUDA / JavaTorch Tensor Compute Blades */}
-      {[-0.42, -0.14, 0.14, 0.42].map((yPos, idx) => (
-        <group key={`gpu-blade-${idx}`} position={[-0.06, yPos, 0]}>
-          <RoundedBox args={[0.56, 0.165, 0.54]} radius={0.014} castShadow>
-            <meshStandardMaterial
-              color={mat.metalDark}
-              metalness={0.72}
-              roughness={0.28}
-            />
-          </RoundedBox>
-          {/* Glowing Lavender / Cyan Tensor Core Bus Bar */}
-          <mesh position={[-0.286, 0, 0]}>
-            <boxGeometry args={[0.018, 0.042, 0.48]} />
-            <meshBasicMaterial
-              ref={idx === 0 ? pulseRef : undefined}
-              color={idx % 2 === 0 ? mat.accentLavender : mat.accentCyan}
-              transparent
-              opacity={0.92}
-            />
-          </mesh>
-          {/* Status Telemetry LEDs */}
-          {[-0.18, -0.12, -0.06].map((zLed, lIdx) => (
-            <mesh key={`led-${lIdx}`} position={[-0.288, 0.048, zLed]}>
-              <sphereGeometry args={[0.013, 8, 8]} />
-              <meshBasicMaterial
-                color={lIdx === 0 ? mat.accentEmerald : mat.accentAmber}
-              />
-            </mesh>
-          ))}
-        </group>
-      ))}
-
-      {/* Tempered Glass Side Panel (Facing Viewer on -X side) */}
-      <mesh position={[-0.354, 0, 0]} rotation={[0, -Math.PI / 2, 0]}>
-        <planeGeometry args={[0.64, 1.36]} />
-        <meshPhysicalMaterial
-          color={mat.accentLavender}
-          transparent
-          opacity={0.2}
-          roughness={0.08}
-          metalness={0.18}
-        />
-      </mesh>
-
-      {/* 3 Spinning Front Intake Cooling Fans (+Z face) */}
-      {renderCoolingFan(fan1Ref, 0.36, mat.accentLavender)}
-      {renderCoolingFan(fan2Ref, 0.0, mat.accentCyan)}
-      {renderCoolingFan(fan3Ref, -0.36, mat.accentLavender)}
-
-      {/* Top Telemetry Status Header Strip */}
-      <mesh position={[0, 0.66, 0.372]}>
-        <boxGeometry args={[0.54, 0.062, 0.012]} />
-        <meshBasicMaterial color={mat.accentCyan} />
-      </mesh>
+      {/* ── 3. Front Intake Cooling Fans (+Z bezel) ── */}
+      {renderCoolingFan(fan1Ref, 0.28, mat.accentLavender)}
+      {renderCoolingFan(fan2Ref, -0.02, mat.accentCyan)}
+      {renderCoolingFan(fan3Ref, -0.32, mat.accentLavender)}
     </InteractiveObject>
   );
 };

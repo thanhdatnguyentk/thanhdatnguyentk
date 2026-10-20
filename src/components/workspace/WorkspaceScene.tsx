@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import * as THREE from 'three';
@@ -14,6 +14,7 @@ import { Robot } from './objects/Robot';
 import { Bookshelf } from './objects/Bookshelf';
 import { Whiteboard } from './objects/Whiteboard';
 import { CoffeeCup } from './objects/CoffeeCup';
+import { preloadPrimaryAtelierAssets } from './objects/AtelierGLBModel';
 import { SCENE_OBJECTS } from './data/sceneObjects';
 import { useWorkspaceStore } from './hooks/useWorkspaceInteraction';
 
@@ -30,6 +31,10 @@ export const WorkspaceScene: React.FC<WorkspaceSceneProps> = ({
   const hoveredObject = useWorkspaceStore((s) => s.hoveredObject);
   const selectObject = useWorkspaceStore((s) => s.selectObject);
   const hoverObject = useWorkspaceStore((s) => s.hoverObject);
+
+  useEffect(() => {
+    preloadPrimaryAtelierAssets();
+  }, []);
 
   // Subtle interactive stations with clean beacon indicators (NO overlapping text labels by default)
   const beaconStations = SCENE_OBJECTS.filter((s) =>

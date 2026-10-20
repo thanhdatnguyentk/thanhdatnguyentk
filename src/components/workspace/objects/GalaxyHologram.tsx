@@ -1,10 +1,13 @@
 import React, { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 import { InteractiveObject } from '../InteractiveObject';
 import { useWorkspaceStore } from '../hooks/useWorkspaceInteraction';
 import { ATELIER_PALETTE } from './materials';
+import {
+  AtelierGLBModel,
+  type MaterialCustomization,
+} from './AtelierGLBModel';
 
 export const GalaxyHologram: React.FC = () => {
   const timeMode = useWorkspaceStore((s) => s.timeMode);
@@ -14,6 +17,27 @@ export const GalaxyHologram: React.FC = () => {
   const outerRingRef = useRef<THREE.Mesh>(null);
   const innerGyroRef = useRef<THREE.Mesh>(null);
   const solarOrbitRef = useRef<THREE.Group>(null);
+
+  const pedestalOverrides = useMemo<Record<string, MaterialCustomization>>(
+    () => ({
+      DarkGrey: {
+        color: mat.metalDark,
+        roughness: 0.28,
+        metalness: 0.78,
+      },
+      Main: {
+        color: mat.metalBrushed,
+        roughness: 0.3,
+        metalness: 0.72,
+      },
+      Accent: {
+        color: mat.woodWarm,
+        roughness: 0.4,
+        metalness: 0.12,
+      },
+    }),
+    [mat]
+  );
 
   // Generate 1,500 3D Spiral Galaxy Stars (Sgr A* Core + 4 Logarithmic Spiral Arms)
   const { positions, colors } = useMemo(() => {
@@ -90,49 +114,27 @@ export const GalaxyHologram: React.FC = () => {
       ringRadius={0.54}
       ringOffset={[0, -0.39, 0]}
     >
-      {/* ── Cylindrical Astrometry Hologram Pedestal Base (Wood & Brushed Metal) ── */}
-      <mesh position={[0, -0.1, 0]} castShadow receiveShadow>
-        <cylinderGeometry args={[0.38, 0.44, 0.6, 32]} />
-        <meshStandardMaterial
-          color={mat.metalBrushed}
-          roughness={0.32}
-          metalness={0.72}
-        />
-      </mesh>
-
-      {/* Warm Walnut Trim Band around Pedestal */}
-      <mesh position={[0, 0.08, 0]} castShadow>
-        <cylinderGeometry args={[0.405, 0.415, 0.12, 32]} />
-        <meshStandardMaterial
-          color={mat.woodWarm}
-          roughness={0.42}
-          metalness={0.1}
-        />
-      </mesh>
-
-      {/* Pedestal Top Emitter Collar */}
-      <mesh position={[0, 0.21, 0]}>
-        <cylinderGeometry args={[0.41, 0.4, 0.045, 32]} />
-        <meshStandardMaterial
-          color={mat.metalDark}
-          metalness={0.82}
-          roughness={0.22}
-        />
-      </mesh>
+      {/* ── Real 3D Sci-Fi Hologram Emitter Pedestal GLB (Quaternius, CC0) ── */}
+      <AtelierGLBModel
+        assetPath="electronics/hologram_pedestal.glb"
+        position={[0, -0.41, 0]}
+        scale={[1.0, 0.96, 1.0]}
+        materialOverrides={pedestalOverrides}
+      />
 
       {/* Glowing Emitter Lens Surface */}
-      <mesh position={[0, 0.236, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[0.35, 32]} />
-        <meshBasicMaterial color="#1e3a8a" transparent opacity={0.7} />
+      <mesh position={[0, 0.228, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <circleGeometry args={[0.34, 32]} />
+        <meshBasicMaterial color="#1e3a8a" transparent opacity={0.72} />
       </mesh>
 
       {/* Rotating Emitter Calibration Ring */}
       <mesh
         ref={outerRingRef}
-        position={[0, 0.25, 0]}
+        position={[0, 0.24, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
       >
-        <ringGeometry args={[0.34, 0.375, 36]} />
+        <ringGeometry args={[0.33, 0.365, 36]} />
         <meshBasicMaterial
           color={mat.accentCyan}
           side={THREE.DoubleSide}
@@ -141,21 +143,7 @@ export const GalaxyHologram: React.FC = () => {
         />
       </mesh>
 
-      {/* Pedestal Front Telemetry Badge */}
-      <RoundedBox
-        args={[0.28, 0.1, 0.032]}
-        radius={0.008}
-        position={[-0.28, -0.06, 0.26]}
-        rotation={[0, -0.72, 0]}
-      >
-        <meshStandardMaterial
-          color={mat.metalDark}
-          metalness={0.65}
-          roughness={0.28}
-        />
-      </RoundedBox>
-
-      {/* ── Floating 3D Milky Way Spiral Galaxy & Astrometry Gyro Rings ── */}
+      {/* ── Live Procedural 3D Milky Way Spiral Galaxy & Astrometry Gyro Rings ── */}
       <group
         ref={galaxyGroupRef}
         position={[0, 0.58, 0]}

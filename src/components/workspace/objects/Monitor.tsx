@@ -4,6 +4,10 @@ import * as THREE from 'three';
 import { InteractiveObject } from '../InteractiveObject';
 import { useWorkspaceStore } from '../hooks/useWorkspaceInteraction';
 import { ATELIER_PALETTE } from './materials';
+import {
+  AtelierGLBModel,
+  type MaterialCustomization,
+} from './AtelierGLBModel';
 
 function createScreenTexture(
   draw: (ctx: CanvasRenderingContext2D, w: number, h: number) => void,
@@ -27,6 +31,27 @@ function createScreenTexture(
 export const MonitorsAndDisplays: React.FC = () => {
   const timeMode = useWorkspaceStore((s) => s.timeMode);
   const mat = ATELIER_PALETTE[timeMode];
+
+  const monitorOverrides = useMemo<Record<string, MaterialCustomization>>(
+    () => ({
+      Plastic1Monitor1: {
+        color: mat.metalBrushed,
+        roughness: 0.28,
+        metalness: 0.72,
+      },
+      Screen1Monitor1: {
+        color: mat.metalDark,
+        roughness: 0.22,
+        metalness: 0.55,
+      },
+      Mat: {
+        color: mat.metalBrushed,
+        roughness: 0.26,
+        metalness: 0.76,
+      },
+    }),
+    [mat]
+  );
 
   // 1. Main Ultrawide Monitor Screen Texture (All 7 Projects Command Center)
   const mainScreenTex = useMemo(
@@ -173,7 +198,10 @@ export const MonitorsAndDisplays: React.FC = () => {
 
           ctx.fillStyle = color;
           const top = Math.min(open as number, close as number);
-          const height = Math.max(12, Math.abs((close as number) - (open as number)));
+          const height = Math.max(
+            12,
+            Math.abs((close as number) - (open as number))
+          );
           ctx.fillRect(cx - 14, top, 28, height);
         });
 
@@ -234,32 +262,19 @@ export const MonitorsAndDisplays: React.FC = () => {
         ringRadius={0.42}
         ringOffset={[0, -0.46, 0.1]}
       >
-        {/* VESA Articulated Stand Base & Post */}
-        <RoundedBox
-          args={[0.28, 0.026, 0.22]}
-          radius={0.008}
-          position={[0, -0.48, -0.05]}
-          castShadow
-        >
-          <meshStandardMaterial
-            color={mat.metalBrushed}
-            metalness={0.75}
-            roughness={0.25}
-          />
-        </RoundedBox>
-        <mesh position={[0, -0.25, -0.08]} castShadow>
-          <cylinderGeometry args={[0.026, 0.032, 0.45, 16]} />
-          <meshStandardMaterial
-            color={mat.metalSilver}
-            metalness={0.8}
-            roughness={0.2}
-          />
-        </mesh>
+        {/* Real 3D Curved-Stand Monitor GLB Hardware (Poly by Google, CC-BY 3.0) */}
+        <AtelierGLBModel
+          assetPath="workstation/monitor_ultrawide.glb"
+          position={[0, -0.515, -0.02]}
+          scale={[1.52, 1.0, 1.0]}
+          materialOverrides={monitorOverrides}
+        />
 
-        {/* Ultrawide Display Chassis */}
+        {/* Ultrawide Display Bezel Frame & Replaceable Custom Project UI Texture */}
         <RoundedBox
-          args={[1.06, 0.55, 0.042]}
-          radius={0.018}
+          args={[1.06, 0.55, 0.036]}
+          radius={0.016}
+          position={[0, 0.01, 0.01]}
           castShadow
           receiveShadow
         >
@@ -269,9 +284,7 @@ export const MonitorsAndDisplays: React.FC = () => {
             roughness={0.32}
           />
         </RoundedBox>
-
-        {/* Glowing Screen Surface */}
-        <mesh position={[0, 0.01, 0.023]}>
+        <mesh position={[0, 0.01, 0.03]}>
           <planeGeometry args={[1.0, 0.49]} />
           <meshBasicMaterial map={mainScreenTex ?? undefined} color="#ffffff" />
         </mesh>
@@ -280,7 +293,7 @@ export const MonitorsAndDisplays: React.FC = () => {
         <RoundedBox
           args={[0.46, 0.026, 0.038]}
           radius={0.008}
-          position={[0, 0.29, 0.02]}
+          position={[0, 0.295, 0.024]}
         >
           <meshStandardMaterial
             color={mat.metalBrushed}
@@ -288,7 +301,7 @@ export const MonitorsAndDisplays: React.FC = () => {
             roughness={0.25}
           />
         </RoundedBox>
-        <mesh position={[0, 0.276, 0.034]}>
+        <mesh position={[0, 0.28, 0.038]}>
           <boxGeometry args={[0.42, 0.009, 0.01]} />
           <meshBasicMaterial color={mat.accentAmber} />
         </mesh>
@@ -302,45 +315,34 @@ export const MonitorsAndDisplays: React.FC = () => {
         ringRadius={0.35}
         ringOffset={[0, -0.42, 0.05]}
       >
-        {/* Stand */}
-        <mesh position={[0, -0.24, -0.05]} castShadow>
-          <cylinderGeometry args={[0.02, 0.024, 0.4, 14]} />
-          <meshStandardMaterial
-            color={mat.metalSilver}
-            metalness={0.75}
-            roughness={0.25}
-          />
-        </mesh>
+        {/* Real 3D Beveled Monitor GLB Hardware (Zsky, CC-BY 3.0) */}
+        <AtelierGLBModel
+          assetPath="workstation/monitor.glb"
+          position={[0, -0.465, -0.02]}
+          scale={[1.02, 1.0, 1.0]}
+          materialOverrides={monitorOverrides}
+        />
+
+        {/* Slim Bezel & Replaceable AIC-26 Video Retrieval UI Texture */}
         <RoundedBox
-          args={[0.21, 0.022, 0.17]}
-          radius={0.006}
-          position={[0, -0.43, -0.03]}
+          args={[0.75, 0.47, 0.03]}
+          radius={0.014}
+          position={[0, 0, 0.01]}
           castShadow
         >
-          <meshStandardMaterial
-            color={mat.metalBrushed}
-            metalness={0.7}
-            roughness={0.3}
-          />
-        </RoundedBox>
-
-        {/* Monitor Bezel */}
-        <RoundedBox args={[0.75, 0.47, 0.036]} radius={0.015} castShadow>
           <meshStandardMaterial
             color={mat.metalDark}
             metalness={0.58}
             roughness={0.32}
           />
         </RoundedBox>
-
-        {/* Screen */}
-        <mesh position={[0, 0, 0.02]}>
+        <mesh position={[0, 0, 0.027]}>
           <planeGeometry args={[0.69, 0.41]} />
           <meshBasicMaterial map={videoScreenTex ?? undefined} />
         </mesh>
 
         {/* Cyan Status LED */}
-        <mesh position={[0.31, -0.21, 0.02]}>
+        <mesh position={[0.31, -0.21, 0.028]}>
           <sphereGeometry args={[0.01, 10, 10]} />
           <meshBasicMaterial color={mat.accentCyan} />
         </mesh>
@@ -354,39 +356,28 @@ export const MonitorsAndDisplays: React.FC = () => {
         ringRadius={0.35}
         ringOffset={[0, -0.42, 0.05]}
       >
-        {/* Stand */}
-        <mesh position={[0, -0.24, -0.05]} castShadow>
-          <cylinderGeometry args={[0.02, 0.024, 0.4, 14]} />
-          <meshStandardMaterial
-            color={mat.metalSilver}
-            metalness={0.75}
-            roughness={0.25}
-          />
-        </mesh>
+        {/* Real 3D Beveled Monitor GLB Hardware (Zsky, CC-BY 3.0) */}
+        <AtelierGLBModel
+          assetPath="workstation/monitor.glb"
+          position={[0, -0.465, -0.02]}
+          scale={[1.0, 1.0, 1.0]}
+          materialOverrides={monitorOverrides}
+        />
+
+        {/* Slim Bezel & Replaceable UIT_PINANCE UI Texture */}
         <RoundedBox
-          args={[0.21, 0.022, 0.17]}
-          radius={0.006}
-          position={[0, -0.43, -0.03]}
+          args={[0.73, 0.46, 0.03]}
+          radius={0.014}
+          position={[0, 0, 0.01]}
           castShadow
         >
-          <meshStandardMaterial
-            color={mat.metalBrushed}
-            metalness={0.7}
-            roughness={0.3}
-          />
-        </RoundedBox>
-
-        {/* Monitor Bezel */}
-        <RoundedBox args={[0.73, 0.46, 0.036]} radius={0.015} castShadow>
           <meshStandardMaterial
             color={mat.metalDark}
             metalness={0.58}
             roughness={0.32}
           />
         </RoundedBox>
-
-        {/* Screen */}
-        <mesh position={[0, 0, 0.02]}>
+        <mesh position={[0, 0, 0.027]}>
           <planeGeometry args={[0.67, 0.4]} />
           <meshBasicMaterial map={financeScreenTex ?? undefined} />
         </mesh>
@@ -413,26 +404,25 @@ export const MonitorsAndDisplays: React.FC = () => {
         </mesh>
       </InteractiveObject>
 
-      {/* ── 5. UIT ACADEMIC DESK CALENDAR & PLAQUE ── */}
+      {/* ── 5. UIT ACADEMIC DOSSIER & RESEARCH VOLUMES (Real 3D book_stack.glb) ── */}
       <InteractiveObject
         id="desk-calendar"
-        position={[-0.46, 1.02, -0.92]}
-        rotation={[0, 0.22, 0]}
+        position={[-0.48, 0.96, -0.96]}
+        rotation={[0, 0.28, 0]}
         ringRadius={0.18}
-        ringOffset={[0, -0.05, 0]}
+        ringOffset={[0, -0.01, 0]}
       >
-        <RoundedBox
-          args={[0.18, 0.13, 0.08]}
-          radius={0.012}
-          position={[0, 0.01, 0]}
-          castShadow
-        >
-          <meshStandardMaterial color={mat.ceramicWhite} roughness={0.38} />
-        </RoundedBox>
-        <mesh position={[0, 0.055, 0.039]}>
-          <boxGeometry args={[0.16, 0.034, 0.01]} />
-          <meshBasicMaterial color={mat.accentEmerald} />
-        </mesh>
+        <AtelierGLBModel
+          assetPath="props/book_stack.glb"
+          position={[0, -0.012, 0]}
+          scale={0.95}
+          materialOverrides={{
+            carpetDarker: { color: mat.accentLavender, roughness: 0.38 },
+            carpetWhite: { color: mat.ceramicWhite, roughness: 0.34 },
+            plant: { color: mat.accentEmerald, roughness: 0.38 },
+            metal: { color: mat.accentAmber, roughness: 0.32 },
+          }}
+        />
       </InteractiveObject>
 
       {/* ── 6. CONTACT & SOCIAL SMART TABLET DOCK ── */}
@@ -443,7 +433,6 @@ export const MonitorsAndDisplays: React.FC = () => {
         ringRadius={0.2}
         ringOffset={[0, -0.05, 0]}
       >
-        {/* Dock Base */}
         <RoundedBox
           args={[0.21, 0.036, 0.15]}
           radius={0.01}
@@ -456,7 +445,6 @@ export const MonitorsAndDisplays: React.FC = () => {
             roughness={0.3}
           />
         </RoundedBox>
-        {/* Angled Smart Tablet */}
         <RoundedBox
           args={[0.185, 0.145, 0.016]}
           radius={0.008}

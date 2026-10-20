@@ -3,11 +3,28 @@ import { RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 import { useWorkspaceStore } from '../hooks/useWorkspaceInteraction';
 import { ATELIER_PALETTE } from './materials';
+import {
+  AtelierGLBModel,
+  type MaterialCustomization,
+} from './AtelierGLBModel';
 
 export const RoomShell: React.FC = () => {
   const timeMode = useWorkspaceStore((s) => s.timeMode);
   const isNight = timeMode === 'night';
   const mat = ATELIER_PALETTE[timeMode];
+
+  const plantOverrides = useMemo<Record<string, MaterialCustomization>>(
+    () => ({
+      Black: { color: mat.ceramicWhite, roughness: 0.32, metalness: 0.08 },
+      Brown: { color: mat.woodTrim, roughness: 0.82, metalness: 0.04 },
+      Plant_Green: {
+        color: mat.foliagePrimary,
+        roughness: 0.48,
+        metalness: 0.05,
+      },
+    }),
+    [mat]
+  );
 
   // Procedural ATELIER // LAB-01 Header Sign Texture
   const labSignTexture = useMemo(() => {
@@ -372,15 +389,16 @@ export const RoomShell: React.FC = () => {
         </mesh>
       </group>
 
-      {/* Baseboard Trims along Back and Left Walls */}
-      <mesh position={[0.08, 0.08, -2.11]}>
-        <boxGeometry args={[4.46, 0.14, 0.045]} />
-        <meshStandardMaterial color={mat.wallTrim} roughness={0.55} />
-      </mesh>
-      <mesh position={[-2.11, 0.08, 0.08]}>
-        <boxGeometry args={[0.045, 0.14, 4.46]} />
-        <meshStandardMaterial color={mat.wallTrim} roughness={0.55} />
-      </mesh>
+      {/* Chamfered Baseboard Trims & Corner Pilaster along Back and Left Walls */}
+      <RoundedBox args={[4.46, 0.14, 0.048]} radius={0.012} smoothness={2} position={[0.08, 0.08, -2.11]} receiveShadow>
+        <meshStandardMaterial color={mat.wallTrim} roughness={0.52} />
+      </RoundedBox>
+      <RoundedBox args={[0.048, 0.14, 4.46]} radius={0.012} smoothness={2} position={[-2.11, 0.08, 0.08]} receiveShadow>
+        <meshStandardMaterial color={mat.wallTrim} roughness={0.52} />
+      </RoundedBox>
+      <RoundedBox args={[0.09, 3.04, 0.09]} radius={0.015} smoothness={2} position={[-2.11, 1.52, -2.11]} receiveShadow>
+        <meshStandardMaterial color={mat.wallTrim} roughness={0.48} />
+      </RoundedBox>
 
       {/* Top Architectural Cove Lighting Strip on Back Wall */}
       <mesh position={[0.1, 2.98, -2.1]}>
@@ -422,44 +440,29 @@ export const RoomShell: React.FC = () => {
         </mesh>
       </group>
 
-      {/* Potted Floor Monstera / Palm Plant in Front-Left Corner */}
+      {/* Real 3D Potted Floor Plant in Front-Left Corner (houseplant_large.glb) */}
       <group position={[-1.72, 0.02, 1.65]}>
-        {/* Ceramic Planter Pot with Wood Stand Rim */}
-        <mesh position={[0, 0.24, 0]} castShadow receiveShadow>
-          <cylinderGeometry args={[0.25, 0.19, 0.46, 22]} />
-          <meshStandardMaterial
-            color={mat.ceramicWhite}
-            roughness={0.35}
-            metalness={0.08}
-          />
+        <mesh position={[0, 0.03, 0]} castShadow receiveShadow>
+          <cylinderGeometry args={[0.26, 0.28, 0.06, 24]} />
+          <meshStandardMaterial color={mat.woodWarm} roughness={0.52} metalness={0.05} />
         </mesh>
-        {/* Soil */}
-        <mesh position={[0, 0.45, 0]}>
-          <cylinderGeometry args={[0.23, 0.23, 0.04, 16]} />
-          <meshStandardMaterial color="#3b281e" roughness={0.9} />
-        </mesh>
-        {/* Lush Foliage Leaves */}
-        {[
-          [0, 0.68, 0, 0.2, 0, 0.1],
-          [0.14, 0.62, 0.1, -0.35, 0.6, -0.3],
-          [-0.14, 0.64, 0.08, -0.3, -0.5, 0.35],
-          [0.08, 0.72, -0.14, 0.4, 0.3, -0.2],
-          [-0.1, 0.58, -0.12, 0.35, -0.4, 0.25],
-        ].map(([x, y, z, rx, ry, rz], idx) => (
-          <mesh
-            key={`leaf-${idx}`}
-            position={[x, y, z]}
-            rotation={[rx, ry, rz]}
-            castShadow
-          >
-            <sphereGeometry args={[0.175, 14, 10]} />
-            <meshStandardMaterial
-              color={idx % 2 === 0 ? mat.foliagePrimary : mat.foliageSecondary}
-              roughness={0.48}
-            />
-          </mesh>
-        ))}
+        <AtelierGLBModel
+          assetPath="props/houseplant_large.glb"
+          position={[0, 0.05, 0]}
+          rotation={[0, 0.55, 0]}
+          scale={1.08}
+          materialOverrides={plantOverrides}
+        />
       </group>
+
+      {/* Window Sill Botanical Accent (houseplant_small.glb) */}
+      <AtelierGLBModel
+        assetPath="props/houseplant_small.glb"
+        position={[-2.01, 1.11, 0.82]}
+        rotation={[0, 1.1, 0]}
+        scale={0.78}
+        materialOverrides={plantOverrides}
+      />
     </group>
   );
 };
