@@ -31,7 +31,7 @@
 
 ## 👋 Overview
 
-I am a **3rd-year Information Technology student** at the **[University of Information Technology (UIT) — VNU-HCM](https://www.uit.edu.vn/)** (`2023 – Present`), focused on engineering end-to-end **Artificial Intelligence systems** — from low-level **CUDA GPU kernels** and custom autograd engines to **Retrieval-Augmented Generation (RAG)** pipelines and **real-time Computer Vision** inference.
+I am a **Information Technology student** at the **[University of Information Technology (UIT) — VNU-HCM](https://www.uit.edu.vn/)** (`2023 – Present`), focused on engineering end-to-end **Artificial Intelligence systems** — from low-level **CUDA GPU kernels** and custom autograd engines to **Retrieval-Augmented Generation (RAG)** pipelines and **real-time Computer Vision** inference.
 
 - 🔬 **Core Research & Engineering Interests:** Deep Learning Architecture (`BERT`, `Transformers`, `T5`), RAG & Vector Search, Real-Time Object Detection (`YOLOv8`, `BlazeFace`, `UltraFace`, `MLTK`), and High-Performance GPU Computing (`CUDA`, `cuDNN`).
 - 🎯 **Short-Term Goal:** Engineer high-performance, low-latency AI systems ready for production deployment.
